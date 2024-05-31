@@ -24,11 +24,11 @@ all_ICB_data[, "MONTH" := as.numeric(substr(YEAR_MONTH, 5, 6)),]
 # convert to numeric -> the "*"s get converted to NAs
 all_ICB_data[, UNIQUE_PATIENT_COUNT := as.numeric(UNIQUE_PATIENT_COUNT)]
 # Change stars to -1 so can be used in numeric
-all_ICB_data[is.na(UNIQUE_PATIENT_COUNT), UNIQUE_PATIENT_COUNT := -100]
+all_ICB_data[is.na(UNIQUE_PATIENT_COUNT), UNIQUE_PATIENT_COUNT := 1]
 # convert to numeric -> the "*"s get converted to NAs
 all_ICB_data[, ITEMS := as.numeric(ITEMS)]
 # Change stars to -1 so can be used in numeric
-all_ICB_data[is.na(ITEMS), ITEMS := -100]
+all_ICB_data[is.na(ITEMS), ITEMS := 1]
 
 
 all_ICB_data[, AGE_BAND := factor(AGE_BAND, levels = c("0-1", "2-5", 
