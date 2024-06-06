@@ -8,4 +8,4 @@ Files are (as of 6/6/2024):
 
 - initial_data_look.R This contains Naomi's code currently used to look at the data, and is constantly changing.
 
-The data can be accessed from https://url.uk.m.mimecastprotect.com/s/wTd9C69QJSlkx9QIpq9c2?domain=opendata.nhsbsa.net
+The data can be accessed from https://url.uk.m.mimecastprotect.com/s/wTd9C69QJSlkx9QIpq9c2?domain=opendata.nhsbsa.net, and needs to be put in subfolders of data to run the above code. (data > ICB_Data and data > Practice_Data)
