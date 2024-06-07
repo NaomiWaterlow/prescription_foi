@@ -94,7 +94,7 @@ ICB_target_2023 <- ICB_data_2023[BNF_CHEMICAL_SUBSTANCE_CODE == target]
 
 # average per month
 ICB_target_2023[, av_rate_per_1000:= mean(rate_per_1000), by = c("ICB_CODE", "GENDER", "AGE_BAND_NEW" )]
-ICB_target_2023_av_month <- ICB_target_2023[, c("YEAR_MONTH", "MONTH", "ITEMS", "rate_per_1000") := NULL]
+ICB_target_2023_av_month <- ICB_target_2023[, c("YEAR_MONTH", "MONTH", "ITEMS", "rate_per_1000", "POP") := NULL]
 
 
 PLOT_TEMP <- ggplot(ICB_target_2023_av_month, aes(x = AGE_BAND_NEW, y = av_rate_per_1000, colour = ICB_CODE, group =ICB_CODE)) + 
@@ -106,5 +106,33 @@ PLOT_TEMP <- ggplot(ICB_target_2023_av_month, aes(x = AGE_BAND_NEW, y = av_rate_
 
 ggsave(paste0("plots/",str_replace_all(target_name, "[^[:alnum:]]", " "), "_av_monhtly_rate_items.pdf"), plot = PLOT_TEMP)
 
+}
+
+
+#### change to look at seasonaility
+# average acrosss ICB
+ICB_data_2023[, av_across_ICBs := mean(rate_per_1000),by = c("MONTH", "GENDER", "AGE_BAND_NEW", "BNF_CHEMICAL_SUBSTANCE_CODE", "drug_name")]
+ICB_data_2023_avICB <- unique(ICB_data_2023[,c("YEAR_MONTH", "ICB_CODE", "ITEMS", "rate_per_1000", "POP") := NULL])
+
+
+
+for(i in drugs_of_interest){
+  target <- i
+  target_name <- ICB_data_2023_avICB[BNF_CHEMICAL_SUBSTANCE_CODE == target]$drug_name[1]
+  ICB_target_2023_avICB <- ICB_data_2023_avICB[BNF_CHEMICAL_SUBSTANCE_CODE == target]
+
+PLOT_TEMP <- ggplot(ICB_target_2023_avICB, aes(x = MONTH, y = av_across_ICBs, colour = AGE_BAND_NEW, group =AGE_BAND_NEW)) + 
+  geom_line() + facet_wrap(GENDER~.) + 
+  labs(title = paste0(target_name), x = "MONTH", y = "prescription rate per 1000 people, averaged across ICBs") + 
+  theme_bw() 
+
+ggsave(paste0("plots/",str_replace_all(target_name, "[^[:alnum:]]", " "), "_seasonality.pdf"), plot = PLOT_TEMP)
 
 }
+
+
+
+
+
+
+
