@@ -1,6 +1,7 @@
 # ICB populations. 
 library(stringr)
-
+library(data.table)
+library(ggplot2)
 # FOR GEOGRAPHIC VARIATION
 # - excludes Wales
 # - 2023 only
@@ -9,7 +10,8 @@ library(stringr)
 # - excludes "Indeterminate" Gender, as don't know population size.
 
 # Because need to combine age bands, have excluded UNIQUE_PATIENT_COLUMN as we can't use this without risking double counting
-
+all_ICB_data <- fread("data/ICB_Data/all_ICB_data.csv")
+drugs_lookup <- fread("data/drugs_lookup.csv")
 
 # looking only at 2023 'post-covid' as this is also the year we have population data for
 # not including wales (For now), as the population size dataset doesn't include it
@@ -79,7 +81,7 @@ ICB_data_2023[, rate_per_1000 := (ITEMS/POP)*1000]
 # add in drug lookup 
 drugs_lookup <- fread("data/drugs_lookup.csv")
 ICB_data_2023[drugs_lookup, on="BNF_CHEMICAL_SUBSTANCE_CODE", drug_name := CHEMICAL_SUBSTANCE_BNF_DESCR]
-
+fwrite(ICB_data_2023, "data/2023_per_population.csv")
 # save these for each drug
 
 # Lets take a look!

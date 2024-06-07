@@ -1,0 +1,258 @@
+﻿drug_name,Class,ATC code,Category ,Listed on EML/EMLc 2021
+Amikacin,Aminoglycosides,J01GB06,Access,Yes
+Amoxicillin,Penicillins,J01CA04,Access,Yes
+Amoxicillin/clavulanic-acid,Beta-lactam/beta-lactamase-inhibitor,J01CR02,Access,Yes
+Ampicillin,Penicillins,J01CA01 ,Access,Yes
+Ampicillin/sulbactam,Beta-lactam/beta-lactamase-inhibitor,J01CR01,Access,No
+Arbekacin,Aminoglycosides,J01GB12,Watch,No
+Aspoxicillin,Penicillins ,J01CA19,Watch,No
+Azidocillin,Penicillins ,J01CE04,Access,No
+Azithromycin,Macrolides,J01FA10,Watch,Yes
+Azlocillin,Penicillins ,J01CA09,Watch,No
+Aztreonam,Monobactams,J01DF01,Reserve,No
+Bacampicillin,Penicillins ,J01CA06,Access,No
+Bekanamycin,Aminoglycosides,J01GB13,Watch,No
+Benzathine-benzylpenicillin,Penicillins,J01CE08,Access,Yes
+Benzylpenicillin,Penicillins,J01CE01,Access,Yes
+Biapenem,Carbapenems,J01DH05,Watch,No
+Brodimoprim,Trimethoprim-derivatives,J01EA02,Access,No
+Carbenicillin,Penicillins,J01CA03,Watch,No
+Carindacillin,Penicillins,J01CA05,Watch,No
+Carumonam,Monobactams,J01DF02,Reserve,No
+Cefacetrile,First-generation-cephalosporins,J01DB10,Access,No
+Cefaclor,Second-generation-cephalosporins,J01DC04,Watch,No
+Cefadroxil,First-generation-cephalosporins,J01DB05,Access,No
+Cefalexin,First-generation-cephalosporins,J01DB01,Access,Yes
+Cefaloridine,First-generation-cephalosporins,J01DB02,Access,No
+Cefalotin,First-generation-cephalosporins,J01DB03,Access,No
+Cefamandole,Second-generation-cephalosporins,J01DC03,Watch,No
+Cefapirin,First-generation-cephalosporins,J01DB08,Access,No
+Cefatrizine,First-generation-cephalosporins,J01DB07,Access,No
+Cefazedone,First-generation-cephalosporins,J01DB06,Access,No
+Cefazolin,First-generation-cephalosporins,J01DB04,Access,Yes
+Cefbuperazone,Second-generation-cephalosporins,J01DC13,Watch,No
+Cefcapene-pivoxil,Third-generation-cephalosporins,J01DD17,Watch,No
+Cefdinir,Third-generation-cephalosporins,J01DD15,Watch,No
+Cefditoren-pivoxil,Third-generation-cephalosporins,J01DD16,Watch,No
+Cefepime,Fourth-generation-cephalosporins,J01DE01,Watch,No
+Cefetamet-pivoxil,Third-generation-cephalosporins,J01DD10,Watch,No
+Cefiderocol,Other-cephalosporins,J01DI04,Reserve,Yes
+Cefixime,Third-generation-cephalosporins,J01DD08,Watch,Yes
+Cefmenoxime,Third-generation-cephalosporins,J01DD05,Watch,No
+Cefmetazole,Second-generation-cephalosporins,J01DC09,Watch,No
+Cefminox,Second-generation-cephalosporins,J01DC12,Watch,No
+Cefodizime,Third-generation-cephalosporins,J01DD09,Watch,No
+Cefonicid,Second-generation-cephalosporins,J01DC06,Watch,No
+Cefoperazone,Third-generation-cephalosporins,J01DD12,Watch,No
+Ceforanide,Second-generation-cephalosporins,J01DC11,Watch,No
+Cefoselis,Fourth-generation-cephalosporins,to be assigned,Watch,No
+Cefotaxime,Third-generation-cephalosporins,J01DD01,Watch,Yes
+Cefotetan,Second-generation-cephalosporins,J01DC05,Watch,No
+Cefotiam,Second-generation-cephalosporins,J01DC07,Watch,No
+Cefoxitin,Second-generation-cephalosporins,J01DC01,Watch,No
+Cefozopran,Fourth-generation-cephalosporins,J01DE03,Watch,No
+Cefpiramide,Third-generation-cephalosporins,J01DD11,Watch,No
+Cefpirome,Fourth-generation-cephalosporins,J01DE02,Watch,No
+Cefpodoxime-proxetil,Third-generation-cephalosporins,J01DD13,Watch,No
+Cefprozil,Second-generation-cephalosporins,J01DC10,Watch,No
+Cefradine,First-generation-cephalosporins,J01DB09,Access,No
+Cefroxadine,First-generation-cephalosporins,J01DB11,Access,No
+Cefsulodin,Third-generation-cephalosporins,J01DD03,Watch,No
+Ceftaroline-fosamil,Fifth-generation cephalosporins,J01DI02 ,Reserve,No
+Ceftazidime,Third-generation-cephalosporins,J01DD02,Watch,Yes
+Ceftazidime/avibactam,Third-generation-cephalosporins,J01DD52,Reserve,Yes
+Cefteram-pivoxil,Third-generation-cephalosporins,J01DD18,Watch,No
+Ceftezole,First-generation-cephalosporins,J01DB12,Access,No
+Ceftibuten,Third-generation-cephalosporins,J01DD14,Watch,No
+Ceftizoxime,Third-generation-cephalosporins,J01DD07,Watch,No
+Ceftobiprole-medocaril,Fifth-generation cephalosporins,J01DI01,Reserve,No
+Ceftolozane/tazobactam,Fifth-generation cephalosporins,J01DI54,Reserve,No
+Ceftriaxone,Third-generation-cephalosporins,J01DD04,Watch,Yes
+Cefuroxime,Second-generation-cephalosporins,J01DC02,Watch,Yes
+Chloramphenicol,Amphenicols,J01BA01,Access,Yes
+Chlortetracycline,Tetracyclines,J01AA03,Watch,No
+Cinoxacin,Quinolones,J01MB06,Watch,No
+Ciprofloxacin,Fluoroquinolones,J01MA02,Watch,Yes
+Clarithromycin,Macrolides,J01FA09,Watch,Yes
+Clindamycin,Lincosamides,J01FF01,Access,Yes
+Clofoctol,Phenol derivatives,J01XX03,Watch,No
+Clometocillin,Penicillins ,J01CE07,Access,No
+Clomocycline,Tetracyclines,J01AA11,Watch,No
+Cloxacillin,Penicillins,J01CF02,Access,Yes
+Colistin_IV,Polymyxins,J01XB01,Reserve,Yes
+Colistin_oral,Polymyxins,A07AA10,Reserve,No
+Dalbavancin,Glycopeptides,J01XA04,Reserve,No
+Dalfopristin/quinupristin,Streptogramins,J01FG02,Reserve,No
+Daptomycin,Lipopeptides,J01XX09,Reserve,No
+Delafloxacin,Fluoroquinolones,J01MA23,Watch,No
+Demeclocycline,Tetracyclines,J01AA01,Watch,No
+Dibekacin,Aminoglycosides,J01GB09,Watch,No
+Dicloxacillin,Penicillins ,J01CF01,Access,No
+Dirithromycin,Macrolides,J01FA13,Watch,No
+Doripenem,Carbapenems,J01DH04,Watch,No
+Doxycycline,Tetracyclines,J01AA02,Access,Yes
+Enoxacin,Fluoroquinolones,J01MA04,Watch,No
+Epicillin,Penicillins ,J01CA07,Access,No
+Eravacycline,Tetracyclines,J01AA13,Reserve,No
+Ertapenem,Carbapenems,J01DH03,Watch,No
+Erythromycin,Macrolides,J01FA01,Watch,No
+Faropenem,Penems,J01DI03,Reserve,No
+Fidaxomicin,Macrolides,A07AA12,Watch,No
+Fleroxacin,Fluoroquinolones,J01MA08,Watch,No
+Flomoxef,Second-generation-cephalosporins,J01DC14,Watch,No
+Flucloxacillin,Penicillins ,J01CF05,Access,No
+Flumequine,Quinolones,J01MB07,Watch,No
+Flurithromycin,Macrolides,J01FA14,Watch,No
+Fosfomycin_IV,Phosphonics,J01XX01,Reserve,Yes
+Fosfomycin_oral,Phosphonics,J01XX01,Watch ,No
+Furazidin,Nitrofuran derivatives,J01XE03,Access,No
+Fusidic-acid,Steroid antibacterials,J01XC01,Watch,No
+Garenoxacin,Fluoroquinolones,J01MA19,Watch,No
+Gatifloxacin,Fluoroquinolones,J01MA16,Watch,No
+Gemifloxacin,Fluoroquinolones,J01MA15,Watch,No
+Gentamicin,Aminoglycosides,J01GB03,Access,Yes
+Grepafloxacin,Fluoroquinolones,J01MA11,Watch,No
+Hetacillin,Penicillins ,J01CA18,Access,No
+Iclaprim,Trimethoprim-derivatives,J01EA03,Reserve,No
+Imipenem/cilastatin,Carbapenems,J01DH51,Watch,No
+Imipenem/cilastatin/relebactam,Carbapenems,J01DH56,Reserve,No
+Isepamicin,Aminoglycosides,J01GB11,Watch,No
+Josamycin,Macrolides,J01FA07,Watch,No
+Kanamycin_IV,Aminoglycosides,J01GB04,Watch,No
+Kanamycin_oral,Aminoglycosides,A07AA08,Watch,No
+Lascufloxacin,Fluoroquinolones,J01MA25,Watch,No
+Latamoxef,Third-generation-cephalosporins,J01DD06,Watch,No
+Lefamulin,Pleuromutilin,J01XX12,Reserve,No
+Levofloxacin,Fluoroquinolones,J01MA12,Watch,No
+Levonadifloxacin,Fluoroquinolones,J01MA24,Watch,No
+Lincomycin,Lincosamides,J01FF02,Watch,No
+Linezolid,Oxazolidinones,J01XX08,Reserve,Yes
+Lomefloxacin,Fluoroquinolones,J01MA07,Watch,No
+Loracarbef,Second-generation-cephalosporins,J01DC08,Watch,No
+Lymecycline,Tetracyclines,J01AA04,Watch,No
+Mecillinam,Penicillins ,J01CA11,Access,No
+Meropenem,Carbapenems,J01DH02,Watch,Yes
+Meropenem/vaborbactam,Carbapenems,J01DH52,Reserve,Yes
+Metacycline,Tetracyclines,J01AA05,Watch,No
+Metampicillin,Penicillins ,J01CA14,Access,No
+Meticillin,Penicillins ,J01CF03,Access,No
+Metronidazole_IV,Imidazoles,J01XD01,Access,Yes
+Metronidazole_oral,Imidazoles,P01AB01,Access,Yes
+Mezlocillin,Penicillins ,J01CA10,Watch,No
+Micronomicin,Aminoglycosides,to be assigned,Watch,No
+Midecamycin,Macrolides,J01FA03,Watch,No
+Minocycline_IV,Tetracyclines,J01AA08,Reserve,No
+Minocycline_oral,Tetracyclines,J01AA08,Watch ,No
+Miocamycin,Macrolides,J01FA11,Watch,No
+Moxifloxacin,Fluoroquinolones,J01MA14,Watch,No
+Nafcillin,Penicillins ,J01CF06,Access,No
+Nemonoxacin,Quinolones,J01MB08,Watch,No
+Neomycin_IV,Aminoglycosides,J01GB05,Watch,No
+Neomycin_oral,Aminoglycosides,A07AA01,Watch,No
+Netilmicin,Aminoglycosides,J01GB07,Watch,No
+Nifurtoinol,Nitrofuran derivatives,J01XE02,Access,No
+Nitrofurantoin,Nitrofuran-derivatives,J01XE01,Access,Yes
+Norfloxacin,Fluoroquinolones,J01MA06,Watch,No
+Ofloxacin,Fluoroquinolones,J01MA01,Watch,No
+Oleandomycin,Macrolides,J01FA05,Watch,No
+Omadacycline,Tetracyclines,J01AA15,Reserve,No
+Oritavancin,Glycopeptides,J01XA05,Reserve,No
+Ornidazole_IV,Imidazoles,J01XD03,Access,No
+Ornidazole_oral,Imidazoles,P01AB03,Access,No
+Oxacillin,Penicillins ,J01CF04,Access,No
+Oxolinic-acid,Quinolones,J01MB05,Watch,No
+Oxytetracycline,Tetracyclines,J01AA06,Watch,No
+Panipenem,Carbapenems,J01DH55,Watch,No
+Pazufloxacin,Fluoroquinolones,J01MA18,Watch,No
+Pefloxacin,Fluoroquinolones,J01MA03,Watch,No
+Penamecillin,Penicillins ,J01CE06,Access,No
+Penimepicycline,Tetracyclines,J01AA10,Watch,No
+Pheneticillin,Penicillins ,J01CE05,Watch,No
+Phenoxymethylpenicillin,Penicillins,J01CE02,Access,Yes
+Pipemidic-acid,Quinolones,J01MB04,Watch,No
+Piperacillin,Penicillins ,J01CA12,Watch,No
+Piperacillin/tazobactam,Beta-lactam/beta-lactamase-inhibitor_anti-pseudomonal,J01CR05,Watch,Yes
+Piromidic-acid,Quinolones,J01MB03,Watch,No
+Pivampicillin,Penicillins ,J01CA02,Access,No
+Pivmecillinam,Penicillins ,J01CA08,Access,No
+Plazomicin,Aminoglycosides,J01GB14,Reserve,Yes
+Polymyxin-B_IV,Polymyxins,J01XB02,Reserve,Yes
+Polymyxin-B_oral,Polymyxins,A07AA05,Reserve,No
+Pristinamycin,Streptogramins,J01FG01,Watch,No
+Procaine-benzylpenicillin,Penicillins,J01CE09,Access,Yes
+Propicillin,Penicillins ,J01CE03,Access,No
+Prulifloxacin,Fluoroquinolones,J01MA17,Watch,No
+Ribostamycin,Aminoglycosides,J01GB10,Watch,No
+Rifabutin,Rifamycins,J04AB04,Watch,No
+Rifampicin,Rifamycins,J04AB02,Watch,No
+Rifamycin_IV,Rifamycins,J04AB03,Watch,No
+Rifamycin_oral,Rifamycins,A07AA13,Watch,No
+Rifaximin,Rifamycins,A07AA11,Watch,No
+Rokitamycin,Macrolides,J01FA12,Watch,No
+Rolitetracycline,Tetracyclines,J01AA09,Watch,No
+Rosoxacin,Quinolones,J01MB01,Watch,No
+Roxithromycin,Macrolides,J01FA06,Watch,No
+Rufloxacin,Fluoroquinolones,J01MA10,Watch,No
+Sarecycline,Tetracyclines,J01AA14,Watch,No
+Secnidazole,Imidazoles,P01AB07,Access,No
+Sisomicin,Aminoglycosides,J01GB08,Watch,No
+Sitafloxacin,Fluoroquinolones,J01MA21,Watch,No
+Solithromycin,Macrolides,J01FA16,Watch,No
+Sparfloxacin,Fluoroquinolones,J01MA09,Watch,No
+Spectinomycin,Aminocyclitols,J01XX04,Access,Yes
+Spiramycin,Macrolides,J01FA02,Watch,No
+Streptoduocin,Aminoglycosides,J01GA02,Watch,No
+Streptomycin_IV,Aminoglycosides,J01GA01,Watch,No
+Streptomycin_oral,Aminoglycosides,A07AA04,Watch,No
+Sulbactam,Beta-lactamase-inhibitors,J01CG01,Access,No
+Sulbenicillin,Penicillins ,J01CA16,Watch,No
+Sulfadiazine ,Sulfonamides,J01EC02,Access,No
+Sulfadiazine/tetroxoprim,Sulfonamide-trimethoprim-combinations,J01EE06,Access,No
+Sulfadiazine/trimethoprim,Sulfonamide-trimethoprim-combinations,J01EE02,Access,No
+Sulfadimethoxine,Sulfonamides,J01ED01,Access,No
+Sulfadimidine,Sulfonamides,J01EB03,Access,No
+Sulfadimidine/trimethoprim,Sulfonamide-trimethoprim-combinations,J01EE05,Access,No
+Sulfafurazole,Sulfonamides ,J01EB05,Access,No
+Sulfaisodimidine,Sulfonamides,J01EB01,Access,No
+Sulfalene,Sulfonamides,J01ED02,Access,No
+Sulfamazone,Sulfonamides,J01ED09,Access,No
+Sulfamerazine,Sulfonamides,J01ED07,Access,No
+Sulfamerazine/trimethoprim,Sulfonamide-trimethoprim-combinations,J01EE07,Access,No
+Sulfamethizole,Sulfonamides,J01EB02,Access,No
+Sulfamethoxazole ,Sulfonamides,J01EC01,Access,No
+Sulfamethoxazole/trimethoprim,Sulfonamide-trimethoprim-combinations,J01EE01,Access,Yes
+Sulfamethoxypyridazine,Sulfonamides,J01ED05,Access,No
+Sulfametomidine,Sulfonamides,J01ED03,Access,No
+Sulfametoxydiazine,Sulfonamides,J01ED04,Access,No
+Sulfametrole/trimethoprim,Sulfonamide-trimethoprim-combinations,J01EE03,Access,No
+Sulfamoxole ,Sulfonamides,J01EC03,Access,No
+Sulfamoxole/trimethoprim,Sulfonamide-trimethoprim-combinations,J01EE04,Access,No
+Sulfanilamide,Sulfonamides,J01EB06,Access,No
+Sulfaperin,Sulfonamides,J01ED06,Access,No
+Sulfaphenazole,Sulfonamides,J01ED08,Access,No
+Sulfapyridine,Sulfonamides,J01EB04,Access,No
+Sulfathiazole,Sulfonamides,J01EB07,Access,No
+Sulfathiourea,Sulfonamides,J01EB08,Access,No
+Sultamicillin,Beta-lactam/beta-lactamase-inhibitor,J01CR04,Access,No
+Talampicillin,Penicillins ,J01CA15,Access,No
+Tazobactam,Beta-lactamase-inhibitors,J01CG02,Watch,No
+Tebipenem,Carbapenems,J01DH06,Watch,No
+Tedizolid,Oxazolidinones,J01XX11,Reserve,No
+Teicoplanin,Glycopeptides,J01XA02,Watch,No
+Telavancin,Glycopeptides,J01XA03,Reserve,No
+Telithromycin,Macrolides,J01FA15,Watch,No
+Temafloxacin,Fluoroquinolones,J01MA05,Watch,No
+Temocillin,Penicillins,J01CA17,Watch,No
+Tetracycline,Tetracyclines,J01AA07,Access,No
+Thiamphenicol,Amphenicols,J01BA02,Access,No
+Ticarcillin,Penicillins,J01CA13,Watch,No
+Tigecycline,Glycylcyclines,J01AA12,Reserve,No
+Tinidazole_IV,Imidazoles,J01XD02,Access,No
+Tinidazole_oral,Imidazoles,P01AB02,Access,No
+Tobramycin,Aminoglycosides,J01GB01,Watch,No
+Tosufloxacin,Fluoroquinolones,J01MA22,Watch,No
+Trimethoprim,Trimethoprim-derivatives,J01EA01,Access,Yes
+Troleandomycin,Macrolides,J01FA08,Watch,No
+Trovafloxacin,Fluoroquinolones,J01MA13,Watch,No
+Vancomycin_IV,Glycopeptides,J01XA01,Watch,Yes
+Vancomycin_oral,Glycopeptides,A07AA09,Watch,Yes
