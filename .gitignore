@@ -2,6 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
-*.csv
+
 *.xlsx
+Practice_Data/
+ICB_Data/
 
