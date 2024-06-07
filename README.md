@@ -8,7 +8,10 @@ Files are (as of 7/6/2024):
 
 - initial_data_look.R This contains Naomi's code currently used to look at the data, and is constantly changing.
 
-- by_population_2023.R calculates the rate of items prescribed by ICB in 2023. Averaged across months. Excludes Wales, unknown demographics and indeterminate gender. 
+- by_population_2023.R calculates the rate of items prescribed by ICB in 2023. Averaged across months. Excludes Wales, unknown demographics and indeterminate gender.
+Also looks at seasonality in 2023
+
+- AWARE.R This assigns the aware classifications to the drugs and creates some plots. NOTE, 8 drugs currently assigned, this is very work in progress
 
 The data can be accessed from https://opendata.nhsbsa.net/dataset/foi-01671, and needs to be put in subfolders of data to run the above code. (data > ICB_Data and data > Practice_Data).
 
