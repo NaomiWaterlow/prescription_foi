@@ -23,14 +23,14 @@ all_ICB_data[, AGE_BAND := factor(AGE_BAND, levels = c("0-1", "2-5",
 for(i in drugs_lookup$BNF_CHEMICAL_SUBSTANCE_CODE){
   
   target <- i 
- # target <- "0501013B0"
+  target <- "0501013B0"
   target_name <- all_ICB_data[BNF_CHEMICAL_SUBSTANCE_CODE == target]$drug_name[1]
   
   ICB_target <- all_ICB_data[BNF_CHEMICAL_SUBSTANCE_CODE == target]
   
-  # ggplot(ICB_target[year],aes(x= YEAR, y = ITEMS, colour = YEAR) ) +
-  #   geom_jitter( alpha =0.5) +
-  #   labs(title = target_name) + facet_grid(.~ICB_CODE)
+  ggplot(ICB_target[],aes(x= AGE_BAND, y = ITEMS, colour = YEAR) ) +
+    geom_jitter( alpha =0.5) +
+    labs(title = target_name) + facet_grid(.~YEAR)
   
   # # percentage of data rows that are in the 1-4 category
   prop_1_4 <- table(ICB_target$ITEMS == 1)["TRUE"] / dim(ICB_target)[1]
@@ -47,18 +47,16 @@ for(i in drugs_lookup$BNF_CHEMICAL_SUBSTANCE_CODE){
 }
 
 
-drugs_lookup[]
 
 
-
-### Check if 0s in patients are randomly distributed. 
-# tbd interpret outcomes
-testing_missingness <- copy(all_ICB_data)
-testing_missingness[UNIQUE_PATIENT_COUNT == 0, missing_indicator := 1 ]
-testing_missingness[UNIQUE_PATIENT_COUNT != 0, missing_indicator := 0 ]
-testing_missingness[, c("ITEMS", "UNIQUE_PATIENT_COUNT") := NULL]
-sub_sample <- sample(1:nrow(testing_missingness), 1000000)
-testing_missingness_sample <- testing_missingness[sub_sample,]
-model <- glm(missing_indicator ~.,family=binomial(link='logit'),data=testing_missingness_sample)
+# ### Check if 0s in patients are randomly distributed. 
+# # tbd interpret outcomes
+# testing_missingness <- copy(all_ICB_data)
+# testing_missingness[UNIQUE_PATIENT_COUNT == 0, missing_indicator := 1 ]
+# testing_missingness[UNIQUE_PATIENT_COUNT != 0, missing_indicator := 0 ]
+# testing_missingness[, c("ITEMS", "UNIQUE_PATIENT_COUNT") := NULL]
+# sub_sample <- sample(1:nrow(testing_missingness), 1000000)
+# testing_missingness_sample <- testing_missingness[sub_sample,]
+# model <- glm(missing_indicator ~.,family=binomial(link='logit'),data=testing_missingness_sample)
 
 
