@@ -15,4 +15,4 @@ Also looks at seasonality in 2023
 
 The data can be accessed from https://opendata.nhsbsa.net/dataset/foi-01671, and needs to be put in subfolders of data to run the above code. (data > ICB_Data and data > Practice_Data).
 
-The plots folder contains plots, currently from the by_population_2023.R file
+The plots folder contains output plots! 
