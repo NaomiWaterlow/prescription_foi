@@ -1,97 +1,97 @@
-﻿BNF_CHEMICAL_SUBSTANCE_CODE,CHEMICAL_SUBSTANCE_BNF_DESCR,BETA_LACTAM
-0501011J0,Benzylpenicillin sodium (Penicillin G),Y
-0501011P0,Phenoxymethylpenicillin (Penicillin V),Y
-0501012G0,Flucloxacillin sodium,Y
-0501012H0,Flucloxacillin magnesium,Y
-0501012U0,Temocillin sodium,Y
-0501013B0,Amoxicillin,Y
-0501013C0,Amoxicillin sodium,Y
-0501013E0,Ampicillin,Y
-0501013K0,Co-amoxiclav (Amoxicillin/clavulanic acid),Y
-0501013L0,Co-fluampicil(Flucloxacillin/ampicillin),Y
-0501014N0,Ticarcillin with clavulanic acid,Y
-0501014S0,Piperacillin sodium/tazobactam sodium,Y
-0501015P0,Pivmecillinam hydrochloride,Y
-0501021A0,Cefaclor,Y
-0501021B0,Cefadroxil,Y
-0501021C0,Cefixime,Y
-0501021D0,Cefotaxime sodium,Y
-0501021E0,Cefoxitin sodium,Y
-0501021F0,Cefpodoxime,Y
-0501021G0,Ceftriaxone sodium,Y
-0501021H0,Ceftazidime pentahydrate,Y
-0501021J0,Cefuroxime sodium,Y
-0501021K0,Cefuroxime axetil,Y
-0501021L0,Cefalexin,Y
-0501021M0,Cefradine,Y
-0501022A0,Meropenem,Y
-0501022B0,Ertapenem sodium,Y
-0501022D0,Imipenem with cilastatin,Y
-0501023A0,Aztreonam,Y
-0501030F0,Demeclocycline hydrochloride,N
-0501030I0,Doxycycline hyclate,N
-0501030L0,Lymecycline,N
-0501030P0,Minocycline hydrochloride,N
-0501030T0,Oxytetracycline,N
-0501030V0,Tetracycline,N
-0501030X0,Tetracycline combined preparations,N
-0501030Y0,Tigecycline,N
-0501030Z0,Doxycycline monohydrate,N
-0501040C0,Amikacin,N
-0501040H0,Gentamicin sulfate,N
-0501040N0,Neomycin sulfate,N
-0501040U0,Tobramycin,N
-0501050A0,Azithromycin,N
-0501050B0,Clarithromycin,N
-0501050C0,Erythromycin,N
-0501050H0,Erythromycin ethylsuccinate,N
-0501050K0,Erythromycin lactobionate,N
-0501050N0,Erythromycin stearate,N
-0501060D0,Clindamycin hydrochloride,N
-0501060E0,Clindamycin phosphate,N
-0501070AA,Taurolidine,N
-0501070AB,Nitazoxanide,N
-0501070AC,Fidaxomicin,N
-0501070AD,Tedizolid,N
-0501070AE,Fosfomycin trometamol,N
-0501070F0,Chloramphenicol,N
-0501070H0,Colistin sulfate,N
-0501070I0,Colistimethate sodium,N
-0501070M0,Fusidic acid,N
-0501070N0,Sodium fusidate,N
-0501070T0,Teicoplanin,N
-0501070U0,Vancomycin hydrochloride,N
-0501070W0,Linezolid,N
-0501070X0,Rifaximin,N
-0501070Y0,Daptomycin,N
-0501070Z0,Pristinamycin,N
-0501080D0,Co-trimoxazole(Trimethoprim/sulfamethoxazole),N
-0501080J0,Sulfadiazine,N
-0501080T0,Sulfamethoxypyridazine,N
-0501080V0,Sulfapyridine,N
-0501080W0,Trimethoprim,N
-0501090A0,Aminosalicylic acid,N
-0501090C0,Capreomycin,N
-0501090E0,Cycloserine,N
-0501090H0,Ethambutol hydrochloride,N
-0501090K0,Isoniazid,N
-0501090N0,Pyrazinamide,N
-0501090Q0,Rifabutin,N
-0501090R0,Rifampicin,N
-0501090S0,Rifampicin combined preparations,N
-0501090U0,Streptomycin,N
-0501090V0,Bedaquiline,N
-0501100C0,Clofazimine,N
-0501100H0,Dapsone,N
-0501100J0,Thalidomide (Antileprotic),N
-0501110C0,Metronidazole,N
-0501110G0,Tinidazole,N
-0501120L0,Ciprofloxacin,N
-0501120N0,Nalidixic acid,N
-0501120P0,Ofloxacin,N
-0501120Q0,Norfloxacin,N
-0501120X0,Levofloxacin,N
-0501120Y0,Moxifloxacin,N
-0501130H0,Methenamine hippurate,N
-0501130R0,Nitrofurantoin,N
-0501130S0,Fosfomycin calcium,N
+﻿BNF_CHEMICAL_SUBSTANCE_CODE,CHEMICAL_SUBSTANCE_BNF_DESCR,BETA_LACTAM,RTI
+0501011J0,Benzylpenicillin sodium (Penicillin G),Y,N
+0501011P0,Phenoxymethylpenicillin (Penicillin V),Y,N
+0501012G0,Flucloxacillin sodium,Y,N
+0501012H0,Flucloxacillin magnesium,Y,N
+0501012U0,Temocillin sodium,Y,N
+0501013B0,Amoxicillin,Y,Y
+0501013C0,Amoxicillin sodium,Y,Y
+0501013E0,Ampicillin,Y,N
+0501013K0,Co-amoxiclav (Amoxicillin/clavulanic acid),Y,Y
+0501013L0,Co-fluampicil(Flucloxacillin/ampicillin),Y,N
+0501014N0,Ticarcillin with clavulanic acid,Y,N
+0501014S0,Piperacillin sodium/tazobactam sodium,Y,Y
+0501015P0,Pivmecillinam hydrochloride,Y,N
+0501021A0,Cefaclor,Y,N
+0501021B0,Cefadroxil,Y,N
+0501021C0,Cefixime,Y,N
+0501021D0,Cefotaxime sodium,Y,N
+0501021E0,Cefoxitin sodium,Y,N
+0501021F0,Cefpodoxime,Y,N
+0501021G0,Ceftriaxone sodium,Y,N
+0501021H0,Ceftazidime pentahydrate,Y,N
+0501021J0,Cefuroxime sodium,Y,N
+0501021K0,Cefuroxime axetil,Y,N
+0501021L0,Cefalexin,Y,N
+0501021M0,Cefradine,Y,N
+0501022A0,Meropenem,Y,N
+0501022B0,Ertapenem sodium,Y,N
+0501022D0,Imipenem with cilastatin,Y,N
+0501023A0,Aztreonam,Y,N
+0501030F0,Demeclocycline hydrochloride,N,N
+0501030I0,Doxycycline hyclate,N,Y
+0501030L0,Lymecycline,N,N
+0501030P0,Minocycline hydrochloride,N,N
+0501030T0,Oxytetracycline,N,N
+0501030V0,Tetracycline,N,N
+0501030X0,Tetracycline combined preparations,N,N
+0501030Y0,Tigecycline,N,N
+0501030Z0,Doxycycline monohydrate,N,Y
+0501040C0,Amikacin,N,N
+0501040H0,Gentamicin sulfate,N,N
+0501040N0,Neomycin sulfate,N,N
+0501040U0,Tobramycin,N,N
+0501050A0,Azithromycin,N,N
+0501050B0,Clarithromycin,N,Y
+0501050C0,Erythromycin,N,Y
+0501050H0,Erythromycin ethylsuccinate,N,Y
+0501050K0,Erythromycin lactobionate,N,Y
+0501050N0,Erythromycin stearate,N,Y
+0501060D0,Clindamycin hydrochloride,N,N
+0501060E0,Clindamycin phosphate,N,N
+0501070AA,Taurolidine,N,N
+0501070AB,Nitazoxanide,N,N
+0501070AC,Fidaxomicin,N,N
+0501070AD,Tedizolid,N,N
+0501070AE,Fosfomycin trometamol,N,N
+0501070F0,Chloramphenicol,N,N
+0501070H0,Colistin sulfate,N,N
+0501070I0,Colistimethate sodium,N,N
+0501070M0,Fusidic acid,N,N
+0501070N0,Sodium fusidate,N,N
+0501070T0,Teicoplanin,N,N
+0501070U0,Vancomycin hydrochloride,N,N
+0501070W0,Linezolid,N,N
+0501070X0,Rifaximin,N,N
+0501070Y0,Daptomycin,N,N
+0501070Z0,Pristinamycin,N,N
+0501080D0,Co-trimoxazole(Trimethoprim/sulfamethoxazole),N,Y
+0501080J0,Sulfadiazine,N,N
+0501080T0,Sulfamethoxypyridazine,N,N
+0501080V0,Sulfapyridine,N,N
+0501080W0,Trimethoprim,N,N
+0501090A0,Aminosalicylic acid,N,N
+0501090C0,Capreomycin,N,N
+0501090E0,Cycloserine,N,N
+0501090H0,Ethambutol hydrochloride,N,N
+0501090K0,Isoniazid,N,N
+0501090N0,Pyrazinamide,N,N
+0501090Q0,Rifabutin,N,N
+0501090R0,Rifampicin,N,N
+0501090S0,Rifampicin combined preparations,N,N
+0501090U0,Streptomycin,N,N
+0501090V0,Bedaquiline,N,N
+0501100C0,Clofazimine,N,N
+0501100H0,Dapsone,N,N
+0501100J0,Thalidomide (Antileprotic),N,N
+0501110C0,Metronidazole,N,N
+0501110G0,Tinidazole,N,N
+0501120L0,Ciprofloxacin,N,N
+0501120N0,Nalidixic acid,N,N
+0501120P0,Ofloxacin,N,N
+0501120Q0,Norfloxacin,N,N
+0501120X0,Levofloxacin,N,Y
+0501120Y0,Moxifloxacin,N,N
+0501130H0,Methenamine hippurate,N,N
+0501130R0,Nitrofurantoin,N,N
+0501130S0,Fosfomycin calcium,N,N
