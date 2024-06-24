@@ -1,14 +1,14 @@
 # label by AWARE classification
 library(data.table)
 library(ggplot2)
-ICB_data_2023 <- fread("data/2023_per_population.csv")
+all_data_ex <- fread("data/all_data_organised.csv")
 aware_lookup <- fread("data/AWARE_Classification.csv")
 
 # when name matches add the aware calssification
-ICB_data_2023[aware_lookup, on = c("drug_name"), aware_class := i.Category]
+all_data_ex[aware_lookup, on = c("drug_name"), aware_class := i.Category]
 
 # which ones don't match names? 
-missing <- unique(ICB_data_2023[is.na(aware_class)]$drug_name)
+missing <- unique(all_data_ex[is.na(aware_class)]$drug_name)
 
 missing[1]
 temp <- aware_lookup$drug_name[grepl("Benzylpenicillin", aware_lookup$drug_name, fixed = TRUE)]
@@ -254,49 +254,55 @@ aware_lookup_new <- aware_lookup[!(is.na(matching_name))]
 aware_lookup_new[,drug_name := NULL]
 colnames(aware_lookup_new)[5] <- "drug_name"
 # when name matches add the aware calssification
-ICB_data_2023[aware_lookup_new, on = c("drug_name"), aware_class := i.Category]
+all_data_ex[aware_lookup_new, on = c("drug_name"), aware_class := i.Category]
 
-ICB_data_2023_aware <- ICB_data_2023[!is.na(aware_class)]
-ICB_data_2023_aware <- dcast.data.table(ICB_data_2023_aware, ICB_CODE + GENDER + YEAR + MONTH +
-                           AGE_BAND_NEW + POP + aware_class ~. , value.var = "ITEMS",
+# combine into aware categories
+all_data_ex_aware <- all_data_ex[!is.na(aware_class)]
+all_data_ex_aware <- dcast.data.table(all_data_ex_aware,GENDER + YEAR + MONTH +
+                           AGE_BAND + aware_class ~. , value.var = "ITEMS",
                          fun.aggregate = sum)
 
 
-colnames(ICB_data_2023_aware)[which(colnames(ICB_data_2023_aware) == ".")] <- "ITEMS"
-ICB_data_2023_aware[,rate_per_1000 := (ITEMS/POP)*1000]
-
-# average acrosss ICB and Months
-ICB_data_2023_aware[, av_across_ICBs_months := mean(rate_per_1000),by = c( "GENDER", "AGE_BAND_NEW", "aware_class")]
-ICB_data_2023_aware_av <- unique(ICB_data_2023_aware[,c("ICB_CODE", "MONTH","ITEMS", "rate_per_1000", "POP") := NULL])
+colnames(all_data_ex_aware)[which(colnames(all_data_ex_aware) == ".")] <- "ITEMS"
 
 
-ICB_data_2023_aware_av$aware_class <- factor(ICB_data_2023_aware_av$aware_class, 
+# average across months
+all_data_ex_aware[, av_across_months := mean(ITEMS),by = c( "GENDER", "AGE_BAND", "aware_class", 'YEAR')]
+all_data_ex_aware_av <- unique(all_data_ex_aware[,c( "ITEMS", "MONTH") := NULL])
+
+
+all_data_ex_aware_av$aware_class <- factor(all_data_ex_aware_av$aware_class, 
                                              levels = c("Access", "Watch", "Reserve"))
-ICB_data_2023_aware_av[, AGE_BAND_NEW := factor(AGE_BAND_NEW, levels = c("0-1", "2-5", 
+all_data_ex_aware_av[, AGE_BAND := factor(AGE_BAND, levels = c("0-1", "2-5", 
                                                                          "6-10", "11-15", "16-20", "21-25", 
                                                                          "26-30", "31-35", "36-40", "41-45", 
                                                                          "46-50", "51-55",  "56-60", "61-65", 
                                                                          "66-70", "71-75", "76-80",  "81-85" ,
                                                                          "86+") )]
 
-
-ggplot(ICB_data_2023_aware_av, aes(x = AGE_BAND_NEW, y = av_across_ICBs_months, colour = aware_class, group = aware_class)) + 
+ggplot(all_data_ex_aware_av, aes(x = AGE_BAND, y = av_across_months,
+                                 colour = YEAR, 
+                                 group = YEAR)) + 
   geom_line() + 
-  facet_grid(GENDER~.) + 
+  facet_grid(GENDER~aware_class) + 
   theme_bw() + 
   labs(y = "average number of prescriptions (across ICBs and months in 2023) per 1000 population",
        title = "AWARE CLASSIFICATION")
 
 
-tot_rates <- ICB_data_2023_aware_av[, sum(av_across_ICBs_months), by = c("GENDER", "AGE_BAND_NEW")]
+tot_prescrips <- all_data_ex_aware_av[, sum(av_across_months), by = c("GENDER", "AGE_BAND", "YEAR")]
 
-ICB_data_2023_aware_av[tot_rates, on=c("GENDER", "AGE_BAND_NEW"), total_rate := i.V1]
-ICB_data_2023_aware_av[, perc_each_class := (av_across_ICBs_months/total_rate)*100]
+all_data_ex_aware_av[tot_prescrips, on=c("GENDER", "AGE_BAND", "YEAR"), total_rate := i.V1]
+all_data_ex_aware_av[, perc_each_class := (av_across_months/total_rate)*100]
 
 
-ggplot(ICB_data_2023_aware_av, aes(x = AGE_BAND_NEW, y = perc_each_class, fill = aware_class, group = aware_class)) + 
-  geom_bar(stat = "identity") + 
-  facet_grid(GENDER~.) + 
+ggplot(all_data_ex_aware_av, aes(x = AGE_BAND, y = perc_each_class,
+                                 colour = YEAR, group = YEAR)) + 
+  geom_line(stat = "identity") + 
+  facet_grid(aware_class~GENDER, scales = "free_y") + 
   theme_bw() + 
-  labs(y = "percent of total rate of prescription by age group in each category (sense check!?)",
-       title = "AWARE CLASSIFICATION")
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
+  labs(y = "Percent of total prescriptions by age group in each category",
+       title = "AWARE CLASSIFICATION", x = "Age band", colour = "Year") + 
+  geom_hline(data =all_data_ex_aware_av[aware_class=="Access"], aes(yintercept = 60), 
+             linetype = "dashed")
