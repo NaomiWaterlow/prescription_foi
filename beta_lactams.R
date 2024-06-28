@@ -20,6 +20,23 @@ all_data_ex[, AGE_BAND := factor(AGE_BAND, levels = c("0-1", "2-5",
                                                        "66-70", "71-75", "76-80",  "81-85" ,
                                                        "86+") )]
 
+
+### INterlude, see which antibiotics driving post-covid bump
+
+interlude <- all_data_ex[beta_lactam == "Y" & AGE_BAND == "0-1"]
+# sum over gender
+interlude_s <- interlude[, sum(ITEMS), by = c("date_time2","drug_name")]
+#divide by average
+interlude_s[, av_drug := mean(V1), by = c("drug_name")]
+interlude_s[, relative := V1/av_drug]
+
+ggplot(interlude_s[date_time2>as.Date("2020-01-01")], aes( x = date_time2, y = relative, colour = drug_name)) + 
+  geom_line() + theme_bw() + 
+  labs(x = "Date (cut off to start at 2020)", y = "Relative #prescriptions cf average over time period", 
+       title = "Which drugs responsible for uptick in 2023? Showing age 0-1 only")
+
+
+
 # Combine the number of ITEMS across drug type (e.g. beta lactam or not)
 combined_subgroup <- all_data_ex[, ITEMS := sum(ITEMS),
                               by = c("date_time2", "GENDER", "AGE_BAND", "YEAR", "MONTH", "inclusion_label", "population")]

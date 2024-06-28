@@ -184,7 +184,7 @@ for(i in drugs_lookup$BNF_CHEMICAL_SUBSTANCE_CODE){
     geom_line()+
     labs(title = target_name) + facet_grid(GENDER~.) + 
     theme_bw() + 
-    labs(x = "Age Band", y = "Prescriptions per 100k population") + 
+    labs(x = "Year", y = "Prescriptions per 100k population") + 
   #  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
     scale_color_manual(values = cc)
   print(target_name)

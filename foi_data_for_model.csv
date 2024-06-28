@@ -1,0 +1,489 @@
+AGE_BAND,GENDER,drug_family,V1
+2-5,Female,Penicillins (excluding β-lactamase inhibitors),529577
+6-10,Female,Penicillins (excluding β-lactamase inhibitors),352272
+11-15,Female,Penicillins (excluding β-lactamase inhibitors),259480
+16-20,Female,Penicillins (excluding β-lactamase inhibitors),356697
+21-25,Female,Penicillins (excluding β-lactamase inhibitors),380650
+26-30,Female,Penicillins (excluding β-lactamase inhibitors),461568
+41-45,Female,Penicillins (excluding β-lactamase inhibitors),402341
+46-50,Female,Penicillins (excluding β-lactamase inhibitors),454105
+61-65,Female,Penicillins (excluding β-lactamase inhibitors),479030
+66-70,Female,Penicillins (excluding β-lactamase inhibitors),541289
+96-100,Female,Penicillins (excluding β-lactamase inhibitors),46240
+0-1,Male,Penicillins (excluding β-lactamase inhibitors),303066
+2-5,Male,Penicillins (excluding β-lactamase inhibitors),580300
+6-10,Male,Penicillins (excluding β-lactamase inhibitors),327788
+11-15,Male,Penicillins (excluding β-lactamase inhibitors),234713
+16-20,Male,Penicillins (excluding β-lactamase inhibitors),213894
+21-25,Male,Penicillins (excluding β-lactamase inhibitors),185554
+26-30,Male,Penicillins (excluding β-lactamase inhibitors),201228
+31-35,Male,Penicillins (excluding β-lactamase inhibitors),228298
+41-45,Male,Penicillins (excluding β-lactamase inhibitors),261794
+46-50,Male,Penicillins (excluding β-lactamase inhibitors),304687
+61-65,Male,Penicillins (excluding β-lactamase inhibitors),390492
+0-1,Female,Penicillins (excluding β-lactamase inhibitors),236396
+31-35,Female,Penicillins (excluding β-lactamase inhibitors),486211
+36-40,Female,Penicillins (excluding β-lactamase inhibitors),432850
+51-55,Female,Penicillins (excluding β-lactamase inhibitors),491572
+56-60,Female,Penicillins (excluding β-lactamase inhibitors),480590
+71-75,Female,Penicillins (excluding β-lactamase inhibitors),498828
+76-80,Female,Penicillins (excluding β-lactamase inhibitors),446812
+81-85,Female,Penicillins (excluding β-lactamase inhibitors),380673
+86-90,Female,Penicillins (excluding β-lactamase inhibitors),284115
+91-95,Female,Penicillins (excluding β-lactamase inhibitors),155577
+101-105,Female,Penicillins (excluding β-lactamase inhibitors),6571
+105+,Female,Penicillins (excluding β-lactamase inhibitors),311
+36-40,Male,Penicillins (excluding β-lactamase inhibitors),244806
+51-55,Male,Penicillins (excluding β-lactamase inhibitors),339979
+56-60,Male,Penicillins (excluding β-lactamase inhibitors),358801
+66-70,Male,Penicillins (excluding β-lactamase inhibitors),466390
+71-75,Male,Penicillins (excluding β-lactamase inhibitors),428403
+76-80,Male,Penicillins (excluding β-lactamase inhibitors),370221
+81-85,Male,Penicillins (excluding β-lactamase inhibitors),293903
+86-90,Male,Penicillins (excluding β-lactamase inhibitors),179993
+91-95,Male,Penicillins (excluding β-lactamase inhibitors),72409
+96-100,Male,Penicillins (excluding β-lactamase inhibitors),14655
+101-105,Male,Penicillins (excluding β-lactamase inhibitors),1089
+105+,Male,Penicillins (excluding β-lactamase inhibitors),17
+0-1,Female,First and second-generation cephalosporins,4255
+2-5,Female,First and second-generation cephalosporins,15144
+6-10,Female,First and second-generation cephalosporins,14940
+11-15,Female,First and second-generation cephalosporins,5837
+16-20,Female,First and second-generation cephalosporins,10817
+21-25,Female,First and second-generation cephalosporins,19080
+26-30,Female,First and second-generation cephalosporins,25332
+31-35,Female,First and second-generation cephalosporins,25381
+36-40,Female,First and second-generation cephalosporins,19874
+41-45,Female,First and second-generation cephalosporins,18548
+46-50,Female,First and second-generation cephalosporins,23261
+51-55,Female,First and second-generation cephalosporins,28493
+56-60,Female,First and second-generation cephalosporins,31282
+61-65,Female,First and second-generation cephalosporins,36868
+66-70,Female,First and second-generation cephalosporins,53229
+71-75,Female,First and second-generation cephalosporins,61277
+76-80,Female,First and second-generation cephalosporins,66004
+81-85,Female,First and second-generation cephalosporins,67224
+86-90,Female,First and second-generation cephalosporins,53410
+91-95,Female,First and second-generation cephalosporins,29763
+96-100,Female,First and second-generation cephalosporins,8310
+101-105,Female,First and second-generation cephalosporins,1060
+0-1,Male,First and second-generation cephalosporins,5124
+2-5,Male,First and second-generation cephalosporins,6599
+6-10,Male,First and second-generation cephalosporins,3744
+11-15,Male,First and second-generation cephalosporins,2404
+16-20,Male,First and second-generation cephalosporins,1633
+21-25,Male,First and second-generation cephalosporins,1610
+26-30,Male,First and second-generation cephalosporins,1885
+31-35,Male,First and second-generation cephalosporins,2244
+36-40,Male,First and second-generation cephalosporins,2783
+41-45,Male,First and second-generation cephalosporins,3734
+46-50,Male,First and second-generation cephalosporins,5085
+51-55,Male,First and second-generation cephalosporins,7280
+56-60,Male,First and second-generation cephalosporins,8511
+61-65,Male,First and second-generation cephalosporins,9920
+66-70,Male,First and second-generation cephalosporins,14529
+71-75,Male,First and second-generation cephalosporins,16584
+76-80,Male,First and second-generation cephalosporins,17806
+81-85,Male,First and second-generation cephalosporins,18947
+86-90,Male,First and second-generation cephalosporins,13675
+91-95,Male,First and second-generation cephalosporins,6596
+96-100,Male,First and second-generation cephalosporins,1606
+2-5,Female,"Third, fourth and fifth-generation cephalosporins",12
+11-15,Female,"Third, fourth and fifth-generation cephalosporins",16
+16-20,Female,"Third, fourth and fifth-generation cephalosporins",135
+21-25,Female,"Third, fourth and fifth-generation cephalosporins",133
+26-30,Female,"Third, fourth and fifth-generation cephalosporins",141
+31-35,Female,"Third, fourth and fifth-generation cephalosporins",106
+36-40,Female,"Third, fourth and fifth-generation cephalosporins",52
+41-45,Female,"Third, fourth and fifth-generation cephalosporins",38
+46-50,Female,"Third, fourth and fifth-generation cephalosporins",62
+56-60,Female,"Third, fourth and fifth-generation cephalosporins",57
+61-65,Female,"Third, fourth and fifth-generation cephalosporins",71
+66-70,Female,"Third, fourth and fifth-generation cephalosporins",144
+71-75,Female,"Third, fourth and fifth-generation cephalosporins",122
+76-80,Female,"Third, fourth and fifth-generation cephalosporins",139
+81-85,Female,"Third, fourth and fifth-generation cephalosporins",73
+91-95,Female,"Third, fourth and fifth-generation cephalosporins",53
+0-1,Male,"Third, fourth and fifth-generation cephalosporins",5
+2-5,Male,"Third, fourth and fifth-generation cephalosporins",14
+6-10,Male,"Third, fourth and fifth-generation cephalosporins",15
+16-20,Male,"Third, fourth and fifth-generation cephalosporins",35
+21-25,Male,"Third, fourth and fifth-generation cephalosporins",82
+26-30,Male,"Third, fourth and fifth-generation cephalosporins",44
+31-35,Male,"Third, fourth and fifth-generation cephalosporins",36
+36-40,Male,"Third, fourth and fifth-generation cephalosporins",24
+41-45,Male,"Third, fourth and fifth-generation cephalosporins",39
+46-50,Male,"Third, fourth and fifth-generation cephalosporins",42
+51-55,Male,"Third, fourth and fifth-generation cephalosporins",64
+56-60,Male,"Third, fourth and fifth-generation cephalosporins",110
+61-65,Male,"Third, fourth and fifth-generation cephalosporins",96
+66-70,Male,"Third, fourth and fifth-generation cephalosporins",119
+71-75,Male,"Third, fourth and fifth-generation cephalosporins",148
+76-80,Male,"Third, fourth and fifth-generation cephalosporins",70
+81-85,Male,"Third, fourth and fifth-generation cephalosporins",122
+86-90,Male,"Third, fourth and fifth-generation cephalosporins",44
+51-55,Female,"Third, fourth and fifth-generation cephalosporins",57
+86-90,Female,"Third, fourth and fifth-generation cephalosporins",39
+96-100,Female,"Third, fourth and fifth-generation cephalosporins",19
+91-95,Male,"Third, fourth and fifth-generation cephalosporins",12
+96-100,Male,"Third, fourth and fifth-generation cephalosporins",4
+105+,Female,First and second-generation cephalosporins,26
+101-105,Male,First and second-generation cephalosporins,112
+11-15,Female,Carbapenems,9
+26-30,Female,Carbapenems,5
+31-35,Female,Carbapenems,15
+41-45,Female,Carbapenems,4
+51-55,Female,Carbapenems,13
+56-60,Female,Carbapenems,24
+81-85,Female,Carbapenems,12
+11-15,Male,Carbapenems,16
+16-20,Male,Carbapenems,5
+41-45,Male,Carbapenems,15
+46-50,Male,Carbapenems,8
+76-80,Male,Carbapenems,14
+46-50,Female,Carbapenems,12
+61-65,Female,Carbapenems,21
+76-80,Female,Carbapenems,13
+91-95,Female,Carbapenems,4
+96-100,Female,Carbapenems,1
+61-65,Male,Carbapenems,11
+66-70,Male,Carbapenems,13
+16-20,Female,Other antibacterials,108672
+31-35,Female,Other antibacterials,131246
+46-50,Female,Other antibacterials,156252
+26-30,Male,Other antibacterials,8545
+41-45,Male,Other antibacterials,17849
+31-35,Female,Tetracyclines,113806
+36-40,Female,Tetracyclines,124523
+41-45,Female,Tetracyclines,145734
+46-50,Female,Tetracyclines,177352
+51-55,Female,Tetracyclines,188417
+56-60,Female,Tetracyclines,183338
+61-65,Female,Tetracyclines,182815
+66-70,Female,Tetracyclines,203975
+71-75,Female,Tetracyclines,179814
+76-80,Female,Tetracyclines,144949
+81-85,Female,Tetracyclines,105950
+86-90,Female,Tetracyclines,69488
+91-95,Female,Tetracyclines,31639
+96-100,Female,Tetracyclines,8271
+46-50,Male,Tetracyclines,98284
+51-55,Male,Tetracyclines,118358
+56-60,Male,Tetracyclines,131912
+61-65,Male,Tetracyclines,152103
+66-70,Male,Tetracyclines,186522
+71-75,Male,Tetracyclines,171112
+76-80,Male,Tetracyclines,134377
+81-85,Male,Tetracyclines,93867
+86-90,Male,Tetracyclines,49362
+91-95,Male,Tetracyclines,17375
+101-105,Male,Tetracyclines,217
+11-15,Female,Tetracyclines,89661
+16-20,Female,Tetracyclines,168490
+21-25,Female,Tetracyclines,118759
+26-30,Female,Tetracyclines,117440
+101-105,Female,Tetracyclines,944
+105+,Female,Tetracyclines,35
+2-5,Male,Tetracyclines,3
+6-10,Male,Tetracyclines,23
+11-15,Male,Tetracyclines,65189
+16-20,Male,Tetracyclines,175748
+21-25,Male,Tetracyclines,72160
+26-30,Male,Tetracyclines,58860
+31-35,Male,Tetracyclines,60163
+36-40,Male,Tetracyclines,63917
+41-45,Male,Tetracyclines,76714
+96-100,Male,Tetracyclines,3068
+105+,Male,Tetracyclines,6
+6-10,Female,Tetracyclines,45
+71-75,Male,Aminoglycosides,296
+2-5,Female,Aminoglycosides,43
+6-10,Female,Aminoglycosides,73
+11-15,Female,Aminoglycosides,56
+21-25,Female,Aminoglycosides,50
+26-30,Female,Aminoglycosides,35
+31-35,Female,Aminoglycosides,45
+36-40,Female,Aminoglycosides,51
+41-45,Female,Aminoglycosides,113
+46-50,Female,Aminoglycosides,126
+51-55,Female,Aminoglycosides,187
+56-60,Female,Aminoglycosides,174
+61-65,Female,Aminoglycosides,220
+66-70,Female,Aminoglycosides,292
+71-75,Female,Aminoglycosides,315
+76-80,Female,Aminoglycosides,196
+81-85,Female,Aminoglycosides,151
+86-90,Female,Aminoglycosides,111
+91-95,Female,Aminoglycosides,42
+96-100,Female,Aminoglycosides,6
+101-105,Female,Aminoglycosides,5
+2-5,Male,Aminoglycosides,20
+6-10,Male,Aminoglycosides,72
+16-20,Male,Aminoglycosides,72
+21-25,Male,Aminoglycosides,56
+26-30,Male,Aminoglycosides,90
+31-35,Male,Aminoglycosides,82
+36-40,Male,Aminoglycosides,65
+41-45,Male,Aminoglycosides,52
+46-50,Male,Aminoglycosides,59
+51-55,Male,Aminoglycosides,170
+56-60,Male,Aminoglycosides,188
+61-65,Male,Aminoglycosides,176
+66-70,Male,Aminoglycosides,257
+76-80,Male,Aminoglycosides,223
+81-85,Male,Aminoglycosides,158
+86-90,Male,Aminoglycosides,140
+91-95,Male,Aminoglycosides,66
+96-100,Male,Aminoglycosides,11
+16-20,Female,Aminoglycosides,129
+0-1,Male,Aminoglycosides,4
+11-15,Male,Aminoglycosides,70
+0-1,Female,"Macrolides, lincosamides and streptogramins",38519
+2-5,Female,"Macrolides, lincosamides and streptogramins",93668
+6-10,Female,"Macrolides, lincosamides and streptogramins",67909
+11-15,Female,"Macrolides, lincosamides and streptogramins",64573
+16-20,Female,"Macrolides, lincosamides and streptogramins",89218
+21-25,Female,"Macrolides, lincosamides and streptogramins",90007
+26-30,Female,"Macrolides, lincosamides and streptogramins",102465
+31-35,Female,"Macrolides, lincosamides and streptogramins",108290
+36-40,Female,"Macrolides, lincosamides and streptogramins",107601
+41-45,Female,"Macrolides, lincosamides and streptogramins",112222
+46-50,Female,"Macrolides, lincosamides and streptogramins",133481
+51-55,Female,"Macrolides, lincosamides and streptogramins",150750
+56-60,Female,"Macrolides, lincosamides and streptogramins",152025
+61-65,Female,"Macrolides, lincosamides and streptogramins",156676
+66-70,Female,"Macrolides, lincosamides and streptogramins",185066
+71-75,Female,"Macrolides, lincosamides and streptogramins",167861
+76-80,Female,"Macrolides, lincosamides and streptogramins",145088
+81-85,Female,"Macrolides, lincosamides and streptogramins",112983
+86-90,Female,"Macrolides, lincosamides and streptogramins",76719
+91-95,Female,"Macrolides, lincosamides and streptogramins",36822
+96-100,Female,"Macrolides, lincosamides and streptogramins",10340
+101-105,Female,"Macrolides, lincosamides and streptogramins",1343
+0-1,Male,"Macrolides, lincosamides and streptogramins",52781
+2-5,Male,"Macrolides, lincosamides and streptogramins",111906
+6-10,Male,"Macrolides, lincosamides and streptogramins",66059
+11-15,Male,"Macrolides, lincosamides and streptogramins",53936
+16-20,Male,"Macrolides, lincosamides and streptogramins",61449
+21-25,Male,"Macrolides, lincosamides and streptogramins",44148
+26-30,Male,"Macrolides, lincosamides and streptogramins",45609
+31-35,Male,"Macrolides, lincosamides and streptogramins",51086
+36-40,Male,"Macrolides, lincosamides and streptogramins",55914
+41-45,Male,"Macrolides, lincosamides and streptogramins",62024
+46-50,Male,"Macrolides, lincosamides and streptogramins",73830
+51-55,Male,"Macrolides, lincosamides and streptogramins",84116
+56-60,Male,"Macrolides, lincosamides and streptogramins",90335
+61-65,Male,"Macrolides, lincosamides and streptogramins",105511
+66-70,Male,"Macrolides, lincosamides and streptogramins",131921
+71-75,Male,"Macrolides, lincosamides and streptogramins",123258
+76-80,Male,"Macrolides, lincosamides and streptogramins",101312
+81-85,Male,"Macrolides, lincosamides and streptogramins",73475
+86-90,Male,"Macrolides, lincosamides and streptogramins",40383
+91-95,Male,"Macrolides, lincosamides and streptogramins",14598
+96-100,Male,"Macrolides, lincosamides and streptogramins",2843
+101-105,Male,"Macrolides, lincosamides and streptogramins",202
+105+,Female,"Macrolides, lincosamides and streptogramins",76
+105+,Male,"Macrolides, lincosamides and streptogramins",6
+6-10,Female,Other antibacterials,9116
+66-70,Female,Other antibacterials,234483
+21-25,Female,Other antibacterials,136101
+26-30,Female,Other antibacterials,141541
+36-40,Female,Other antibacterials,121680
+41-45,Female,Other antibacterials,129700
+51-55,Female,Other antibacterials,174947
+56-60,Female,Other antibacterials,173932
+61-65,Female,Other antibacterials,180965
+71-75,Female,Other antibacterials,242733
+76-80,Female,Other antibacterials,228261
+81-85,Female,Other antibacterials,199614
+86-90,Female,Other antibacterials,148668
+91-95,Female,Other antibacterials,78496
+96-100,Female,Other antibacterials,21359
+101-105,Female,Other antibacterials,2328
+105+,Female,Other antibacterials,84
+31-35,Male,Other antibacterials,10453
+46-50,Male,Other antibacterials,25101
+51-55,Male,Other antibacterials,33636
+56-60,Male,Other antibacterials,39744
+61-65,Male,Other antibacterials,48116
+66-70,Male,Other antibacterials,65573
+71-75,Male,Other antibacterials,69080
+76-80,Male,Other antibacterials,68314
+81-85,Male,Other antibacterials,62079
+86-90,Male,Other antibacterials,44658
+91-95,Male,Other antibacterials,18990
+0-1,Female,Other antibacterials,940
+2-5,Female,Other antibacterials,5609
+11-15,Female,Other antibacterials,19834
+0-1,Male,Other antibacterials,935
+2-5,Male,Other antibacterials,2224
+6-10,Male,Other antibacterials,2454
+11-15,Male,Other antibacterials,3192
+16-20,Male,Other antibacterials,5151
+21-25,Male,Other antibacterials,6287
+36-40,Male,Other antibacterials,13631
+96-100,Male,Other antibacterials,3809
+0-1,Female,Sulfonamides and trimethoprim,9718
+2-5,Female,Sulfonamides and trimethoprim,67051
+6-10,Female,Sulfonamides and trimethoprim,66287
+11-15,Female,Sulfonamides and trimethoprim,36584
+16-20,Female,Sulfonamides and trimethoprim,78642
+21-25,Female,Sulfonamides and trimethoprim,82154
+26-30,Female,Sulfonamides and trimethoprim,82206
+31-35,Female,Sulfonamides and trimethoprim,76792
+36-40,Female,Sulfonamides and trimethoprim,73978
+41-45,Female,Sulfonamides and trimethoprim,80445
+46-50,Female,Sulfonamides and trimethoprim,97637
+51-55,Female,Sulfonamides and trimethoprim,109324
+56-60,Female,Sulfonamides and trimethoprim,107922
+61-65,Female,Sulfonamides and trimethoprim,115360
+66-70,Female,Sulfonamides and trimethoprim,148537
+71-75,Female,Sulfonamides and trimethoprim,158774
+76-80,Female,Sulfonamides and trimethoprim,162003
+81-85,Female,Sulfonamides and trimethoprim,160414
+86-90,Female,Sulfonamides and trimethoprim,134546
+91-95,Female,Sulfonamides and trimethoprim,80422
+96-100,Female,Sulfonamides and trimethoprim,24683
+0-1,Male,Sulfonamides and trimethoprim,13100
+2-5,Male,Sulfonamides and trimethoprim,24147
+6-10,Male,Sulfonamides and trimethoprim,15918
+11-15,Male,Sulfonamides and trimethoprim,10130
+16-20,Male,Sulfonamides and trimethoprim,12276
+21-25,Male,Sulfonamides and trimethoprim,9669
+26-30,Male,Sulfonamides and trimethoprim,10723
+31-35,Male,Sulfonamides and trimethoprim,12111
+36-40,Male,Sulfonamides and trimethoprim,14167
+41-45,Male,Sulfonamides and trimethoprim,17960
+46-50,Male,Sulfonamides and trimethoprim,26295
+51-55,Male,Sulfonamides and trimethoprim,33747
+56-60,Male,Sulfonamides and trimethoprim,39191
+61-65,Male,Sulfonamides and trimethoprim,46714
+66-70,Male,Sulfonamides and trimethoprim,64941
+71-75,Male,Sulfonamides and trimethoprim,70712
+76-80,Male,Sulfonamides and trimethoprim,73267
+81-85,Male,Sulfonamides and trimethoprim,71198
+86-90,Male,Sulfonamides and trimethoprim,54977
+91-95,Male,Sulfonamides and trimethoprim,25651
+96-100,Male,Sulfonamides and trimethoprim,5463
+101-105,Female,Sulfonamides and trimethoprim,3141
+105+,Female,Sulfonamides and trimethoprim,203
+101-105,Male,Sulfonamides and trimethoprim,408
+0-1,Female,Oral Metronidazole (P01AB01),215
+2-5,Female,Oral Metronidazole (P01AB01),1306
+6-10,Female,Oral Metronidazole (P01AB01),1493
+11-15,Female,Oral Metronidazole (P01AB01),3041
+16-20,Female,Oral Metronidazole (P01AB01),26119
+21-25,Female,Oral Metronidazole (P01AB01),51076
+26-30,Female,Oral Metronidazole (P01AB01),57535
+31-35,Female,Oral Metronidazole (P01AB01),49202
+36-40,Female,Oral Metronidazole (P01AB01),39005
+41-45,Female,Oral Metronidazole (P01AB01),33771
+46-50,Female,Oral Metronidazole (P01AB01),33303
+51-55,Female,Oral Metronidazole (P01AB01),27050
+56-60,Female,Oral Metronidazole (P01AB01),21744
+61-65,Female,Oral Metronidazole (P01AB01),19561
+66-70,Female,Oral Metronidazole (P01AB01),20891
+71-75,Female,Oral Metronidazole (P01AB01),18094
+76-80,Female,Oral Metronidazole (P01AB01),14523
+81-85,Female,Oral Metronidazole (P01AB01),11109
+86-90,Female,Oral Metronidazole (P01AB01),7355
+91-95,Female,Oral Metronidazole (P01AB01),3413
+96-100,Female,Oral Metronidazole (P01AB01),913
+101-105,Female,Oral Metronidazole (P01AB01),94
+0-1,Male,Oral Metronidazole (P01AB01),331
+2-5,Male,Oral Metronidazole (P01AB01),880
+6-10,Male,Oral Metronidazole (P01AB01),1281
+11-15,Male,Oral Metronidazole (P01AB01),1534
+16-20,Male,Oral Metronidazole (P01AB01),3121
+21-25,Male,Oral Metronidazole (P01AB01),4730
+26-30,Male,Oral Metronidazole (P01AB01),6146
+31-35,Male,Oral Metronidazole (P01AB01),7278
+36-40,Male,Oral Metronidazole (P01AB01),8306
+41-45,Male,Oral Metronidazole (P01AB01),8995
+46-50,Male,Oral Metronidazole (P01AB01),10347
+51-55,Male,Oral Metronidazole (P01AB01),11702
+56-60,Male,Oral Metronidazole (P01AB01),11167
+61-65,Male,Oral Metronidazole (P01AB01),11519
+66-70,Male,Oral Metronidazole (P01AB01),11829
+71-75,Male,Oral Metronidazole (P01AB01),10215
+76-80,Male,Oral Metronidazole (P01AB01),8198
+81-85,Male,Oral Metronidazole (P01AB01),6244
+86-90,Male,Oral Metronidazole (P01AB01),3502
+91-95,Male,Oral Metronidazole (P01AB01),1208
+96-100,Male,Oral Metronidazole (P01AB01),206
+0-1,Female,Quinolones,345
+2-5,Female,Quinolones,1281
+6-10,Female,Quinolones,1487
+11-15,Female,Quinolones,1881
+16-20,Female,Quinolones,7770
+21-25,Female,Quinolones,11494
+26-30,Female,Quinolones,12178
+31-35,Female,Quinolones,11699
+36-40,Female,Quinolones,11524
+41-45,Female,Quinolones,13400
+46-50,Female,Quinolones,16708
+51-55,Female,Quinolones,19212
+56-60,Female,Quinolones,20693
+61-65,Female,Quinolones,23133
+66-70,Female,Quinolones,29848
+71-75,Female,Quinolones,29733
+76-80,Female,Quinolones,28009
+81-85,Female,Quinolones,23418
+86-90,Female,Quinolones,15897
+91-95,Female,Quinolones,7360
+96-100,Female,Quinolones,2065
+101-105,Female,Quinolones,189
+0-1,Male,Quinolones,603
+2-5,Male,Quinolones,1220
+6-10,Male,Quinolones,1322
+11-15,Male,Quinolones,1943
+16-20,Male,Quinolones,4963
+21-25,Male,Quinolones,8330
+26-30,Male,Quinolones,10784
+31-35,Male,Quinolones,12378
+36-40,Male,Quinolones,13873
+41-45,Male,Quinolones,15798
+46-50,Male,Quinolones,20460
+51-55,Male,Quinolones,23849
+56-60,Male,Quinolones,24417
+61-65,Male,Quinolones,26188
+66-70,Male,Quinolones,32331
+71-75,Male,Quinolones,29800
+76-80,Male,Quinolones,24652
+81-85,Male,Quinolones,19447
+86-90,Male,Quinolones,11932
+91-95,Male,Quinolones,4802
+96-100,Male,Quinolones,913
+101-105,Male,Quinolones,27
+101-105,Male,Other antibacterials,265
+6-10,Female,"Third, fourth and fifth-generation cephalosporins",21
+11-15,Male,"Third, fourth and fifth-generation cephalosporins",19
+101-105,Male,"Third, fourth and fifth-generation cephalosporins",1
+105+,Male,First and second-generation cephalosporins,4
+26-30,Male,Carbapenems,11
+36-40,Male,Carbapenems,9
+51-55,Male,Carbapenems,4
+66-70,Female,Carbapenems,8
+86-90,Female,Carbapenems,7
+71-75,Male,Carbapenems,11
+81-85,Male,Carbapenems,5
+86-90,Male,Carbapenems,2
+105+,Male,Sulfonamides and trimethoprim,7
+105+,Female,Oral Metronidazole (P01AB01),7
+101-105,Male,Oral Metronidazole (P01AB01),10
+16-20,Female,Carbapenems,4
+71-75,Female,Carbapenems,7
+21-25,Male,Carbapenems,2
+56-60,Male,Carbapenems,12
+91-95,Male,Carbapenems,1
+2-5,Female,Tetracyclines,3
+105+,Male,Quinolones,1
+105+,Male,Other antibacterials,4
+0-1,Female,Aminoglycosides,2
+0-1,Female,"Third, fourth and fifth-generation cephalosporins",1
+0-1,Male,Tetracyclines,3
+105+,Female,Quinolones,4
+21-25,Female,Carbapenems,4
+31-35,Male,Carbapenems,4
+0-1,Female,Tetracyclines,2
+101-105,Male,Aminoglycosides,1
