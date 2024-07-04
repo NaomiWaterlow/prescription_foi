@@ -2,6 +2,8 @@
 library(stringr)
 library(data.table)
 library(ggplot2)
+library(gridExtra)
+library(ggpubr)
 
 
 #create lookup
@@ -30,16 +32,20 @@ all_data[is.na(ITEMS), ITEMS := 1]
 
 fwrite(all_data, "data/all_data.csv")
 
-#drop those in the unknown or interderminate gender / age 
-all_data_ex <- all_data[GENDER != "Indeterminate" & GENDER != "Unknown" & AGE_BAND != "Unknown"]
+# drop all the ones that have less than an average of 10 prescriptions per year (aka 90!)
+temp <- all_data[, sum(ITEMS), by = "drug_name"]
+to_remove_low <- (temp[which(temp$V1 < 90)]$drug_name)
 
+#drop those in the unknown or interderminate gender / age 
+all_data_ex <- all_data[GENDER != "Indeterminate" & GENDER != "Unknown" & AGE_BAND != "Unknown" & 
+                          !(drug_name %in% to_remove_low)]
 
 
 
 for(i in drugs_lookup$BNF_CHEMICAL_SUBSTANCE_CODE){
   
   target <- i 
-#  target <- "0501013B0"
+  #target <- "0501013B0"
   target_name <- all_data_ex[BNF_CHEMICAL_SUBSTANCE_CODE == target]$drug_name[1]
   
   target_data <- all_data_ex[BNF_CHEMICAL_SUBSTANCE_CODE == target]
@@ -134,10 +140,9 @@ all_data_ex[AGE_BAND == "96-100", AGE_BAND := "86+" ]
 all_data_ex[AGE_BAND == "101-105", AGE_BAND := "86+" ]
 all_data_ex[AGE_BAND == "105+", AGE_BAND := "86+" ]
 
-all_data_ex <- all_data_ex[, ITEMS := sum(ITEMS),
+all_data_ex <- all_data_ex[, sum(ITEMS),
                                       by = c("BNF_CHEMICAL_SUBSTANCE_CODE", "AGE_BAND","GENDER" ,"YEAR", "MONTH", "drug_name")]
-all_data_ex[,"UNIQUE_PATIENT_COUNT" := NULL]
-all_data_ex <- unique(all_data_ex)
+colnames(all_data_ex)[which(colnames(all_data_ex) == "V1")] <- "ITEMS"
 
 
 pop_sizes_all <- melt.data.table(pop_sizes_to_21, id.vars = c("sex", "AGE_BAND"))
@@ -165,6 +170,7 @@ all_data_ex[, date_time2 := as.Date(date_time, try.format = "%z-%m-%d")]
 
 
 fwrite(all_data_ex, "data/all_data_organised.csv")
+fwrite(pop_sizes_all, "data/pop_sizes.csv")
 
 
 all_data_ex[,MONTH := as.factor(MONTH)]
@@ -174,27 +180,68 @@ cc <- scales::seq_gradient_pal("blue", "darkorange", "Lab")(seq(0,1,length.out=l
 for(i in drugs_lookup$BNF_CHEMICAL_SUBSTANCE_CODE){
   
   target <- i 
-  #  target <- "0501013B0"
-  target_name <- all_data_ex[BNF_CHEMICAL_SUBSTANCE_CODE == target]$drug_name[1]
-  
+  # target <- "0501013B0"# Amox
+  # target <- "0501120P0" # Ofloxacin
+  target_name <- drugs_lookup[BNF_CHEMICAL_SUBSTANCE_CODE == target]$CHEMICAL_SUBSTANCE_BNF_DESCR[1]
+
   target_data <- all_data_ex[BNF_CHEMICAL_SUBSTANCE_CODE == target]
   
+  if(nrow(target_data) > 0 ){
   PLOT_TEMP <-  ggplot(target_data,aes(x= date_time2, y = per_100k, colour = AGE_BAND, group = AGE_BAND) ) +
     geom_point( size =0.3) +
     geom_line()+
     labs(title = target_name) + facet_grid(GENDER~.) + 
     theme_bw() + 
-    labs(x = "Year", y = "Prescriptions per 100k population") + 
+    labs(x = "Month", y = "Prescriptions per 100k population", colour = "Age band") + 
   #  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
     scale_color_manual(values = cc)
+  
+  if(target == "0501013B0"){AMOX_PLOT <- PLOT_TEMP }
+  if(target == "0501120P0"){OF_PLOT <- PLOT_TEMP }
+  
   print(target_name)
+  
   ggsave(paste0("plots/per_pop/",str_replace_all(target_name, "[^[:alnum:]]", " "),
                 "_overview.pdf"), plot = PLOT_TEMP, 
          width = 20, height = 10)
 
-  
+  }
 }
 
 
+# try to make a heatmap to investigate male vs female rates
+drugs_to_exclude <- drugs_lookup[total_prescriptions<10000,]$CHEMICAL_SUBSTANCE_BNF_DESCR
+# for this want to exclude ones with tiny numbers. Under 10k over whole time period?
+
+
+# average per year
+all_data_annual <- all_data_ex[!(drug_name %in% drugs_to_exclude), mean(per_100k), by = c("drug_name", "GENDER", "AGE_BAND", "YEAR")]
+
+# cast to get male and female on same row
+target_year <- 2023
+
+relative_weightings <- dcast.data.table(all_data_annual, drug_name + AGE_BAND + YEAR ~ GENDER, value.var = "V1")
+relative_weightings[, relative_gender := log(Female/Male)]
+temp <- relative_weightings[YEAR == target_year & AGE_BAND=="61-65",]
+drug_order <-  temp[order(relative_gender)]$drug_name
+relative_weightings$drug_name <- factor(relative_weightings$drug_name, levels = drug_order)
+
+# ignore if less than double to cut out noise
+#relative_weightings[relative_gender > -0.4054651 & relative_gender  < 0.4054651, relative_gender := NA]
+
+RELATIVE_GENDER <- ggplot(relative_weightings[YEAR == target_year], aes(x = AGE_BAND, y = drug_name, fill = relative_gender)) + 
+  geom_tile() + 
+  theme_linedraw() +
+   scale_fill_gradient2(low = "#24693D", mid = "#F4F8FB",high = "#2A5783" ) + 
+  labs(x = "Age Band", y= "Antibiotic", fill = "relative rate (log)", 
+       title = paste0(target_year, " Relative prescription rate by sex. High = higher in female, Low = higher in male")) + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+
+LEG <- get_legend(AMOX_PLOT)
+
+grid.arrange(AMOX_PLOT + theme(legend.position = "NONE"), OF_PLOT+ theme(legend.position = "NONE"), LEG ,RELATIVE_GENDER, layout_matrix = rbind(c(1,1,1,1,1, 3, 4,4,4,4,4,4,4),
+                                                                             c(2,2,2,2,2, 3, 4,4,4,4,4,4,4))
+)
 
 

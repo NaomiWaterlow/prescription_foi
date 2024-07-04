@@ -1,3 +1,10 @@
+
+####### NOTE!!!! THERE IS SOMETHING WRONG WITH POPULATIOUN DENOMINATORS IN THIS SCRIPT
+
+
+
+
+
 # MRSA
 # beta lactam drug labelling
 
@@ -8,10 +15,11 @@ library(ggplot2)
 # load in the data and mark those that are beta lactams
 all_data_ex <- fread("data/all_data_organised.csv")
 drugs_lookup <- fread("data/drugs_lookup.csv")
+pop_sizes_all <- fread("data/pop_sizes.csv")
 all_data_ex[drugs_lookup, on="BNF_CHEMICAL_SUBSTANCE_CODE", drug_name := CHEMICAL_SUBSTANCE_BNF_DESCR]
 all_data_ex[drugs_lookup, on="BNF_CHEMICAL_SUBSTANCE_CODE", beta_lactam := BETA_LACTAM]
 all_data_ex[beta_lactam == "Y", inclusion_label := "Beta-lactam antibiotic" ]
-all_data[beta_lactam == "N", inclusion_label := "Not beta-lactam antibiotic" ]
+all_data_ex[beta_lactam == "N", inclusion_label := "Not beta-lactam antibiotic" ]
 # factor age groups
 all_data_ex[, AGE_BAND := factor(AGE_BAND, levels = c("0-1", "2-5", 
                                                        "6-10", "11-15", "16-20", "21-25", 
@@ -37,13 +45,11 @@ ggplot(interlude_s[date_time2>as.Date("2020-01-01")], aes( x = date_time2, y = r
 
 
 
-# Combine the number of ITEMS across drug type (e.g. beta lactam or not)
-combined_subgroup <- all_data_ex[, ITEMS := sum(ITEMS),
+# Combine the number of ITEMS across drug type (e.g. beta lactam or not) - don't need to change population 
+combined_subgroup <- all_data_ex[, sum(ITEMS),
                               by = c("date_time2", "GENDER", "AGE_BAND", "YEAR", "MONTH", "inclusion_label", "population")]
-combined_subgroup[, c("drug_name", "BNF_CHEMICAL_SUBSTANCE_CODE") := NULL]
-combined_subgroup <- unique(combined_subgroup)
-# work out items per 100k
-combined_subgroup[, per_100k := (ITEMS/population)*100000]
+# work out items per 100k 
+combined_subgroup[, per_100k := (V1/population)*100000]
 
 # colours
 cc <- scales::seq_gradient_pal("blue", "darkorange", "Lab")(seq(0,1,length.out=length(unique(all_data_ex$AGE_BAND))))
@@ -98,13 +104,43 @@ all_data_ex[AGE_BAND == "81-85", AGE_BAND_COMBO := "75-84" ]
 all_data_ex[AGE_BAND == "86+", AGE_BAND_COMBO := "85+" ]
 
 # Re-calculate the prescriptiosn grouped in the new age groups
-# Sum items
-all_data_ex[,  ITEMS_NEW := sum(ITEMS),
-                                 by = c("date_time2", "GENDER", "AGE_BAND_COMBO", "inclusion_label")]
-all_data_ex[,  POPULATION_NEW := sum(population),
-            by = c("date_time2", "GENDER", "AGE_BAND_COMBO", "inclusion_label")]
+# and across financial year
+
+all_data_ex[date_time2 > as.Date("2015-04-05") &
+                        date_time2 <= as.Date("2016-04-05"), fyear_start := 2015]
+all_data_ex[date_time2 > as.Date("2016-04-05") &
+                        date_time2 <= as.Date("2017-04-05"), fyear_start := 2016]
+all_data_ex[date_time2 > as.Date("2017-04-05") &
+                        date_time2 <= as.Date("2018-04-05"), fyear_start := 2017]
+all_data_ex[date_time2 > as.Date("2018-04-05") &
+                        date_time2 <= as.Date("2019-04-05"), fyear_start := 2018]
+all_data_ex[date_time2 > as.Date("2019-04-05") &
+                        date_time2 <= as.Date("2020-04-05"), fyear_start := 2019]
+all_data_ex[date_time2 > as.Date("2020-04-05") &
+                        date_time2 <= as.Date("2021-04-05"), fyear_start := 2020]
+all_data_ex[date_time2 > as.Date("2021-04-05") &
+                        date_time2 <= as.Date("2022-04-05"), fyear_start := 2021]
+all_data_ex[date_time2 > as.Date("2022-04-05") &
+                        date_time2 <= as.Date("2023-04-05"), fyear_start := 2022]
+
+
+# Sum items across age group and year
+prescrips_annual <- all_data_ex[,  sum(ITEMS), by = c("fyear_start", "GENDER", "AGE_BAND_COMBO", "inclusion_label")]
+
+pop <- all_data_ex[,   sum(population),
+            by = c("date_time2", "GENDER", "AGE_BAND_COMBO", "inclusion_label", "fyear_start", "drug_name")]
+pop[month(date_time2)== 10, ID_year := paste0(fyear_start, "_10")]
+pop_sub <- pop[!is.na(ID_year)&!is.na(fyear_start)]
+pop <- unique(pop_sub[,c("inclusion_label", "drug_name") := NULL])
+
+
+
+
 data_for_mrsa_comp <- all_data_ex[, c("GENDER", "date_time2", "inclusion_label", "AGE_BAND_COMBO", "ITEMS_NEW", "POPULATION_NEW")]
 data_for_mrsa_comp <- unique(data_for_mrsa_comp)
+
+
+
 data_for_mrsa_comp[, V1 := (ITEMS_NEW/POPULATION_NEW)*100000]
 # label prescription rate
 data_for_mrsa_comp[,type := "prescription_rate"]
@@ -227,11 +263,54 @@ staph_temp_c[GENDER == "CASES_WOMEN", GENDER := "Female"]
 
 prescriptions <- data_for_mrsa_comp[inclusion_label=="Beta-lactam antibiotic", c("date_time2", "AGE_BAND_COMBO", "GENDER", "type","V1")]
 colnames(prescriptions)[which(colnames(prescriptions)=="V1")] <- "value"
+prescriptions[, date_time2 := as.Date(date_time2)]
+prescriptions[date_time2 > as.Date("2015-04-05") &
+                        date_time2 <= as.Date("2016-04-05"), fyear_start := 2015]
+prescriptions[date_time2 > as.Date("2016-04-05") &
+                        date_time2 <= as.Date("2017-04-05"), fyear_start := 2016]
+prescriptions[date_time2 > as.Date("2017-04-05") &
+                        date_time2 <= as.Date("2018-04-05"), fyear_start := 2017]
+prescriptions[date_time2 > as.Date("2018-04-05") &
+                        date_time2 <= as.Date("2019-04-05"), fyear_start := 2018]
+prescriptions[date_time2 > as.Date("2019-04-05") &
+                        date_time2 <= as.Date("2020-04-05"), fyear_start := 2019]
+prescriptions[date_time2 > as.Date("2020-04-05") &
+                        date_time2 <= as.Date("2021-04-05"), fyear_start := 2020]
+prescriptions[date_time2 > as.Date("2021-04-05") &
+                        date_time2 <= as.Date("2022-04-05"), fyear_start := 2021]
+prescriptions[date_time2 > as.Date("2022-04-05") &
+                        date_time2 <= as.Date("2023-04-05"), fyear_start := 2022]
+prescriptions_annual <- prescriptions[, sum(value), by = c("AGE_BAND_COMBO", "GENDER", "type","fyear_start" )]
+prescriptions_annual <- prescriptions_annual[!is.na(fyear_start)]
+colnames(prescriptions_annual)[which(colnames(prescriptions_annual)=="V1")] <- "value"
+prescriptions_annual[, date_time2 := as.Date(paste0(fyear_start, "-04-05"))]
+prescriptions_annual[,fyear_start:=NULL]
 
-all_together <- rbind(staph_temp_c, prescriptions)
+all_together <- rbind(staph_temp_c, prescriptions_annual)
 
-ggplot(all_together, aes(x = date_time2, y = value, colour = AGE_BAND_COMBO, linetype = GENDER)) + 
+MRSA_PRESCRIPS <- ggplot(all_together, aes(x = date_time2, y = value, colour = AGE_BAND_COMBO, linetype = GENDER)) + 
   facet_grid(type~AGE_BAND_COMBO, scales = "free_y") + 
   geom_line() + geom_point(size = 0.4) + theme_bw() + 
-  labs(x = "Date", y = "roportion MRSI (over MRSA and MSSA), Monthly prescriptions per 100k",
-       title = "NOTE: AGE BANDS OUT BY A YEAR OR TWO")
+  labs(x = "Date", y = "Proportion MRSI (over MRSA and MSSA), Annual prescriptions",
+       title = "NOTE: AGE BANDS OUT BY A YEAR OR TWO", colour = "Age Band", linetype = "Sex")
+
+# multiplier <- 1000000
+# 
+# all_together[type == "prop_resistant", value := value*multiplier]
+# 
+# MRSA_PRESCRIPS2 <- ggplot(all_together, aes(x = date_time2, y = value, colour = GENDER, linetype = type, group = interaction(type, GENDER))) + 
+#   facet_grid(.~AGE_BAND_COMBO, scales = "free_y") + 
+#   geom_line() + theme_bw() +
+#   labs(x = "Financial Year",
+#        title = "NOTE: AGE BANDS OUT BY A YEAR OR TWO", colour = "Age Band", linetype = "Sex") + 
+#   scale_linetype_manual(values = c(2,1)) + 
+#   scale_y_continuous(
+#       "Annual prescriptions of beta-lactam antibiotics",
+#       sec.axis = sec_axis(~ . /multiplier, name = "Proportion of MRSA BSI (cf MRSA+MSSA BSI)")
+#     )
+# 
+
+
+
+# source RTI.R to get the flu plot
+grid.arrange(MRSA_PRESCRIPS, FLU_CHANGE, ncol =2)
