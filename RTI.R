@@ -14,22 +14,11 @@ all_data_ex[drugs_lookup, on="BNF_CHEMICAL_SUBSTANCE_CODE", RTI := RTI]
 # remove amoxicillin
 all_data_ex[drug_name == "Amoxicillin", RTI := "N"]
 all_data_ex <- all_data_ex[!is.na(AGE_BAND)]
-#all_data_ex[drug_name == "Clarithromycin", RTI := "N"]
-# 
-# 
-# all_data_ex[, AGE_BAND := factor(AGE_BAND, levels = c("0-1", "2-5", 
-#                                                        "6-10", "11-15", "16-20", "21-25", 
-#                                                        "26-30", "31-35", "36-40", "41-45", 
-#                                                        "46-50", "51-55",  "56-60", "61-65", 
-#                                                        "66-70", "71-75", "76-80",  "81-85" ,
-#                                                        "86-90", "91-95","96-100","101-105", "105+") )]
+
 
 # sum across genders as not interested. 
 data_for_RTI<- all_data_ex[, sum(ITEMS),
-                             by = c("date_time2", "AGE_BAND", "drug_name", "BNF_CHEMICAL_SUBSTANCE_CODE", "RTI")]
-temp_pops<- all_data_ex[, sum(population),
-                           by = c("date_time2", "AGE_BAND", "drug_name", "BNF_CHEMICAL_SUBSTANCE_CODE", "RTI")]
-data_for_RTI[temp_pops, on = c("date_time2", "AGE_BAND", "drug_name", "BNF_CHEMICAL_SUBSTANCE_CODE", "RTI"), population := i.V1]
+                             by = c("YEAR","date_time2", "AGE_BAND", "drug_name", "BNF_CHEMICAL_SUBSTANCE_CODE", "RTI")]
 
 # keep only respiratory related drugs
 data_for_RTI <- data_for_RTI[RTI == "Y"]
@@ -49,14 +38,24 @@ data_for_RTI[AGE_BAND %in% c("66-70", "71-75", "76-80",  "81-85" ,
 
 # combine across new age bands and drugs. 
 temp <- data_for_RTI[, sum(V1), by = c("date_time2", "AGE_BAND_NEW", "RTI")]
+
 # here combining age bands but not drugs for population sizes
-temp_pop2 <- data_for_RTI[, sum(population), by = c("date_time2", "AGE_BAND_NEW", "RTI", "drug_name")]
-temp_pop3 <- unique(temp_pop2[, drug_name:= NULL])
+pop_sizes_nogender <- pop_sizes_all[, sum(value), by = c("AGE_BAND", "YEAR")]
+pop_sizes_nogender <- pop_sizes_nogender[!is.na(AGE_BAND)]
+pop_sizes_nogender[, AGE_BAND_NEW := "15-50"]
+pop_sizes_nogender[AGE_BAND == "0-1" , AGE_BAND_NEW := "0-1"]
+pop_sizes_nogender[AGE_BAND == "2-5" , AGE_BAND_NEW := "2-5"]
+pop_sizes_nogender[AGE_BAND == "6-10" , AGE_BAND_NEW := "6-10"]
+pop_sizes_nogender[AGE_BAND == "11-15" , AGE_BAND_NEW := "11-15"]
+pop_sizes_nogender[AGE_BAND == "51-55" , AGE_BAND_NEW := "50-65"]
+pop_sizes_nogender[AGE_BAND == "56-60" , AGE_BAND_NEW := "50-65"]
+pop_sizes_nogender[AGE_BAND == "61-65" , AGE_BAND_NEW := "50-65"]
+pop_sizes_nogender[AGE_BAND %in% c("66-70", "71-75", "76-80",  "81-85" ,
+                             "86-90", "91-95","96-100","101-105", "105+"), AGE_BAND_NEW := "65+"]
 
-temp_pop3[,sum(V1), by = "date_time2"]
-
-
-temp[temp_pop2, on = c("date_time2", "AGE_BAND_NEW", "RTI"), population := i.V1]
+pop_sizes_nogender <- pop_sizes_nogender[, sum(V1), by = c("AGE_BAND_NEW", "YEAR")]
+temp[, YEAR := year(date_time2)]
+temp[pop_sizes_nogender, on = c("YEAR", "AGE_BAND_NEW"), population := i.V1]
 temp[,AGE_BAND_NEW := factor(AGE_BAND_NEW, levels = c("0-1"  , "2-5"  , "6-10",  "11-15", "15-50", "50-65" ,"65+"  ))]
 
 temp[, prescriptions_p_100k := (V1/population)*100000]
@@ -112,19 +111,19 @@ FLU_VACC <- ggplot(temp, aes(x = date_time2, y = normalised_rate, colour = AGE_B
 # look at flu season year. I.e. october to end of march
 temp[date_time2 >= as.Date(paste0(year(date_time2), "-10-01")) & 
        date_time2 < as.Date(paste0(year(date_time2)+1, "-04-01")) , flu_year := year(date_time2)]
+
 # drop anything wiht na (off season) or 2023 (as dont have full season)
-
 temp <- temp[!is.na(flu_year) & flu_year != 2023,]
-# remove pre otober 2015
 
+# sum across flu year
 flu_total <- temp[, sum(V1), by = c("flu_year", "AGE_BAND_NEW")]
+# relabel
 flu_total[, prev_year := flu_year -1]
 flu_total[flu_total, on = c(prev_year = "flu_year", "AGE_BAND_NEW"), prev_year_value := i.V1 ]
-
 flu_total <- flu_total[, c("flu_year", "AGE_BAND_NEW", "V1", "prev_year", "prev_year_value")]
-
-
+# first year use itself
 flu_total[is.na(prev_year_value), prev_year_value := V1]
+# proportion change
 flu_total[,prop_change := (V1/prev_year_value)-1]
 
 FLU_CHANGE <- ggplot(flu_total, aes(x = flu_year, y = prop_change, colour = AGE_BAND_NEW)) +

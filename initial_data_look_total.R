@@ -155,8 +155,8 @@ pop_sizes_all[variable == "pop_2020_c", YEAR := 2020]
 pop_sizes_all[variable == "pop_2021_c", YEAR := 2021]
 pop_sizes_all[variable == "pop_2022_c", YEAR := 2022]
 pop_sizes_all[variable == "pop_2023_c", YEAR := 2023]
-pop_sizes_all[sex == "M", GENDER := "Female"]
-pop_sizes_all[sex == "F", GENDER := "Male"]
+pop_sizes_all[sex == "M", GENDER := "Male"]
+pop_sizes_all[sex == "F", GENDER := "Female"]
 
 all_data_ex[pop_sizes_all, on = c("AGE_BAND", "GENDER", "YEAR"), population := i.value]
 
@@ -210,7 +210,7 @@ for(i in drugs_lookup$BNF_CHEMICAL_SUBSTANCE_CODE){
 
 
 # try to make a heatmap to investigate male vs female rates
-drugs_to_exclude <- drugs_lookup[total_prescriptions<10000,]$CHEMICAL_SUBSTANCE_BNF_DESCR
+drugs_to_exclude <- drugs_lookup[total_prescriptions<100000,]$CHEMICAL_SUBSTANCE_BNF_DESCR
 # for this want to exclude ones with tiny numbers. Under 10k over whole time period?
 
 
