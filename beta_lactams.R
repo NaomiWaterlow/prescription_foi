@@ -76,48 +76,48 @@ ggplot(staph_temp_m, aes(x = fyear_start, y =value, colour = AGE_BAND)) +
 
 
 # convert prescriptions data to the same-ish age groups as the resistance data
-all_data_ex[AGE_BAND == "0-1", AGE_BAND_COMBO := "<1" ]
-all_data_ex[AGE_BAND == "2-5", AGE_BAND_COMBO := "1-14" ]
-all_data_ex[AGE_BAND == "6-10", AGE_BAND_COMBO := "1-14" ]
-all_data_ex[AGE_BAND == "11-15", AGE_BAND_COMBO := "1-14" ]
-all_data_ex[AGE_BAND == "16-20", AGE_BAND_COMBO := "15-44" ]
-all_data_ex[AGE_BAND == "21-25", AGE_BAND_COMBO := "15-44" ]
-all_data_ex[AGE_BAND == "26-30", AGE_BAND_COMBO := "15-44" ]
-all_data_ex[AGE_BAND == "31-35", AGE_BAND_COMBO := "15-44" ]
-all_data_ex[AGE_BAND == "36-40", AGE_BAND_COMBO := "15-44" ]
-all_data_ex[AGE_BAND == "41-45", AGE_BAND_COMBO := "15-44" ]
-all_data_ex[AGE_BAND == "46-50", AGE_BAND_COMBO := "45-64" ]
-all_data_ex[AGE_BAND == "51-55", AGE_BAND_COMBO := "45-64" ]
-all_data_ex[AGE_BAND == "56-60", AGE_BAND_COMBO := "45-64" ]
-all_data_ex[AGE_BAND == "61-65", AGE_BAND_COMBO := "45-64" ]
-all_data_ex[AGE_BAND == "66-70", AGE_BAND_COMBO := "65-74" ]
-all_data_ex[AGE_BAND == "71-75", AGE_BAND_COMBO := "65-74" ]
-all_data_ex[AGE_BAND == "76-80", AGE_BAND_COMBO := "75-84" ]
-all_data_ex[AGE_BAND == "81-85", AGE_BAND_COMBO := "75-84" ]
-all_data_ex[AGE_BAND == "81-85", AGE_BAND_COMBO := "75-84" ]
-all_data_ex[AGE_BAND == "86+", AGE_BAND_COMBO := "85+" ]
+all_data_ex[AGE_BAND == "0-1", AGE_BAND_COMBO := "0-1" ]
+all_data_ex[AGE_BAND == "2-5", AGE_BAND_COMBO := "2-15" ]
+all_data_ex[AGE_BAND == "6-10", AGE_BAND_COMBO := "2-15" ]
+all_data_ex[AGE_BAND == "11-15", AGE_BAND_COMBO := "2-15" ]
+all_data_ex[AGE_BAND == "16-20", AGE_BAND_COMBO := "16-45" ]
+all_data_ex[AGE_BAND == "21-25", AGE_BAND_COMBO := "16-45" ]
+all_data_ex[AGE_BAND == "26-30", AGE_BAND_COMBO := "16-45" ]
+all_data_ex[AGE_BAND == "31-35", AGE_BAND_COMBO := "16-45" ]
+all_data_ex[AGE_BAND == "36-40", AGE_BAND_COMBO := "16-45" ]
+all_data_ex[AGE_BAND == "41-45", AGE_BAND_COMBO := "16-45" ]
+all_data_ex[AGE_BAND == "46-50", AGE_BAND_COMBO := "46-65" ]
+all_data_ex[AGE_BAND == "51-55", AGE_BAND_COMBO := "46-65" ]
+all_data_ex[AGE_BAND == "56-60", AGE_BAND_COMBO := "46-65" ]
+all_data_ex[AGE_BAND == "61-65", AGE_BAND_COMBO := "46-65" ]
+all_data_ex[AGE_BAND == "66-70", AGE_BAND_COMBO := "66-70" ]
+all_data_ex[AGE_BAND == "71-75", AGE_BAND_COMBO := "66-70" ]
+all_data_ex[AGE_BAND == "76-80", AGE_BAND_COMBO := "76-80" ]
+all_data_ex[AGE_BAND == "81-85", AGE_BAND_COMBO := "76-80" ]
+all_data_ex[AGE_BAND == "81-85", AGE_BAND_COMBO := "76-80" ]
+all_data_ex[AGE_BAND == "86+", AGE_BAND_COMBO := "86+" ]
 
 ### Need the population to match the age groups of the data, not the slightly off Combo ones. 
-pop_sizes_all[AGE_BAND == "0-1", AGE_BAND_COMBO := "<1" ]
-pop_sizes_all[AGE_BAND == "2-5", AGE_BAND_COMBO := "1-14" ]
-pop_sizes_all[AGE_BAND == "6-10", AGE_BAND_COMBO := "1-14" ]
-pop_sizes_all[AGE_BAND == "11-15", AGE_BAND_COMBO := "1-14" ]
-pop_sizes_all[AGE_BAND == "16-20", AGE_BAND_COMBO := "15-44" ]
-pop_sizes_all[AGE_BAND == "21-25", AGE_BAND_COMBO := "15-44" ]
-pop_sizes_all[AGE_BAND == "26-30", AGE_BAND_COMBO := "15-44" ]
-pop_sizes_all[AGE_BAND == "31-35", AGE_BAND_COMBO := "15-44" ]
-pop_sizes_all[AGE_BAND == "36-40", AGE_BAND_COMBO := "15-44" ]
-pop_sizes_all[AGE_BAND == "41-45", AGE_BAND_COMBO := "15-44" ]
-pop_sizes_all[AGE_BAND == "46-50", AGE_BAND_COMBO := "45-64" ]
-pop_sizes_all[AGE_BAND == "51-55", AGE_BAND_COMBO := "45-64" ]
-pop_sizes_all[AGE_BAND == "56-60", AGE_BAND_COMBO := "45-64" ]
-pop_sizes_all[AGE_BAND == "61-65", AGE_BAND_COMBO := "45-64" ]
-pop_sizes_all[AGE_BAND == "66-70", AGE_BAND_COMBO := "65-74" ]
-pop_sizes_all[AGE_BAND == "71-75", AGE_BAND_COMBO := "65-74" ]
-pop_sizes_all[AGE_BAND == "76-80", AGE_BAND_COMBO := "75-84" ]
-pop_sizes_all[AGE_BAND == "81-85", AGE_BAND_COMBO := "75-84" ]
-pop_sizes_all[AGE_BAND == "81-85", AGE_BAND_COMBO := "75-84" ]
-pop_sizes_all[AGE_BAND == "86+", AGE_BAND_COMBO := "85+" ]
+pop_sizes_all[AGE_BAND == "0-1", AGE_BAND_COMBO := "0-1" ]
+pop_sizes_all[AGE_BAND == "2-5", AGE_BAND_COMBO := "2-15" ]
+pop_sizes_all[AGE_BAND == "6-10", AGE_BAND_COMBO := "2-15" ]
+pop_sizes_all[AGE_BAND == "11-15", AGE_BAND_COMBO := "2-15" ]
+pop_sizes_all[AGE_BAND == "16-20", AGE_BAND_COMBO := "16-45" ]
+pop_sizes_all[AGE_BAND == "21-25", AGE_BAND_COMBO := "16-45" ]
+pop_sizes_all[AGE_BAND == "26-30", AGE_BAND_COMBO := "16-45" ]
+pop_sizes_all[AGE_BAND == "31-35", AGE_BAND_COMBO := "16-45" ]
+pop_sizes_all[AGE_BAND == "36-40", AGE_BAND_COMBO := "16-45" ]
+pop_sizes_all[AGE_BAND == "41-45", AGE_BAND_COMBO := "16-45" ]
+pop_sizes_all[AGE_BAND == "46-50", AGE_BAND_COMBO := "46-65" ]
+pop_sizes_all[AGE_BAND == "51-55", AGE_BAND_COMBO := "46-65" ]
+pop_sizes_all[AGE_BAND == "56-60", AGE_BAND_COMBO := "46-65" ]
+pop_sizes_all[AGE_BAND == "61-65", AGE_BAND_COMBO := "46-65" ]
+pop_sizes_all[AGE_BAND == "66-70", AGE_BAND_COMBO := "66-70" ]
+pop_sizes_all[AGE_BAND == "71-75", AGE_BAND_COMBO := "66-70" ]
+pop_sizes_all[AGE_BAND == "76-80", AGE_BAND_COMBO := "76-80" ]
+pop_sizes_all[AGE_BAND == "81-85", AGE_BAND_COMBO := "76-80" ]
+pop_sizes_all[AGE_BAND == "81-85", AGE_BAND_COMBO := "76-80" ]
+pop_sizes_all[AGE_BAND == "86+", AGE_BAND_COMBO := "86+" ]
 # calculate the pop sizes in the slightly altered new ages
 pop_sizes_COMBO <- pop_sizes_all[, sum(value), by = c("AGE_BAND_COMBO", "YEAR", "GENDER")]
 
@@ -141,16 +141,16 @@ all_data_ex[date_time2 > as.Date("2022-04-05") &
                         date_time2 <= as.Date("2023-04-05"), fyear_start := 2022]
 
 
-# Sum items across age group and year
-prescrips_annual <- all_data_ex[,  sum(ITEMS), by = c("fyear_start", "GENDER", "AGE_BAND_COMBO", "inclusion_label")]
-prescrips_annual <- prescrips_annual[!is.na(fyear_start)]
-prescrips_annual[pop_sizes_COMBO, on=c(AGE_BAND_COMBO="AGE_BAND_COMBO", fyear_start= "YEAR", GENDER = "GENDER"), population := i.V1]
-
-prescrips_annual[, rate_per_100k := (V1/population)*100000]
-# label prescription rate
-prescrips_annual[,type := "prescription_rate"]
-
-# # reformat resistance data
+# # Sum items across age group and year
+# prescrips_annual <- all_data_ex[,  sum(ITEMS), by = c("fyear_start", "GENDER", "AGE_BAND_COMBO", "inclusion_label")]
+# prescrips_annual <- prescrips_annual[!is.na(fyear_start)]
+# prescrips_annual[pop_sizes_COMBO, on=c(AGE_BAND_COMBO="AGE_BAND_COMBO", fyear_start= "YEAR", GENDER = "GENDER"), population := i.V1]
+# 
+# prescrips_annual[, rate_per_100k := (V1/population)*100000]
+# # label prescription rate
+# prescrips_annual[,type := "prescription_rate"]
+# 
+# # # reformat resistance data
 # staph_temp <- melt.data.table(staph_temp, id.vars = c("Species", "fyear_start", "AGE_BAND"))
 # colnames(staph_temp)[which(colnames(staph_temp)=="AGE_BAND")] <- "AGE_BAND_COMBO"
 # staph_temp[Species == "MRSA", inclusion_label := "Beta-lactam antibiotic"]
@@ -175,6 +175,7 @@ staph_temp <- staph[, c("Species", "fyear_start", "AGE_BAND", "CASES_MEN", "CASE
 staph_temp_m <- melt.data.table(staph_temp, id.vars = c("Species", "fyear_start", "AGE_BAND"))
 # cast to seperate columns for MRSA and MSSA
 staph_temp_c <- dcast.data.table(staph_temp_m,  AGE_BAND + variable +fyear_start~ Species, value.var = "value")
+
 # calculate proportion
 staph_temp_c[, propR := MRSA/(MRSA+MSSA)]
 # remove no longer needed colunmns
@@ -206,15 +207,32 @@ prescrips_annual[, inclusion_label := NULL]
 colnames(prescrips_annual)[which(colnames(prescrips_annual)=="rate_per_100k")] <- "value"
 prescrips_annual[, c("population", "V1") := NULL]
 
+staph_temp_c[,matched_age := AGE_BAND_COMBO]
+prescrips_annual[AGE_BAND_COMBO == "0-1",matched_age := "<1"]
+prescrips_annual[AGE_BAND_COMBO == "2-15",matched_age := "1-14"]
+prescrips_annual[AGE_BAND_COMBO == "16-45",matched_age := "15-44"]
+prescrips_annual[AGE_BAND_COMBO == "46-65",matched_age := "45-64"]
+prescrips_annual[AGE_BAND_COMBO == "66-70",matched_age := "65-74"]
+prescrips_annual[AGE_BAND_COMBO == "76-80",matched_age := "75-84"]
+prescrips_annual[AGE_BAND_COMBO == "86+",matched_age := "85+"]
+
 all_together <- rbind(staph_temp_c, prescrips_annual)
 
-MRSA_PRESCRIPS <- ggplot(all_together, aes(x = fyear_start, y = value, colour = AGE_BAND_COMBO, linetype = GENDER)) + 
-  facet_grid(type~AGE_BAND_COMBO, scales = "free_y") + 
+all_together[type == "prescription_rate", nice_labels := "Prescription rate"]
+all_together[type == "prop_resistant", nice_labels := "Proportion resistant"]
+all_together[type == "prop_resistant", upper_lim := 0.15]
+all_together[type == "prescription_rate", upper_lim := 80000]
+
+
+MRSA_PRESCRIPS <- ggplot(all_together, aes(x = fyear_start, y = value, colour = GENDER, linetype = type)) + 
+  geom_blank(aes(ymin =0 , ymax = upper_lim) ) +
+  facet_wrap(nice_labels~AGE_BAND_COMBO, scales = "free_y", nrow = 2) + 
   geom_line() + geom_point(size = 0.4) + theme_bw() + 
+  scale_linetype_manual(values = c(1,2)) + 
   labs(x = "Date", y = "Proportion MRSI (over MRSA and MSSA), Annual beta-lactam prescription rate",
-       title = "NOTE: AGE BANDS OUT BY A YEAR OR TWO", colour = "Age Band", linetype = "Sex")
+       title = "", colour = "Age Band", linetype = "Sex") 
 
-
+MRSA_PRESCRIPS
 
 
 
