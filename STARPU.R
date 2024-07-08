@@ -36,39 +36,64 @@ NEW_STARPU <- ggplot(data_2023, aes( x = GENDER, y = AGE_BAND, fill = star_pu)) 
   theme_bw() + 
   labs(y = "Age Band", x = "Gender", fill = "STAR PU 2023") 
 
-# Now looking at drug specific STAR-PUs
-#  Need to sum to make annual 
-data_2023_drugs <- data_sub[, sum(ITEMS), by = c("AGE_BAND", "GENDER", "drug_name")]
+
+# # Combine all drugs that each have less than a total of 10K prescrptions 
+# data_2023_drugs[, total_prescrips := sum(V1), by = drug_name]
+# data_2023_drugs[total_prescrips < 10000, drug_starpu := "Other"]
+# data_2023_drugs[total_prescrips >= 10000, drug_starpu := drug_name]
+
+# Combine based on drug type bnf
+data_sub[drugs_lookup, on = c(drug_name = "CHEMICAL_SUBSTANCE_BNF_DESCR"), drug_starpu := i.Drug_type]
+
+
+# sum other category together
+data_2023_drugs <- data_sub[,sum(ITEMS), by = c("AGE_BAND", "GENDER", "drug_starpu")]
+
 data_2023_drugs[pop_sub, on = c("GENDER", "AGE_BAND"), pop := i.value]
 data_2023_drugs[, rate := V1/pop]
 
 
-base_rate_drugs <- data_2023_drugs[AGE_BAND=="61-65" & GENDER == "Female", c("rate", "drug_name")]
-data_2023_drugs[base_rate_drugs, on = c("drug_name"), base := i.rate]
+base_rate_drugs <- data_2023_drugs[AGE_BAND=="61-65" & GENDER == "Female", c("rate", "drug_starpu")]
+data_2023_drugs[base_rate_drugs, on = c("drug_starpu"), base := i.rate]
 data_2023_drugs[, star_pu := rate/base]
 
-all_drugs <- unique(data_2023_drugs$drug_name)
+all_drugs <- unique(data_2023_drugs$drug_starpu)
 
+template <- unique(all_data_ex[,c("GENDER", "AGE_BAND")])
+
+
+
+
+# set defaults for kids
+template[AGE_BAND %in% c("0-1", "2-5", 
+                         "6-10", "11-15"), star_pu := 0.01]
 
 
 
 for(i in all_drugs){
   
-  temp <- data_2023_drugs[drug_name == i,]
+  temp <- data_2023_drugs[drug_starpu == i,]
+  temp2 <- template
+  temp2[temp, on = c("AGE_BAND", "GENDER"), star_pu := i.star_pu]  
   
-  temp[, AGE_BAND := factor(AGE_BAND, levels = c("0-1", "2-5", 
-                                                            "6-10", "11-15", "16-20", "21-25", 
-                                                            "26-30", "31-35", "36-40", "41-45", 
-                                                            "46-50", "51-55",  "56-60", "61-65", 
-                                                            "66-70", "71-75", "76-80",  "81-85" ,
-                                                            "86+"))]
-  temp[, GENDER := factor(GENDER, levels = c("Female", "Male"))]
+  # set limits of 0.01 and 100
+  temp2[star_pu < 0.01, star_pu := 0.01]
+  temp2[star_pu > 100, star_pu := 100]
+  
+  temp2[, GENDER := factor(GENDER, levels = c("Female", "Male"))]
+  temp2[, AGE_BAND := factor(AGE_BAND, levels = c("0-1", "2-5", 
+                                                     "6-10", "11-15", "16-20", "21-25", 
+                                                     "26-30", "31-35", "36-40", "41-45", 
+                                                     "46-50", "51-55",  "56-60", "61-65", 
+                                                     "66-70", "71-75", "76-80",  "81-85" ,
+                                                     "86+"))]
   
   
-  PLOT_TEMP <- ggplot(temp, aes( x = GENDER, y = AGE_BAND, fill = star_pu)) + 
+  
+  PLOT_TEMP <- ggplot(temp2, aes( x = GENDER, y = AGE_BAND, fill = star_pu)) + 
     geom_tile() + geom_text(aes(label = round(star_pu,2)), colour = "white") + 
     theme_bw() + 
-    labs(y = "Age Band", x = "Gender", fill = "STAR PU 2023", title = paste0(i, ": ", sum(temp$V1)))+ 
+    labs(y = "Age Band", x = "Gender", fill = "STAR PU 2023", title = paste0(i, ": total prescriptions", sum(temp$V1)))+ 
     scale_y_discrete(drop = F) + 
     scale_x_discrete(drop = F) 
   
