@@ -3,7 +3,7 @@ library(purrr)
 library(stringr)
 library(data.table)
 library(ggplot2)
-
+dir.create(file.path("plots/byicb"))
 # FOR GEOGRAPHIC VARIATION
 # - excludes Wales
 # - 2023 only
@@ -120,7 +120,7 @@ PLOT_TEMP <- ggplot(ICB_target_2023_av_month, aes(x = AGE_BAND_NEW, y = av_rate_
   theme(axis.text.y = element_text(size =10)  ,legend.position = "none"
         )
 
-ggsave(paste0("plots/",str_replace_all(target_name, "[^[:alnum:]]", " "), "_av_monhtly_rate_items.pdf"), plot = PLOT_TEMP)
+ggsave(paste0("plots/byicb/",str_replace_all(target_name, "[^[:alnum:]]", " "), "_av_monhtly_rate_items.pdf"), plot = PLOT_TEMP)
 
 
 #differences between gender by age
@@ -137,7 +137,7 @@ PLOT_TEMP2 <- ggplot(sex_dif, aes(x = AGE_BAND_NEW, y = sex_diference, colour = 
   theme(axis.text.y = element_text(size =10)  ,legend.position = "none"
   )
 
-ggsave(paste0("plots/",str_replace_all(target_name, "[^[:alnum:]]", " "), "_sex_dif.pdf"), plot = PLOT_TEMP2)
+ggsave(paste0("plots/byicb/",str_replace_all(target_name, "[^[:alnum:]]", " "), "_sex_dif.pdf"), plot = PLOT_TEMP2)
 
 
 }
@@ -164,7 +164,7 @@ PLOT_TEMP <- ggplot(ICB_target_2023_avICB, aes(x = MONTH, y = av_across_ICBs, co
   theme_bw() +
 scale_color_manual(values = Age_colours, drop = F) 
 
-ggsave(paste0("plots/",str_replace_all(target_name, "[^[:alnum:]]", " "), "_seasonality.pdf"), plot = PLOT_TEMP)
+ggsave(paste0("plots/byicb/",str_replace_all(target_name, "[^[:alnum:]]", " "), "_seasonality.pdf"), plot = PLOT_TEMP)
 
 PLOT_TEMP2 <- ggplot(ICB_target_2023_avICB, aes(x = MONTH, y = seasonal_change, colour = AGE_BAND_NEW, group =AGE_BAND_NEW)) + 
   geom_line() + facet_wrap(GENDER~.) + 
@@ -173,7 +173,7 @@ PLOT_TEMP2 <- ggplot(ICB_target_2023_avICB, aes(x = MONTH, y = seasonal_change, 
   scale_color_manual(values = Age_colours, drop = F) + 
   lims(y = c(0,4.6))
 
-ggsave(paste0("plots/",str_replace_all(target_name, "[^[:alnum:]]", " "), "_seasonality_relative.pdf"), plot = PLOT_TEMP2)
+ggsave(paste0("plots/byicb/",str_replace_all(target_name, "[^[:alnum:]]", " "), "_seasonality_relative.pdf"), plot = PLOT_TEMP2)
 
 }
 
@@ -205,4 +205,4 @@ ICB_POPS <- ggplot(pop_dat_combo, aes(x = ICB_Name_short, y = prop_pop, fill = A
   scale_x_discrete(guide = guide_axis(angle = 90)) +
   labs(title = "ICB demographics", x = "ICB", y = "Proportion in each age group")
 ICB_POPS
-ggsave(paste0("plots/ICB.pdf"), plot = ICB_POPS, width = 10, height = 10)
+ggsave(paste0("plots/byicb/ICB.pdf"), plot = ICB_POPS, width = 10, height = 10)
