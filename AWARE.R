@@ -229,7 +229,9 @@ AWARE1 <- ggplot(all_data_ex_aware_av, aes(x = AGE_BAND, y = perc_each_class,
   geom_hline(data =all_data_ex_aware_av[aware_class=="Access"], aes(yintercept = 60), 
              linetype = "dashed") + 
   geom_hline(data =all_data_ex_aware_av[aware_class=="Access"], aes(yintercept = 80), 
-             linetype = "dashed")
+             linetype = "dashed") + 
+  geom_vline(xintercept = "11-15", linetype = "dotted")+ 
+  geom_vline(xintercept = "16-20", linetype = "dotted")
 
 # which are the drugs that cause the big uptick in young men in watch? 
 drug_specific <- all_data_ex[!is.na(aware_class),sum(ITEMS), by = c("YEAR", "GENDER", "AGE_BAND", "drug_name", "aware_class")]
@@ -253,11 +255,16 @@ AWARE2 <- ggplot(drug_specific[YEAR == 2023 ], aes(x = AGE_BAND, y = V1, group =
   theme_bw() + 
   labs(x = "Age band", y = "Total prescriptions", title = "AWaRe Classifications (2023), with key drugs highlighted", 
        colour = "Drug") + 
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
+  geom_vline(xintercept = "11-15", linetype = "dotted")+ 
+  geom_vline(xintercept = "16-20", linetype = "dotted")
 
-grid.arrange(AWARE1, AWARE2, ncol=2)
+
+FIG3 <- grid.arrange(AWARE1, AWARE2, ncol=2)
 
 
+ggsave(paste0("plots/Fig3.pdf"), plot = FIG3, 
+       width = 20, height = 10)
 # calculate the total % in aware across alla ge groups and sex
 overall_aware <- drug_specific[YEAR == 2023, sum(V1), by = c("aware_class")]
 overall_aware[, total := sum(overall_aware$V1)]

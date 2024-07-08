@@ -88,6 +88,8 @@ temp[temp2, on = c("date_time2"), mid_age := i.prescriptions_p_100k]
 temp[, normalised_rate := prescriptions_p_100k/mid_age]
 
 FLU_VACC <- ggplot(temp, aes(x = date_time2, y = normalised_rate, colour = AGE_BAND_NEW)) + 
+  annotate("rect", xmin = as.Date("2020-03-01"), xmax = as.Date("2022-07-01"), ymin = 0, ymax = 4,
+           alpha = 0.4,fill = "grey") +
   geom_line() + theme_bw() + 
   labs(x = "Date", y = "Relative prescirption rate of RTI antibiotics, cf 15-50 age group", 
        title = "RTI antibiotics, excluding Amoxicillin", 
@@ -131,8 +133,8 @@ FLU_CHANGE <- ggplot(flu_total, aes(x = flu_year, y = prop_change, colour = AGE_
            alpha = 0.4,fill = "grey") +
   geom_line() + theme_bw() + 
   geom_point() + 
-  labs(x = "Flu season", y = "Change in number of prescirptions prom previous year", 
-       title = "RTI antibiotics, excluding Amoxicillin, change in number of prescrptions by flu season (oct-march incl.)", 
+  labs(x = "Flu season", y = "Change in number of prescirptions from previous year", 
+       title = "RTI antibiotics (flu season), excluding Amoxicillin", 
        colour = "Age band") +
   geom_vline(xintercept = 2016-0.4, linetype = "dashed") + 
   annotate("text", x = 2016-0.3, y = 1.5, label = "Ages 7-8", angle = 90)+
@@ -147,6 +149,29 @@ FLU_CHANGE <- ggplot(flu_total, aes(x = flu_year, y = prop_change, colour = AGE_
   geom_vline(xintercept = 2021-0.4,linetype = "dashed") + 
   annotate("text", x = 2021-0.3, y = 1.5, label = "Ages 12-16", angle = 90) + 
   lims(y = c(-0.7,1.8)) + 
+  geom_hline(yintercept = 0)
+
+FLU_CHANGE <- ggplot(flu_total[flu_year < 2020, ], aes(x = flu_year, y = prop_change, colour = AGE_BAND_NEW)) +
+  # annotate("rect", xmin = 2019.5, xmax = 2019.8, ymin = -0.7, ymax = 1.8,
+  #          alpha = 0.4,fill = "grey") +
+  geom_line() + theme_bw() + 
+  geom_point() + 
+  labs(x = "Flu season", y = "Change in number of prescirptions from previous year", 
+       title = "RTI antibiotics (flu season), excluding Amoxicillin", 
+       colour = "Age band") +
+  geom_vline(xintercept = 2016-0.4, linetype = "dashed") + 
+  annotate("text", x = 2016-0.3, y = 0.2, label = "Ages 7-8", angle = 90)+
+  geom_vline(xintercept = 2017-0.4, linetype = "dashed") + 
+  annotate("text", x = 2017-0.3, y = 0.2, label = "Ages 4-5 & 8-9", angle = 90) +
+  geom_vline(xintercept = 2018-0.4, linetype = "dashed") + 
+  annotate("text", x = 2018-0.3, y = 0.2, label = "Ages 9-10", angle = 90) + 
+  geom_vline(xintercept = 2019-0.4, linetype = "dashed") + 
+  annotate("text", x = 2019-0.3, y = 0.2, label = "Ages 10-11", angle = 90)+
+  # geom_vline(xintercept = 2020-0.4) + 
+  # annotate("text", x = 2020-0.3, y = 1.5, label = "Ages 11-12 & 50-65", angle = 90)+
+  # geom_vline(xintercept = 2021-0.4,linetype = "dashed") + 
+  # annotate("text", x = 2021-0.3, y = 1.5, label = "Ages 12-16", angle = 90) + 
+  lims(y = c(-0.3,0.3)) + 
   geom_hline(yintercept = 0)
 
 

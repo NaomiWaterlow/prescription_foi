@@ -219,4 +219,9 @@ MRSA_PRESCRIPS <- ggplot(all_together, aes(x = fyear_start, y = value, colour = 
 
 
 # source RTI.R to get the flu plot
-grid.arrange(MRSA_PRESCRIPS, FLU_CHANGE, ncol =2)
+FIG4 <- grid.arrange(FLU_VACC, FLU_CHANGE, MRSA_PRESCRIPS,
+             layout_matrix = rbind(c(1,2),
+                                   c(3,3)))
+ggsave(paste0("plots/Fig4.pdf"), plot = FIG4, 
+       width = 20, height = 10)
+

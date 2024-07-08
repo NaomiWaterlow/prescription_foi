@@ -188,15 +188,18 @@ for(i in drugs_lookup$BNF_CHEMICAL_SUBSTANCE_CODE){
   
   if(nrow(target_data) > 0 ){
   PLOT_TEMP <-  ggplot(target_data,aes(x= date_time2, y = per_100k, colour = AGE_BAND, group = AGE_BAND) ) +
+    annotate("rect", xmin = as.Date("2020-03-01"), xmax = as.Date("2022-07-01"), ymin = 0, ymax = max(target_data$per_100k),
+             alpha = 0.4,fill = "grey") +
     geom_point( size =0.3) +
     geom_line()+
     labs(title = target_name) + facet_grid(GENDER~.) + 
     theme_bw() + 
     labs(x = "Month", y = "Prescriptions per 100k population", colour = "Age band") + 
+    guides(color = guide_legend(override.aes = list(size=2))) +
   #  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
     scale_color_manual(values = cc)
   
-  if(target == "0501013B0"){AMOX_PLOT <- PLOT_TEMP }
+  if(target == "0501050B0"){CLARITH_PLOT <- PLOT_TEMP }
   if(target == "0501120P0"){OF_PLOT <- PLOT_TEMP }
   
   print(target_name)
@@ -211,37 +214,54 @@ for(i in drugs_lookup$BNF_CHEMICAL_SUBSTANCE_CODE){
 
 # try to make a heatmap to investigate male vs female rates
 drugs_to_exclude <- drugs_lookup[total_prescriptions<100000,]$CHEMICAL_SUBSTANCE_BNF_DESCR
-# for this want to exclude ones with tiny numbers. Under 10k over whole time period?
+# for this want to exclude ones with tiny numbers. Under 100k over whole time period?
 
 
 # average per year
-all_data_annual <- all_data_ex[!(drug_name %in% drugs_to_exclude), mean(per_100k), by = c("drug_name", "GENDER", "AGE_BAND", "YEAR")]
+all_data_ex[drugs_lookup, on=c(drug_name = "CHEMICAL_SUBSTANCE_BNF_DESCR"), drug_type := i.Drug_type]
+all_data_annual <- all_data_ex[!(drug_name %in% drugs_to_exclude), mean(per_100k), by = c("drug_name", "GENDER", "AGE_BAND", "YEAR", "drug_type")]
 
 # cast to get male and female on same row
 target_year <- 2023
 
-relative_weightings <- dcast.data.table(all_data_annual, drug_name + AGE_BAND + YEAR ~ GENDER, value.var = "V1")
+relative_weightings <- dcast.data.table(all_data_annual, drug_name + AGE_BAND + YEAR + drug_type ~ GENDER, value.var = "V1")
 relative_weightings[, relative_gender := log(Female/Male)]
 temp <- relative_weightings[YEAR == target_year & AGE_BAND=="61-65",]
-drug_order <-  temp[order(relative_gender)]$drug_name
-relative_weightings$drug_name <- factor(relative_weightings$drug_name, levels = drug_order)
+# drug_order <-  temp[order(relative_gender)]$drug_name
+relative_weightings$drug_name <- factor(relative_weightings$drug_name)
 
 # ignore if less than double to cut out noise
 #relative_weightings[relative_gender > -0.4054651 & relative_gender  < 0.4054651, relative_gender := NA]
+
+relative_weightings[drug_type == "Penicillins", short_title :=  "Penicillins"]
+relative_weightings[drug_type == "Macrolides", short_title :=  "Macrolides"]
+relative_weightings[drug_type == "Cephalosportins and other beta-lactams", short_title :=  "Ceph's"]
+relative_weightings[drug_type == "Quinolones", short_title :=  "Quinolones"]
+relative_weightings[drug_type == "Clindamycin and lincomycin", short_title :=  "C&L"]
+relative_weightings[drug_type == "Sulfonamides and trimethoprim", short_title :=  "S&T"]
+relative_weightings[drug_type == "Some other antibacterials", short_title :=  "Other"]
+relative_weightings[drug_type == "Antileprotic drugs", short_title :=  "Lep"]
+relative_weightings[drug_type == "Tetracyclines", short_title :=  "Tetracyclines"]
+relative_weightings[drug_type == "Antituberculosis drugs", short_title :=  "TB"]
+relative_weightings[drug_type == "Urinary-tract infections", short_title :=  "UTIs"]
+relative_weightings[drug_type == "Metronidazole, tinidazole and ornidazole", short_title :=  "MTO"]
+relative_weightings <- relative_weightings[!is.na(relative_gender),]
 
 RELATIVE_GENDER <- ggplot(relative_weightings[YEAR == target_year], aes(x = AGE_BAND, y = drug_name, fill = relative_gender)) + 
   geom_tile() + 
   theme_linedraw() +
    scale_fill_gradient2(low = "#24693D", mid = "#F4F8FB",high = "#2A5783" ) + 
+  facet_grid(short_title~., scales = "free_y", space = "free") + 
   labs(x = "Age Band", y= "Antibiotic", fill = "relative rate (log)", 
-       title = paste0(target_year, " Relative prescription rate by sex. High = higher in female, Low = higher in male")) + 
+       title = paste0("Relative prescription rate by sex (",target_year,")")) + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+RELATIVE_GENDER
 
+LEG <- get_legend(CLARITH_PLOT) 
 
-LEG <- get_legend(AMOX_PLOT)
-
-grid.arrange(AMOX_PLOT + theme(legend.position = "NONE"), OF_PLOT+ theme(legend.position = "NONE"), LEG ,RELATIVE_GENDER, layout_matrix = rbind(c(1,1,1,1,1, 3, 4,4,4,4,4,4,4),
+FIG1 <- grid.arrange(CLARITH_PLOT + theme(legend.position = "NONE"), OF_PLOT+ theme(legend.position = "NONE"), LEG ,RELATIVE_GENDER, layout_matrix = rbind(c(1,1,1,1,1, 3, 4,4,4,4,4,4,4),
                                                                              c(2,2,2,2,2, 3, 4,4,4,4,4,4,4))
 )
 
-
+ggsave(paste0("plots/Fig1.pdf"), plot = FIG1, 
+       width = 20, height = 10)
