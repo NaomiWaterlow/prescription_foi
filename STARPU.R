@@ -22,7 +22,7 @@ data_2023[, AGE_BAND := factor(AGE_BAND, levels = c("0-1", "2-5",
                                                       "46-50", "51-55",  "56-60", "61-65", 
                                                       "66-70", "71-75", "76-80",  "81-85" ,
                                                       "86+"))]
-
+fwrite(data_2023, file = "data/starpu_overall.csv")
 
 STAR_PU_NEW <- dcast.data.table(data_2023, AGE_BAND ~ GENDER, value.var = "star_pu")
 STAR_PU_NEW[, AGE_BAND := factor(AGE_BAND, levels = c("0-1", "2-5", 
@@ -56,6 +56,8 @@ data_2023_drugs[, rate := V1/pop]
 base_rate_drugs <- data_2023_drugs[AGE_BAND=="61-65" & GENDER == "Female", c("rate", "drug_starpu")]
 data_2023_drugs[base_rate_drugs, on = c("drug_starpu"), base := i.rate]
 data_2023_drugs[, star_pu := rate/base]
+
+fwrite(data_2023_drugs, file = "data/starpu_per_drug.csv")
 
 all_drugs <- unique(data_2023_drugs$drug_starpu)
 
