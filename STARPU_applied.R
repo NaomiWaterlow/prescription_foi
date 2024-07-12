@@ -1,5 +1,10 @@
+# STARPU.R must be run first
+
 # applying the starpu
 library(scales)
+library(data.table)
+library(ggplot2)
+library(gridExtra)
 
 
 # load the pre-calculated starpus
@@ -104,7 +109,7 @@ ICB_items_overall[, normalised_rating := rating / mean_rating]
 
 ICB_items_drugs[drug_type == "Penicillins", short_title :=  "Penicillins"]
 ICB_items_drugs[drug_type == "Macrolides", short_title :=  "Macrolides"]
-ICB_items_drugs[drug_type == "Cephalosportins and other beta-lactams", short_title :=  "Ceph's"]
+ICB_items_drugs[drug_type == "Cephalosporins and other beta-lactams", short_title :=  "Ceph's"]
 ICB_items_drugs[drug_type == "Quinolones", short_title :=  "Quinolones"]
 ICB_items_drugs[drug_type == "Clindamycin and lincomycin", short_title :=  "C&L"]
 ICB_items_drugs[drug_type == "Sulfonamides and trimethoprim", short_title :=  "S&T"]
@@ -116,7 +121,9 @@ ICB_items_drugs[drug_type == "Urinary-tract infections", short_title :=  "UTIs"]
 ICB_items_drugs[drug_type == "Metronidazole, tinidazole and ornidazole", short_title :=  "MTO"]
 ICB_items_drugs[drug_type == "Aminoglycosides", short_title :=  "Aminoglycosides"]
 
-
+# calculate total prescriptions by category
+ICB_items_drugs[, drug_total := sum(ITEMS), by ="drug_type"]
+ICB_items_drugs[, new_label := paste0(drug_type, " (n=", format(drug_total, big.mark=",", scientific=F, trim = T), ")")]
 
 STAR_PU_APPLIED <- ggplot(ICB_items_drugs[ICB_CODE != "QXU" & ICB_CODE !="QJM" & ICB_CODE != "QOP"], aes(x = short_title, y = log(normalised_rating))) + 
   geom_blank(aes(y = 0, ymin =-abs(normalised_rating)*0.5 , ymax = abs(normalised_rating)*0.5) ) +
@@ -125,17 +132,21 @@ STAR_PU_APPLIED <- ggplot(ICB_items_drugs[ICB_CODE != "QXU" & ICB_CODE !="QJM" &
   geom_hline(yintercept = log(ICB_items_overall[ICB_CODE == "QJM",normalised_rating]),colour = "#1E88E5" ,alpha = 1, size = 1) +
   geom_hline(yintercept = log(ICB_items_overall[ICB_CODE == "QOP",normalised_rating]),colour = "#FFC107" ,alpha = 1, size = 1) +
     geom_jitter(width = 0.2, colour = "grey20") + theme_bw() +
-  facet_wrap(.~short_title, scales = "free",ncol = 5) + 
-  geom_point(data = ICB_items_drugs[ICB_CODE == "QUY"], aes(x = short_title, y = log(normalised_rating)), colour = "#D81B60") + 
-  geom_point(data = ICB_items_drugs[ICB_CODE == "QJM"], aes(x = short_title, y = log(normalised_rating)), colour = "#1E88E5") + 
-  geom_point(data = ICB_items_drugs[ICB_CODE == "QOP"], aes(x = short_title, y = log(normalised_rating)), colour = "#FFC107") + 
+  facet_wrap(.~new_label, scales = "free",ncol = 5, labeller = label_wrap_gen(width=20)) + 
+  geom_point(data = ICB_items_drugs[ICB_CODE == "QUY"], aes(x = short_title, y = log(normalised_rating)), colour = "#D81B60", size =3) + 
+  geom_point(data = ICB_items_drugs[ICB_CODE == "QJM"], aes(x = short_title, y = log(normalised_rating)), colour = "#1E88E5", size =3) + 
+  geom_point(data = ICB_items_drugs[ICB_CODE == "QOP"], aes(x = short_title, y = log(normalised_rating)), colour = "#FFC107", size =3) + 
   labs(x = "Drug Family", y = "Normalised prescriptions per STARPU population (log-scale)", colour = "ICB Code")+ 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   theme(axis.text.x = element_blank())
 
 
-FIG2 <- grid.arrange(NEW_STARPU, STAR_PU_APPLIED, layout_matrix = rbind(c(1,1,2,2,2),
-                                                                        c(1,1,2,2,2)))
+FIG2 <- grid.arrange(NEW_STARPU + theme(legend.position = "None"),
+                     STAR_PU_APPLIED,
+                     OLD_STARPU + theme(legend.position = "None"),
+                     LEG,
+                     layout_matrix = rbind(c(3,3,1,1,4,2,2,2,2,2),
+                                           c(3,3,1,1,4,2,2,2,2,2)))
 
 ggsave(paste0("plots/Fig2.pdf"), plot = FIG2, 
        width = 20, height = 10)

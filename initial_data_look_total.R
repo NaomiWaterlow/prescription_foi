@@ -72,7 +72,7 @@ for(i in drugs_lookup$BNF_CHEMICAL_SUBSTANCE_CODE){
 # Load in the population sizes
 
 
-pop_sizes_to_21 <- fread("data/MYEB2_detailed_components_of_change_series_EW_(2020_geog20).csv")
+  pop_sizes_to_21 <- fread("data/MYEB2_detailed_components_of_change_series_EW_(2020_geog20).csv")
 pop_sizes_to_21 <- pop_sizes_to_21[, c("laname20", "age", "sex", "population_2015", "population_2016", 
                         "population_2017", "population_2018", "population_2019", "population_2020")]
 
