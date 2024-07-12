@@ -12,22 +12,22 @@
 0501014N0,Ticarcillin with clavulanic acid,Y,N,Penicillins (excluding β-lactamase inhibitors),Penicillins
 0501014S0,Piperacillin sodium/tazobactam sodium,Y,Y,Penicillins (excluding β-lactamase inhibitors),Penicillins
 0501015P0,Pivmecillinam hydrochloride,Y,N,Penicillins (excluding β-lactamase inhibitors),Penicillins
-0501021A0,Cefaclor,Y,N,First and second-generation cephalosporins,Cephalosportins and other beta-lactams
-0501021B0,Cefadroxil,Y,N,First and second-generation cephalosporins,Cephalosportins and other beta-lactams
-0501021C0,Cefixime,Y,N,"Third, fourth and fifth-generation cephalosporins",Cephalosportins and other beta-lactams
-0501021D0,Cefotaxime sodium,Y,N,"Third, fourth and fifth-generation cephalosporins",Cephalosportins and other beta-lactams
-0501021E0,Cefoxitin sodium,Y,N,First and second-generation cephalosporins,Cephalosportins and other beta-lactams
-0501021F0,Cefpodoxime,Y,N,"Third, fourth and fifth-generation cephalosporins",Cephalosportins and other beta-lactams
-0501021G0,Ceftriaxone sodium,Y,N,"Third, fourth and fifth-generation cephalosporins",Cephalosportins and other beta-lactams
-0501021H0,Ceftazidime pentahydrate,Y,N,"Third, fourth and fifth-generation cephalosporins",Cephalosportins and other beta-lactams
-0501021J0,Cefuroxime sodium,Y,N,First and second-generation cephalosporins,Cephalosportins and other beta-lactams
-0501021K0,Cefuroxime axetil,Y,N,First and second-generation cephalosporins,Cephalosportins and other beta-lactams
-0501021L0,Cefalexin,Y,N,First and second-generation cephalosporins,Cephalosportins and other beta-lactams
-0501021M0,Cefradine,Y,N,First and second-generation cephalosporins,Cephalosportins and other beta-lactams
-0501022A0,Meropenem,Y,N,Carbapenems,Cephalosportins and other beta-lactams
-0501022B0,Ertapenem sodium,Y,N,Carbapenems,Cephalosportins and other beta-lactams
-0501022D0,Imipenem with cilastatin,Y,N,Carbapenems,Cephalosportins and other beta-lactams
-0501023A0,Aztreonam,Y,N,Other antibacterials,Cephalosportins and other beta-lactams
+0501021A0,Cefaclor,Y,N,First and second-generation cephalosporins,Cephalosporins and other beta-lactams
+0501021B0,Cefadroxil,Y,N,First and second-generation cephalosporins,Cephalosporins and other beta-lactams
+0501021C0,Cefixime,Y,N,"Third, fourth and fifth-generation cephalosporins",Cephalosporins and other beta-lactams
+0501021D0,Cefotaxime sodium,Y,N,"Third, fourth and fifth-generation cephalosporins",Cephalosporins and other beta-lactams
+0501021E0,Cefoxitin sodium,Y,N,First and second-generation cephalosporins,Cephalosporins and other beta-lactams
+0501021F0,Cefpodoxime,Y,N,"Third, fourth and fifth-generation cephalosporins",Cephalosporins and other beta-lactams
+0501021G0,Ceftriaxone sodium,Y,N,"Third, fourth and fifth-generation cephalosporins",Cephalosporins and other beta-lactams
+0501021H0,Ceftazidime pentahydrate,Y,N,"Third, fourth and fifth-generation cephalosporins",Cephalosporins and other beta-lactams
+0501021J0,Cefuroxime sodium,Y,N,First and second-generation cephalosporins,Cephalosporins and other beta-lactams
+0501021K0,Cefuroxime axetil,Y,N,First and second-generation cephalosporins,Cephalosporins and other beta-lactams
+0501021L0,Cefalexin,Y,N,First and second-generation cephalosporins,Cephalosporins and other beta-lactams
+0501021M0,Cefradine,Y,N,First and second-generation cephalosporins,Cephalosporins and other beta-lactams
+0501022A0,Meropenem,Y,N,Carbapenems,Cephalosporins and other beta-lactams
+0501022B0,Ertapenem sodium,Y,N,Carbapenems,Cephalosporins and other beta-lactams
+0501022D0,Imipenem with cilastatin,Y,N,Carbapenems,Cephalosporins and other beta-lactams
+0501023A0,Aztreonam,Y,N,Other antibacterials,Cephalosporins and other beta-lactams
 0501030F0,Demeclocycline hydrochloride,N,N,Tetracyclines,Tetracyclines
 0501030I0,Doxycycline hyclate,N,Y,Tetracyclines,Tetracyclines
 0501030L0,Lymecycline,N,N,Tetracyclines,Tetracyclines
