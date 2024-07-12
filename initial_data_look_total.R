@@ -33,11 +33,11 @@ all_data[, "MONTH" := as.numeric(substr(YEAR_MONTH, 5, 6)),]
 
 # convert to numeric -> the "*"s get converted to NAs
 all_data[, UNIQUE_PATIENT_COUNT := as.numeric(UNIQUE_PATIENT_COUNT)]
-# Change stars to -1 so can be used in numeric #### NAOMI: you know this "1" now not -1? 
+# Change stars to 1 so can be used in numeric 
 all_data[is.na(UNIQUE_PATIENT_COUNT), UNIQUE_PATIENT_COUNT := 1]
 # convert to numeric -> the "*"s get converted to NAs
 all_data[, ITEMS := as.numeric(ITEMS)]
-# Change stars to -1 so can be used in numeric #### NAOMI: you know this "1" now not -1? 
+# Change stars to 1 so can be used in numeric 
 all_data[is.na(ITEMS), ITEMS := 1]
 
 #### Save re-formatted data
@@ -54,9 +54,10 @@ all_data_ex <- all_data[GENDER != "Indeterminate" & GENDER != "Unknown" & AGE_BA
 100 * dim(all_data_ex)[1] / dim(all_data)[1] # 74% of the rows kept
 100 - 100 * sum(all_data_ex$ITEMS) / sum(all_data$ITEMS) # but only 4% of items removed
 
-
+# check folder is there for saving the plots into
+if(!file.exists("plots/per_pop")){dir.create(file.path("plots/seasonality/"))}
 #### Explore seasonality by age and add total number of drugs etc to main data
-for(i in drugs_lookup$BNF_CHEMICAL_SUBSTANCE_CODE){
+for(i in unique(all_data_ex$BNF_CHEMICAL_SUBSTANCE_CODE)){
   
   target <- i 
   #target <- "0501013B0"
@@ -64,11 +65,17 @@ for(i in drugs_lookup$BNF_CHEMICAL_SUBSTANCE_CODE){
   
   target_data <- all_data_ex[BNF_CHEMICAL_SUBSTANCE_CODE == target]
   
-  # Explore monthly and age variation by year #### NAOMI: Is this worth saving? in plots for seasonality? 
-  ggplot(target_data,aes(x= AGE_BAND, y = ITEMS, colour = YEAR) ) +
+  # Explore monthly and age variation by year 
+ TEMP <- ggplot(target_data,aes(x= AGE_BAND, y = ITEMS, colour = YEAR) ) +
     geom_jitter( alpha =0.5) +
-    labs(title = target_name) + facet_grid(.~MONTH)
+    labs(title = target_name,x = "Age Band", y = "Prescription items", 
+         colour = "Year") + facet_grid(.~MONTH) + theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
   
+   ggsave(paste0("plots/seasonality/",str_replace_all(target_name, "[^[:alnum:]]", " "),
+                "_seasonality.pdf"), plot = TEMP, 
+         width = 20, height = 10)
+ 
   # # percentage of data rows that are in the 1-4 category
   prop_1_4 <- table(target_data$ITEMS == 1)["TRUE"] / dim(target_data)[1]
   print(paste0(target_name, "--- Proportion of data points with 1-4 items prescribed: ", round(prop_1_4,2)))
@@ -101,7 +108,7 @@ pop_sizes_to_21[,c("laname20","population_2015", "population_2016",
 pop_sizes_to_21 <- unique(pop_sizes_to_21)
 
 # convert sex to match variable in national prescription data 
-pop_sizes_to_21[sex == 1, sex2 := "M"] ###### NAOMI: have you double checked these the right way round? 
+pop_sizes_to_21[sex == 1, sex2 := "M"] 
 pop_sizes_to_21[sex == 2, sex2 := "F"]
 pop_sizes_to_21[, sex := sex2]
 pop_sizes_to_21[, sex2 := NULL]
@@ -240,7 +247,7 @@ for(i in drugs_lookup$BNF_CHEMICAL_SUBSTANCE_CODE){
 
 ###### Heat map of male vs female rates
 # Exclude those with small numbers to guarantee sufficient prescriptions
-# Use only those with more than 100k over whole time period?
+# Use only those with more than 100k over whole time period
 drugs_to_exclude <- drugs_lookup[total_prescriptions<100000,]$CHEMICAL_SUBSTANCE_BNF_DESCR
 # removes 63 drugs
 
@@ -255,13 +262,9 @@ target_year <- 2023
 relative_weightings <- dcast.data.table(all_data_annual, drug_name + AGE_BAND + YEAR + drug_type ~ GENDER, value.var = "V1")
 # take log of the relative levels 
 relative_weightings[, relative_gender := log(Female/Male)]
-# temp <- relative_weightings[YEAR == target_year & AGE_BAND=="61-65",] #### NAOMI: think we can remove this and next?
-# drug_order <-  temp[order(relative_gender)]$drug_name
+
 # factor drug name
 relative_weightings$drug_name <- factor(relative_weightings$drug_name)
-
-# ignore if less than double to cut out noise ##### NAOMI: cut this too? 
-#relative_weightings[relative_gender > -0.4054651 & relative_gender  < 0.4054651, relative_gender := NA]
 
 ## Add in short titles for figure formatting 
 relative_weightings[drug_type == "Penicillins", short_title :=  "Penicillins"]
@@ -290,7 +293,7 @@ RELATIVE_GENDER <- ggplot(relative_weightings[YEAR == target_year], aes(x = AGE_
        title = paste0("Relative prescription rate by sex (",target_year,")")) + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 RELATIVE_GENDER
-ggsave(paste0("plots/per_pop/relative_gender_",target_year,".pdf"), #### NAOMI: suggested to output here so we can see if any differences? 2019 has even greater extremes but general trend same
+ggsave(paste0("plots/per_pop/relative_gender_",target_year,".pdf"), 
        plot = RELATIVE_GENDER, width = 20, height = 10)
 
 LEG <- get_legend(CLARITH_PLOT) 
