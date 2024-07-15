@@ -6,7 +6,7 @@ library(stringr)
 library(ggpubr)
 
 # STAR-PU analysis
-dir.create(file.path("plots/starpu"))
+if(!file.exists("plots/per_pop")){dir.create(file.path("plots/starpu"))}
 # INitially just do updated one with all data. 
 
 all_data_ex <- fread("data/all_data_organised.csv")
@@ -41,7 +41,7 @@ STAR_PU_NEW[, AGE_BAND := factor(AGE_BAND, levels = c("0-1", "2-5",
 NEW_STARPU<- ggplot(data_2023, aes( x = GENDER, y = AGE_BAND, fill = star_pu)) + 
   geom_tile() + geom_text(aes(label = round(star_pu,2)), colour = "grey14") + 
   theme_bw() + 
-  labs(y = "Age Band", x = "Gender", fill = "value", title = "Updated measure") + 
+  labs(y = "Age Band", x = "Gender", fill = "value", title = "B: Updated Comparison Metric") + 
   scale_fill_gradient2(low = "#24693D", mid = "#F4F8FB",high = "#2A5783" , midpoint = 1, 
                        limits=c(0,2)) 
 
@@ -61,7 +61,7 @@ LEG <- get_legend(NEW_STARPU)
 OLD_STARPU <- ggplot(old_starpu, aes( x = GENDER, y = AGE_BAND, fill = star_pu)) + 
   geom_tile() + geom_text(aes(label = round(star_pu,2)), colour = "grey14") + 
   theme_bw() + 
-  labs(y = "Age Band", x = "Gender", fill = "value", title = "2013 STAR-PU") + 
+  labs(y = "Age Band", x = "Gender", fill = "value", title = "A: 2013 STAR-PU") + 
   scale_fill_gradient2(low = "#24693D", mid = "#F4F8FB",high = "#2A5783" , midpoint = 1, 
                        limits=c(0,2)) 
 

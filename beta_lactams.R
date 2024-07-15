@@ -228,9 +228,12 @@ MRSA_PRESCRIPS <- ggplot(all_together, aes(x = fyear_start, y = value, colour = 
   geom_blank(aes(ymin =0 , ymax = upper_lim) ) +
   facet_wrap(nice_labels~AGE_BAND_COMBO, scales = "free_y", nrow = 2) + 
   geom_line() + geom_point(size = 0.4) + theme_bw() + 
+  annotate("rect", xmin = 2019.5, xmax = 2022, ymin = -0.7, ymax = 1.8,
+           alpha = 0.4,fill = "grey") +
   scale_linetype_manual(values = c(1,2)) + 
+  
   labs(x = "Date", y = "Proportion MRSI (over MRSA and MSSA), Annual beta-lactam prescription rate",
-       title = "", colour = "Age Band", linetype = "Sex") 
+       title = "C: BSI resistance vs prescriptions", colour = "Age Band", linetype = "Sex") 
 
 MRSA_PRESCRIPS
 

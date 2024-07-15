@@ -225,7 +225,7 @@ AWARE1 <- ggplot(all_data_ex_aware_av, aes(x = AGE_BAND, y = perc_each_class,
   theme_bw() + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
   labs(y = "Percent of total prescriptions by age group in each category",
-       title = "AWaRe Classifications", x = "Age band", colour = "Year") + 
+       title = "A: AWaRe Classifications", x = "Age band", colour = "Year") + 
   geom_hline(data =all_data_ex_aware_av[aware_class=="Access"], aes(yintercept = 60), 
              linetype = "dashed") + 
   geom_hline(data =all_data_ex_aware_av[aware_class=="Access"], aes(yintercept = 80), 
@@ -253,7 +253,7 @@ AWARE2 <- ggplot(drug_specific[YEAR == 2023 ], aes(x = AGE_BAND, y = V1, group =
                                                  drug_name == "Amoxicillin" | drug_name == "Clarithromycin")], 
             aes(x = AGE_BAND, y = V1, colour = str_wrap(drug_name, 10), group = drug_name), linewidth = 1) + 
   theme_bw() + 
-  labs(x = "Age band", y = "Total prescriptions", title = "AWaRe Classifications (2023), with key drugs highlighted", 
+  labs(x = "Age band", y = "Total prescriptions", title = "B: AWaRe Classifications (2023), with key drugs highlighted", 
        colour = "Drug") + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
   geom_vline(xintercept = "11-15", linetype = "dotted")+ 

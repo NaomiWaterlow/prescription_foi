@@ -233,8 +233,8 @@ for(i in drugs_lookup$BNF_CHEMICAL_SUBSTANCE_CODE){
     scale_color_manual(values = cc)
   
   # Save these for Figure 1 plot below
-  if(target == "0501050B0"){CLARITH_PLOT <- PLOT_TEMP }
-  if(target == "0501120P0"){OF_PLOT <- PLOT_TEMP }
+  if(target == "0501050B0"){CLARITH_PLOT <- PLOT_TEMP + labs(title= "A: Clarithromycin") }
+  if(target == "0501120P0"){OF_PLOT <- PLOT_TEMP+ labs(title= "B: Ofloxacin")  }
   
   print(target_name)
   
@@ -290,7 +290,7 @@ RELATIVE_GENDER <- ggplot(relative_weightings[YEAR == target_year], aes(x = AGE_
    scale_fill_gradient2(low = "#24693D", mid = "#F4F8FB",high = "#2A5783" ) + 
   facet_grid(short_title~., scales = "free_y", space = "free") + 
   labs(x = "Age Band", y= "Antibiotic", fill = "relative rate (log)", 
-       title = paste0("Relative prescription rate by sex (",target_year,")")) + 
+       title = paste0("C: Relative prescription rate by sex (",target_year,")")) + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 RELATIVE_GENDER
 ggsave(paste0("plots/per_pop/relative_gender_",target_year,".pdf"), 

@@ -136,13 +136,13 @@ STAR_PU_APPLIED <- ggplot(ICB_items_drugs[ICB_CODE != "QXU" & ICB_CODE !="QJM" &
   geom_point(data = ICB_items_drugs[ICB_CODE == "QUY"], aes(x = short_title, y = log(normalised_rating)), colour = "#D81B60", size =3) + 
   geom_point(data = ICB_items_drugs[ICB_CODE == "QJM"], aes(x = short_title, y = log(normalised_rating)), colour = "#1E88E5", size =3) + 
   geom_point(data = ICB_items_drugs[ICB_CODE == "QOP"], aes(x = short_title, y = log(normalised_rating)), colour = "#FFC107", size =3) + 
-  labs(x = "Drug Family", y = "Normalised prescriptions per STARPU population (log-scale)", colour = "ICB Code")+ 
+  labs(x = "Drug Family", y = "Normalised prescriptions per UCM population (log-scale)", colour = "ICB Code")+ 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   theme(axis.text.x = element_blank())
 
 
 FIG2 <- grid.arrange(NEW_STARPU + theme(legend.position = "None"),
-                     STAR_PU_APPLIED,
+                     STAR_PU_APPLIED + labs(title = "C: Comparison of overall vs family specific UCMs"),
                      OLD_STARPU + theme(legend.position = "None"),
                      LEG,
                      layout_matrix = rbind(c(3,3,1,1,4,2,2,2,2,2),

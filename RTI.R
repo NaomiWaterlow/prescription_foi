@@ -92,7 +92,7 @@ FLU_VACC <- ggplot(temp, aes(x = date_time2, y = normalised_rate, colour = AGE_B
            alpha = 0.4,fill = "grey") +
   geom_line() + theme_bw() + 
   labs(x = "Date", y = "Relative prescirption rate of RTI antibiotics, cf 15-50 age group", 
-       title = "RTI antibiotics, excluding Amoxicillin", 
+       title = "A: RTI antibiotics, excluding Amoxicillin", 
        colour = "Age band") +
   geom_vline(xintercept = as.Date("2015-10-01"), linetype = "dashed") + 
   annotate("text", x = as.Date("2015-10-01")+30, y = 3.5, label = "Ages 5-7", angle = 90) +
@@ -134,7 +134,7 @@ FLU_CHANGE <- ggplot(flu_total, aes(x = flu_year, y = prop_change, colour = AGE_
   geom_line() + theme_bw() + 
   geom_point() + 
   labs(x = "Flu season", y = "Change in number of prescirptions from previous year", 
-       title = "RTI antibiotics (flu season), excluding Amoxicillin", 
+       title = "A: RTI antibiotics (flu season), excluding Amoxicillin", 
        colour = "Age band") +
   geom_vline(xintercept = 2016-0.4, linetype = "dashed") + 
   annotate("text", x = 2016-0.3, y = 1.5, label = "Ages 7-8", angle = 90)+
@@ -157,7 +157,7 @@ FLU_CHANGE <- ggplot(flu_total[flu_year < 2020, ], aes(x = flu_year, y = prop_ch
   geom_line() + theme_bw() + 
   geom_point() + 
   labs(x = "Flu season", y = "Change in number of prescirptions from previous year", 
-       title = "RTI antibiotics (flu season), excluding Amoxicillin", 
+       title = "B: RTI antibiotics (flu season), excluding Amoxicillin", 
        colour = "Age band") +
   geom_vline(xintercept = 2016-0.4, linetype = "dashed") + 
   annotate("text", x = 2016-0.3, y = 0.2, label = "Ages 7-8", angle = 90)+
