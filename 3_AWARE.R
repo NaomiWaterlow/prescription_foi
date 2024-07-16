@@ -4,7 +4,7 @@
 #######################################################################################
 
 # load data and lookup file
-all_data_ex <- fread("data/all_data_organised.csv")
+all_data_ex <- fread(paste0("data/",sensitivity_choice,"/all_data_organised_",sensitivity_choice,".csv"))
 aware_lookup <- fread("data/AWARE_Classification.csv")
 
 # when name matches add the aware calssification
@@ -269,8 +269,10 @@ AWARE2 <- ggplot(drug_specific[YEAR == 2023 ], aes(x = AGE_BAND, y = V1, group =
 FIG3 <- grid.arrange(AWARE1, AWARE2, ncol=2)
 
 # save
-ggsave(paste0("plots/Fig3.pdf"), plot = FIG3, 
+ggsave(paste0("plots/",sensitivity_choice,"/Fig3_",sensitivity_choice,".pdf"), plot = FIG3, 
        width = 20, height = 10)
+
+
 # calculate the total % in aware across alla ge groups and sex
 overall_aware <- drug_specific[YEAR == 2023, sum(V1), by = c("aware_class")]
 overall_aware[, total := sum(overall_aware$V1)]

@@ -5,7 +5,7 @@
 #######################################################################################
 
 # Read in data
-all_data_ex <- fread("data/all_data_organised.csv")
+all_data_ex <- fread(paste0("data/",sensitivity_choice,"/all_data_organised_",sensitivity_choice,".csv"))
 drugs_lookup <- fread("data/drugs_lookup.csv")
 pop_sizes_all <- fread("data/pop_sizes.csv")
 #Match drug name

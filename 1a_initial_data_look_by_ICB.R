@@ -7,7 +7,7 @@
 
 
 #create lookup
-all_ICB_data <- fread("data/ICB_Data/all_ICB_data.csv")
+all_ICB_data <- fread(paste0("data/",sensitivity_choice,"/all_ICB_data_",sensitivity_choice,".csv"))
 drugs_lookup <- fread("data/drugs_lookup.csv")
 all_ICB_data[drugs_lookup, on="BNF_CHEMICAL_SUBSTANCE_CODE", drug_name := CHEMICAL_SUBSTANCE_BNF_DESCR]
 
@@ -21,7 +21,7 @@ all_ICB_data[, AGE_BAND := factor(AGE_BAND, levels = c("0-1", "2-5",
 for(i in drugs_lookup$BNF_CHEMICAL_SUBSTANCE_CODE){
   
   target <- i 
-  target <- "0501013B0"
+ # target <- "0501013B0"
   target_name <- all_ICB_data[BNF_CHEMICAL_SUBSTANCE_CODE == target]$drug_name[1]
   
   ICB_target <- all_ICB_data[BNF_CHEMICAL_SUBSTANCE_CODE == target]

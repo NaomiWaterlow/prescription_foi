@@ -4,11 +4,11 @@
 #######################################################################################
 
 # load the pre-calculated starpus
-starpu_by_drugs <- fread(file = "data/starpu_per_drug.csv")
-starpu_overall <- fread(file = "data/starpu_overall.csv")
+starpu_by_drugs <- fread(file = paste0("data/",sensitivity_choice,"/starpu_per_drug_",sensitivity_choice,".csv"))
+starpu_overall <- fread(file = paste0("data/",sensitivity_choice,"/starpu_overall_",sensitivity_choice,".csv"))
 
 # load the cleaned ICB data
-ICB_data <- fread("data/ICB_data/all_ICB_data.csv")
+ICB_data <- fread(paste0("data/",sensitivity_choice,"/all_ICB_data_",sensitivity_choice,".csv"))
 ICB_data_2023 <- ICB_data[YEAR == 2023]
 drugs_lookup <- fread("data/drugs_lookup.csv")
 # load in the ICB population data
@@ -150,7 +150,7 @@ FIG2 <- grid.arrange(NEW_STARPU + theme(legend.position = "None"),
                      layout_matrix = rbind(c(3,3,1,1,4,2,2,2,2,2),
                                            c(3,3,1,1,4,2,2,2,2,2)))
 #save
-ggsave(paste0("plots/Fig2.pdf"), plot = FIG2, 
+ggsave(paste0("plots/",sensitivity_choice,"/Fig2_",sensitivity_choice,".pdf"), plot = FIG2, 
        width = 20, height = 10)
 
 

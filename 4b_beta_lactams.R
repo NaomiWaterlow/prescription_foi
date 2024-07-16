@@ -4,7 +4,8 @@
 #######################################################################################
 
 # load in the data 
-all_data_ex <- fread("data/all_data_organised.csv")
+#read in the data 
+all_data_ex <- fread(paste0("data/",sensitivity_choice,"/all_data_organised_",sensitivity_choice,".csv"))
 drugs_lookup <- fread("data/drugs_lookup.csv")
 pop_sizes_all <- fread("data/pop_sizes.csv")
 
@@ -218,6 +219,6 @@ MRSA_PRESCRIPS
 FIG4 <- grid.arrange(FLU_VACC, FLU_CHANGE, MRSA_PRESCRIPS,
              layout_matrix = rbind(c(1,2),
                                    c(3,3)))
-ggsave(paste0("plots/Fig4.pdf"), plot = FIG4, 
+ggsave(paste0("plots/",sensitivity_choice,"/Fig4_",sensitivity_choice,".pdf"), plot = FIG4, 
        width = 20, height = 10)
 

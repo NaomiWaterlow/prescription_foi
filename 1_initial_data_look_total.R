@@ -26,29 +26,173 @@ all_data[, "MONTH" := as.numeric(substr(YEAR_MONTH, 5, 6)),]
 
 # convert to numeric -> the "*"s get converted to NAs
 all_data[, UNIQUE_PATIENT_COUNT := as.numeric(UNIQUE_PATIENT_COUNT)]
-# Change stars to 1 so can be used in numeric 
-all_data[is.na(UNIQUE_PATIENT_COUNT), UNIQUE_PATIENT_COUNT := 1]
 # convert to numeric -> the "*"s get converted to NAs
 all_data[, ITEMS := as.numeric(ITEMS)]
-# Change stars to 1 so can be used in numeric 
-all_data[is.na(ITEMS), ITEMS := 1]
+
+if(sensitivity_choice == "default_1"){
+
+  all_data[is.na(UNIQUE_PATIENT_COUNT), UNIQUE_PATIENT_COUNT := 1]
+
+  all_data[is.na(ITEMS), ITEMS := 1]
+  
+} else if (sensitivity_choice == "sens_4"){
+
+  all_data[is.na(UNIQUE_PATIENT_COUNT), UNIQUE_PATIENT_COUNT := 4]
+
+  all_data[is.na(ITEMS), ITEMS := 4]
+  
+} else if (sensitivity_choice == "m4_f1"){
+  
+  all_data[is.na(UNIQUE_PATIENT_COUNT) & 
+                 GENDER == "Male", UNIQUE_PATIENT_COUNT := 4]
+  all_data[is.na(UNIQUE_PATIENT_COUNT) & 
+                 GENDER == "Female", UNIQUE_PATIENT_COUNT := 1]
+  all_data[is.na(UNIQUE_PATIENT_COUNT) & 
+                 GENDER == "Indeterminate", UNIQUE_PATIENT_COUNT := 0]
+  all_data[is.na(UNIQUE_PATIENT_COUNT) & 
+                 GENDER == "Unknown", UNIQUE_PATIENT_COUNT := 0]
+  
+  all_data[is.na(ITEMS) & 
+                 GENDER == "Male", ITEMS := 4]
+  all_data[is.na(ITEMS) & 
+                 GENDER == "Female", ITEMS := 1]
+  all_data[is.na(ITEMS) & 
+                 GENDER == "Indeterminate", ITEMS := 0]
+  all_data[is.na(ITEMS) & 
+                 GENDER == "Unknown", ITEMS := 0]
+  
+} else if (sensitivity_choice == "20_cutoff"){
+  
+  all_data[is.na(UNIQUE_PATIENT_COUNT), UNIQUE_PATIENT_COUNT := 1]
+  
+  all_data[is.na(UNIQUE_PATIENT_COUNT) & 
+                 AGE_BAND %in% c("0-1", "2-5", "6-10", 
+                                 "11-15", "16-20"), UNIQUE_PATIENT_COUNT := 4]
+  
+  all_data[is.na(UNIQUE_PATIENT_COUNT) & 
+                 AGE_BAND %in% c("Unknown"), UNIQUE_PATIENT_COUNT := 0]
+  
+  all_data[is.na(ITEMS), ITEMS := 1]
+  
+  all_data[is.na(ITEMS) & 
+                 AGE_BAND %in% c("0-1", "2-5", "6-10", 
+                                 "11-15", "16-20"), ITEMS := 4]
+  
+  all_data[is.na(ITEMS) & 
+                 AGE_BAND %in% c("Unknown"), ITEMS := 0]
+  
+} else {
+  print("Not a valid sensitivity choice")
+  stop()
+}
 
 #### Save re-formatted data
-fwrite(all_data, "data/all_data.csv")
+fwrite(all_data, paste0("data/",sensitivity_choice,"/all_data_",sensitivity_choice,".csv"))
 
 # drop all the ones that have less than an average of 10 prescriptions per year (i.e. < 90 prescriptions in total)
 temp <- all_data[, sum(ITEMS), by = "drug_name"]
 to_remove_low <- (temp[which(temp$V1 < 90)]$drug_name) # Removes 22 drugs
 
+# check the trend in Unknown age bands 
+
+# Add in a date_time standardised column 
+all_data[MONTH <10, date_time := paste0(YEAR, "-0",MONTH,"-01")] # add a zero to convert single month value to 2digits
+all_data[MONTH >= 10, date_time := paste0(YEAR, "-",MONTH,"-01")]
+all_data[, date_time2 := as.Date(date_time, try.format = "%z-%m-%d")] # in standard date time format
+
+# total by date
+tot_year_month <- all_data[, sum(ITEMS), by =c("date_time2")]
+
+#percent unknown by age
+temp_age <- all_data[, sum(ITEMS), by = c("date_time2", "AGE_BAND")]
+temp_age[tot_year_month, on = c("date_time2"), total := i.V1]
+temp_age[, percent := (V1/total)*100]
+temp_age[, type := "Age Band"]
+
+
+#percent unknown by gender
+temp_gender <- all_data[, sum(ITEMS), by = c("date_time2", "GENDER")]
+temp_gender[tot_year_month, on = c("date_time2"), total := i.V1]
+temp_gender[, percent := (V1/total)*100]
+temp_gender[, type := "Gender"]
+
+# combine for plotting
+temp_both <- rbind(temp_gender[GENDER == "Unknown", c("date_time2", "percent", "type")], 
+                   temp_age[AGE_BAND == "Unknown", c("date_time2", "percent", "type")])
+
+# PLOT
+UNKNOWN_TIME <- ggplot(temp_both, aes(x = date_time2, y = percent, colour = type)) + 
+  geom_line()+ 
+  labs(x = "Date", y = "Percent Unknown", type = "Variable") + 
+  theme_bw()
+#save for supplement
+ggsave(paste0("plots/",sensitivity_choice,"/unknown_time.pdf"), plot = UNKNOWN_TIME, 
+       width = 10, height = 5)
+
+
+# calculate Unknowns by drug 
+tot_drug <- all_data[, sum(ITEMS), by =c("drug_name")]
+temp_age_drug <- all_data[, sum(ITEMS), by = c("drug_name", "AGE_BAND")]
+temp_age_drug[tot_drug, on = c("drug_name"), total := i.V1]
+temp_age_drug[, percent := (V1/total)*100]
+temp_age_drug[, type := "Age Band"]
+temp_gender_drug <- all_data[, sum(ITEMS), by = c("drug_name", "GENDER")]
+temp_gender_drug[tot_drug, on = c("drug_name"), total := i.V1]
+temp_gender_drug[, percent := (V1/total)*100]
+temp_gender_drug[, type := "Gender"]
+
+# combine for plotting
+temp_both_drug <- rbind(temp_gender_drug[GENDER == "Unknown", c("drug_name", "percent", "type", "V1")], 
+                   temp_age_drug[AGE_BAND == "Unknown", c("drug_name", "percent", "type", "V1")])
+
+temp_both_drug_m <- melt.data.table(temp_both_drug, id.vars = c("drug_name", "type"))
+temp_both_drug_m[variable == "V1", variable := "number"]
+temp_both_drug_m[drugs_lookup, on = c(drug_name = "CHEMICAL_SUBSTANCE_BNF_DESCR"), drug_type := i.Drug_type]
+
+## Add in short titles for figure formatting 
+temp_both_drug_m[drug_type == "Penicillins", short_title :=  "Penicillins"]
+temp_both_drug_m[drug_type == "Macrolides", short_title :=  "Macrolides"]
+temp_both_drug_m[drug_type == "Cephalosporins and other beta-lactams", short_title :=  "Ceph's"]
+temp_both_drug_m[drug_type == "Quinolones", short_title :=  "Quinolones"]
+temp_both_drug_m[drug_type == "Clindamycin and lincomycin", short_title :=  "C&L"]
+temp_both_drug_m[drug_type == "Sulfonamides and trimethoprim", short_title :=  "S&T"]
+temp_both_drug_m[drug_type == "Some other antibacterials", short_title :=  "Other"]
+temp_both_drug_m[drug_type == "Antileprotic drugs", short_title :=  "Lep"]
+temp_both_drug_m[drug_type == "Tetracyclines", short_title :=  "Tetracyclines"]
+temp_both_drug_m[drug_type == "Antituberculosis drugs", short_title :=  "TB"]
+temp_both_drug_m[drug_type == "Urinary-tract infections", short_title :=  "UTIs"]
+temp_both_drug_m[drug_type == "Metronidazole, tinidazole and ornidazole", short_title :=  "MTO"]
+# Remove those with NA weightings 
+
+UNKNOWN_DRUG <- ggplot(temp_both_drug_m, aes(x = drug_name, y = value, fill = type)) + 
+  geom_bar(stat="Identity", position = "dodge") + 
+  facet_grid(variable~short_title, scales = "free", space = "free_x") +
+  theme_bw() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
+  labs(x = "Antibiotic name")
+  
+#save for supplement
+ggsave(paste0("plots/",sensitivity_choice,"/unknown_drug.pdf"), plot = UNKNOWN_DRUG, 
+       width = 15, height = 10)
+
+# how many Indeterminate gender
+Indeterminate <- all_data[, sum(ITEMS), by = "GENDER"]
+# NUmber
+Indeterminate[GENDER == "Indeterminate", "V1"]
+# Percent
+(Indeterminate[GENDER == "Indeterminate", "V1"]/ all_data[, sum(ITEMS)])*100
+
+
 #drop those in the unknown or intederminate gender / age 
 all_data_ex <- all_data[GENDER != "Indeterminate" & GENDER != "Unknown" & AGE_BAND != "Unknown" & 
-                          !(drug_name %in% to_remove_low)]
+                          !(drug_name %in% to_remove_low)] 
 
 100 * dim(all_data_ex)[1] / dim(all_data)[1] # 74% of the rows kept
 100 - 100 * sum(all_data_ex$ITEMS) / sum(all_data$ITEMS) # but only 4% of items removed
 
 # check folder is there for saving the plots into
-if(!file.exists("plots/per_pop")){dir.create(file.path("plots/seasonality/"))}
+if(!file.exists(paste0("plots/", sensitivity_choice, "/seasonality"))){
+  dir.create(paste0("plots/", sensitivity_choice, "/seasonality"))}
 #### Explore seasonality by age and add total number of drugs etc to main data
 for(i in unique(all_data_ex$BNF_CHEMICAL_SUBSTANCE_CODE)){
   
@@ -65,10 +209,11 @@ for(i in unique(all_data_ex$BNF_CHEMICAL_SUBSTANCE_CODE)){
          colour = "Year") + facet_grid(.~MONTH) + theme_bw() + 
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
   
-   ggsave(paste0("plots/seasonality/",str_replace_all(target_name, "[^[:alnum:]]", " "),
-                "_seasonality.pdf"), plot = TEMP, 
+   ggsave(paste0("plots/", sensitivity_choice, "/seasonality/",str_replace_all(target_name, "[^[:alnum:]]", " "),
+                "_seasonality_",sensitivity_choice,".pdf"), plot = TEMP, 
          width = 20, height = 10)
  
+  if(sensitivity_choice == "default_1"){
   # # percentage of data rows that are in the 1-4 category
   prop_1_4 <- table(target_data$ITEMS == 1)["TRUE"] / dim(target_data)[1]
   print(paste0(target_name, "--- Proportion of data points with 1-4 items prescribed: ", round(prop_1_4,2)))
@@ -77,9 +222,11 @@ for(i in unique(all_data_ex$BNF_CHEMICAL_SUBSTANCE_CODE)){
   
   # total number of rows in the original dataset
   drugs_lookup[BNF_CHEMICAL_SUBSTANCE_CODE == target, total_entries := dim(target_data)[1]]
-  # total number of prescriptions
-  drugs_lookup[BNF_CHEMICAL_SUBSTANCE_CODE == target, total_prescriptions := sum(target_data$ITEMS)]
-  
+
+  }
+   
+   # total number of prescriptions
+   drugs_lookup[BNF_CHEMICAL_SUBSTANCE_CODE == target, total_prescriptions := sum(target_data$ITEMS)]
 }
 
 ############ Need to normalise prescriptions by the number of people in age group ########################
@@ -188,7 +335,7 @@ all_data_ex[MONTH >= 10, date_time := paste0(YEAR, "-",MONTH,"-01")]
 all_data_ex[, date_time2 := as.Date(date_time, try.format = "%z-%m-%d")] # in standard date time format
 
 ########### Save organised and reformatted prescription data and population data
-fwrite(all_data_ex, "data/all_data_organised.csv")
+fwrite(all_data_ex, paste0("data/",sensitivity_choice,"/all_data_organised_",sensitivity_choice,".csv"))
 fwrite(pop_sizes_all, "data/pop_sizes.csv")
 
 #######################################################################
@@ -200,7 +347,8 @@ all_data_ex[,MONTH := as.factor(MONTH)]
 cc <- scales::seq_gradient_pal("blue", "darkorange", "Lab")(seq(0,1,length.out=length(unique(all_data_ex$AGE_BAND))))
 
 # Generate plots in per_pop folder 
-if(!file.exists("plots/per_pop")){dir.create(file.path("plots/per_pop"))}
+if(!file.exists(paste0("plots/",sensitivity_choice,"/per_pop"))){
+  dir.create(file.path(paste0("plots/",sensitivity_choice,"/per_pop")))}
 
 # For each drug generate plots of per population 
 for(i in drugs_lookup$BNF_CHEMICAL_SUBSTANCE_CODE){
@@ -231,8 +379,8 @@ for(i in drugs_lookup$BNF_CHEMICAL_SUBSTANCE_CODE){
   
   print(target_name)
   
-  ggsave(paste0("plots/per_pop/",str_replace_all(target_name, "[^[:alnum:]]", " "),
-                "_overview.pdf"), plot = PLOT_TEMP, 
+  ggsave(paste0("plots/",sensitivity_choice,"/per_pop/",str_replace_all(target_name, "[^[:alnum:]]", " "),
+                "_overview_",sensitivity_choice,".pdf"), plot = PLOT_TEMP, 
          width = 20, height = 10)
 
   }
@@ -286,7 +434,7 @@ RELATIVE_GENDER <- ggplot(relative_weightings[YEAR == target_year], aes(x = AGE_
        title = paste0("C: Relative prescription rate by sex (",target_year,")")) + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 RELATIVE_GENDER
-ggsave(paste0("plots/per_pop/relative_gender_",target_year,".pdf"), 
+ggsave(paste0("plots/",sensitivity_choice,"/per_pop/relative_gender_",target_year,".pdf"), 
        plot = RELATIVE_GENDER, width = 20, height = 10)
 
 LEG <- get_legend(CLARITH_PLOT) 
@@ -297,5 +445,6 @@ FIG1 <- grid.arrange(CLARITH_PLOT + theme(legend.position = "NONE"), OF_PLOT+ th
 
 
 ##### Save Figure 1
-ggsave(paste0("plots/Fig1.pdf"), plot = FIG1, 
+ggsave(paste0("plots/",sensitivity_choice,"/Fig1_",sensitivity_choice,".pdf"), plot = FIG1, 
        width = 20, height = 10)
+

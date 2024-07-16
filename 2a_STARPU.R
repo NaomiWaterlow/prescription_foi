@@ -6,10 +6,11 @@
 ###### SETUP ######
 
 # Create folder for plots if doesn't exist
-if(!file.exists("plots/per_pop")){dir.create(file.path("plots/starpu"))}
+if(!file.exists(paste0("plots/", sensitivity_choice, "/starpu"))){
+  dir.create(file.path(paste0("plots/", sensitivity_choice, "/starpu")))}
 
 #read in the data 
-all_data_ex <- fread("data/all_data_organised.csv")
+all_data_ex <- fread(paste0("data/",sensitivity_choice,"/all_data_organised_",sensitivity_choice,".csv"))
 # read in the lookup file
 drugs_lookup <- fread("data/drugs_lookup.csv")
 # read in the population sizes
@@ -34,7 +35,7 @@ data_2023[, base := base_rate]
 # work out relative rates
 data_2023[, star_pu := rate/base]
 # save 
-fwrite(data_2023, file = "data/starpu_overall.csv")
+fwrite(data_2023, file = paste0("data/",sensitivity_choice,"/starpu_overall_",sensitivity_choice,".csv"))
 
 #make wide fprmat
 STAR_PU_NEW <- dcast.data.table(data_2023, AGE_BAND ~ GENDER, value.var = "star_pu")
@@ -97,7 +98,7 @@ data_2023_drugs[base_rate_drugs, on = c("drug_starpu"), base := i.rate]
 # calculate the realtive rate
 data_2023_drugs[, star_pu := rate/base]
 # save the data file
-fwrite(data_2023_drugs, file = "data/starpu_per_drug.csv")
+fwrite(data_2023_drugs, file = paste0("data/",sensitivity_choice,"/starpu_per_drug_",sensitivity_choice,".csv"))
 # list of all drugs
 all_drugs <- unique(data_2023_drugs$drug_starpu)
 # create template for filling in with each drug family specific UCM
@@ -138,8 +139,8 @@ for(i in all_drugs){
     scale_y_discrete(drop = F) + 
     scale_x_discrete(drop = F) 
   # save plot
-  ggsave(filename = paste0("plots/starpu/",str_replace_all(i, "[^[:alnum:]]", " "),
-                "_new_starpu.pdf"), plot = PLOT_TEMP, 
+  ggsave(filename = paste0("plots/",sensitivity_choice,"/starpu/",str_replace_all(i, "[^[:alnum:]]", " "),
+                "_new_starpu_",sensitivity_choice,".pdf"), plot = PLOT_TEMP, 
          width = 20, height = 10) 
 }
             
