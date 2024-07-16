@@ -1,6 +1,13 @@
-Code for working on UK antibiotic prescirption data - in progress. 
+##### Code for working on UK antibiotic prescirption data - in progress. ########## 
 
-- initial_data_look_total.R. This script loads the data that is not split by geography, calculates the population sizes and makes plots of each drug. Also generates Figure 1. This script must be run before the other scripts will work, as it generates the initial cleaned data. 
+## Authors: Naomi Waterlow & Gwen Knight
+## Date: July 2024
+
+## Data
+The subnational data can be accessed from https://opendata.nhsbsa.net/dataset/foi-01671 along with the reference data tables. The national data can be accessed from a subsequent FOI request here: https://opendata.nhsbsa.net/dataset/foi-01975. All datasets (csv files) need to be put in subfolders of data to run the above code. (data, data > ICB_Data and data > Practice_Data).
+
+## Code 
+- initial_data_look_total.R. This script loads the data that is not split by geography, calculates the population sizes and makes time series plots of each drug. Also generates Figure 1. This script must be run before the other scripts will work, as it generates the initial cleaned data. 
 
 - RTI.R This script compares the respiratory antibiotics to the data of flu vaccinations, option at the top to Exclude Amoxicillin or not. 
 
@@ -29,6 +36,5 @@ Also looks at seasonality in 2023
 
 
 
-The data can be accessed from https://opendata.nhsbsa.net/dataset/foi-01671, and needs to be put in subfolders of data to run the above code. (data > ICB_Data and data > Practice_Data).
 
 The plots folder contains output plots! 
