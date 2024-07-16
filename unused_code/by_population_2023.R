@@ -1,8 +1,5 @@
 # ICB populations. 
-library(purrr)
-library(stringr)
-library(data.table)
-library(ggplot2)
+
 dir.create(file.path("plots/byicb"))
 # FOR GEOGRAPHIC VARIATION
 # - excludes Wales

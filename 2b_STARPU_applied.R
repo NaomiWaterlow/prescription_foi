@@ -1,23 +1,17 @@
-# STARPU.R must be run first
-
-# applying the starpu
-library(scales)
-library(data.table)
-library(ggplot2)
-library(gridExtra)
-
+############ STARPU Application ################################################
+####### July 2024 #####################################################################
+####### Authors: Naomi Waterlow & Gwen Knight #########################################
+#######################################################################################
 
 # load the pre-calculated starpus
 starpu_by_drugs <- fread(file = "data/starpu_per_drug.csv")
 starpu_overall <- fread(file = "data/starpu_overall.csv")
 
 # load the cleaned ICB data
-
 ICB_data <- fread("data/ICB_data/all_ICB_data.csv")
 ICB_data_2023 <- ICB_data[YEAR == 2023]
 drugs_lookup <- fread("data/drugs_lookup.csv")
-
-#source("pop_data_2023_ICBs.R")
+# load in the ICB population data
 ICB_pops <- fread("data/ICB_Data/ICB_2023_pops.csv")
 
 ##### ICB STARPU POPS #####
@@ -25,39 +19,45 @@ ICB_pops <- fread("data/ICB_Data/ICB_2023_pops.csv")
 
 # 1. overall
 
-# x <- population[age,sex, ICB] * starpu[age,sex, ICB]
-# sum(X[ICB]) == starpu pop pby ICB
+# add the starpu values to the population sizes data frame
 ICB_pops[starpu_overall, on = c(AGE_BAND_NEW = "AGE_BAND", "GENDER"), 
          star_pu := i.star_pu]
+# times 
 ICB_pops[, star_pu_pop := star_pu * PEOPLE]
+# sum the star_pu population by ICB Code
 ICB_pops_overall <- ICB_pops[, sum(star_pu_pop), by = "ICB_CODE"]
+# rename column
 colnames(ICB_pops_overall)[which(colnames(ICB_pops_overall) == "V1")] <- "starpu_pop"
 
 
 # 2. by drug
 
-ICB_pops <- fread("data/ICB_Data/ICB_2023_pops.csv")
+# create data.table for storage
 ICB_pops_drugs <- data.table()
 
+#for each drug family
 for(i in unique(starpu_by_drugs$drug_starpu)){
+  #print what doing
   print(i)
+  # subset to that drug family
   starpu_temp <- starpu_by_drugs[drug_starpu == i,]
-  
+  # add starpu to population
   ICB_pops[starpu_temp, on = c(AGE_BAND_NEW = "AGE_BAND", "GENDER"), 
            star_pu := i.star_pu]
+  # multiply
   ICB_pops[, star_pu_pop := star_pu * PEOPLE]
+  # sum 
   ICB_pops_temp <- ICB_pops[, sum(star_pu_pop), by = "ICB_CODE"]
+  #rename
   colnames(ICB_pops_temp)[which(colnames(ICB_pops_temp) == "V1")] <- "starpu_pop"
-  
+  #store
   ICB_pops_temp$drug_type <- i
   ICB_pops_drugs <- rbind(ICB_pops_drugs, ICB_pops_temp)
   
 }
 
 
-
 ##### PRESCRIPTION DATA #####
-
 
 # need to format to same age groups
 ICB_data_2023[AGE_BAND == "86-90", AGE_BAND := "86+" ]
@@ -89,7 +89,7 @@ ICB_items_drugs[ICB_pops_drugs, on = c("ICB_CODE", "drug_type"), starpu_pop := i
 ICB_items_drugs[, rating := ITEMS/starpu_pop]
 
 
-
+# have a look
 ggplot(ICB_items_drugs, aes(x = drug_type, y = rating, colour = ICB_CODE)) + 
   geom_jitter() + theme_bw() + 
   labs(x = "Drug Family", y = "Prescriptions per STARPU population", colour = "ICB Code")+ 
@@ -99,14 +99,14 @@ ggplot(ICB_items_drugs, aes(x = drug_type, y = rating, colour = ICB_CODE)) +
 # remove NAs (from Wales)
 ICB_items_drugs <- ICB_items_drugs[!is.na(starpu_pop)]
 ICB_items_overall <- ICB_items_overall[!is.na(starpu_pop)]
-
+# calculate mean and divide each row by it
 ICB_items_drugs[, mean_rating := mean(rating), by= "drug_type"]
 ICB_items_drugs[, normalised_rating := rating / mean_rating]
-
+# same for overall values
 ICB_items_overall[, mean_rating := mean(rating)]
 ICB_items_overall[, normalised_rating := rating / mean_rating]
 
-
+# Create shorter titles for plot
 ICB_items_drugs[drug_type == "Penicillins", short_title :=  "Penicillins"]
 ICB_items_drugs[drug_type == "Macrolides", short_title :=  "Macrolides"]
 ICB_items_drugs[drug_type == "Cephalosporins and other beta-lactams", short_title :=  "Ceph's"]
@@ -123,8 +123,10 @@ ICB_items_drugs[drug_type == "Aminoglycosides", short_title :=  "Aminoglycosides
 
 # calculate total prescriptions by category
 ICB_items_drugs[, drug_total := sum(ITEMS), by ="drug_type"]
+# combine drug family name and total prescriptions for pretty plotting
 ICB_items_drugs[, new_label := paste0(drug_type, " (n=", format(drug_total, big.mark=",", scientific=F, trim = T), ")")]
 
+#create plot
 STAR_PU_APPLIED <- ggplot(ICB_items_drugs[ICB_CODE != "QXU" & ICB_CODE !="QJM" & ICB_CODE != "QOP"], aes(x = short_title, y = log(normalised_rating))) + 
   geom_blank(aes(y = 0, ymin =-abs(normalised_rating)*0.5 , ymax = abs(normalised_rating)*0.5) ) +
   geom_hline(yintercept = log(ICB_items_overall$normalised_rating), alpha = 0.2) +
@@ -140,14 +142,14 @@ STAR_PU_APPLIED <- ggplot(ICB_items_drugs[ICB_CODE != "QXU" & ICB_CODE !="QJM" &
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   theme(axis.text.x = element_blank())
 
-
+# combine all to Figure 2
 FIG2 <- grid.arrange(NEW_STARPU + theme(legend.position = "None"),
                      STAR_PU_APPLIED + labs(title = "C: Comparison of overall vs family specific UCMs"),
                      OLD_STARPU + theme(legend.position = "None"),
                      LEG,
                      layout_matrix = rbind(c(3,3,1,1,4,2,2,2,2,2),
                                            c(3,3,1,1,4,2,2,2,2,2)))
-
+#save
 ggsave(paste0("plots/Fig2.pdf"), plot = FIG2, 
        width = 20, height = 10)
 

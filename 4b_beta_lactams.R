@@ -1,19 +1,26 @@
+############ MRSA comparison ############################################################
+####### July 2024 #####################################################################
+####### Authors: Naomi Waterlow & Gwen Knight #########################################
+#######################################################################################
 
-# MRSA
-# beta lactam drug labelling
-
-# required packages
-library(stringr)
-library(data.table)
-library(ggplot2)
-# load in the data and mark those that are beta lactams
+# load in the data 
 all_data_ex <- fread("data/all_data_organised.csv")
 drugs_lookup <- fread("data/drugs_lookup.csv")
 pop_sizes_all <- fread("data/pop_sizes.csv")
+
+##### Beta lactam prescriptions #####
+
+#Match drug name
 all_data_ex[drugs_lookup, on="BNF_CHEMICAL_SUBSTANCE_CODE", drug_name := CHEMICAL_SUBSTANCE_BNF_DESCR]
-all_data_ex[drugs_lookup, on="BNF_CHEMICAL_SUBSTANCE_CODE", beta_lactam := BETA_LACTAM]
-all_data_ex[beta_lactam == "Y", inclusion_label := "Beta-lactam antibiotic" ]
-all_data_ex[beta_lactam == "N", inclusion_label := "Not beta-lactam antibiotic" ]
+# default don't include as beta lactam
+drugs_lookup[, BETA_LACTAM := "N"]
+# label as beta-lactam if Penicillin or ceph/b-lactam categories
+drugs_lookup[Drug_type %in% c("Penicillins", "Cephalosporins and other beta-lactams"), BETA_LACTAM := "Y"]
+# transfer labels over to prescription data
+all_data_ex[drugs_lookup, on="BNF_CHEMICAL_SUBSTANCE_CODE", inclusion_label := BETA_LACTAM]
+# label for clarity
+all_data_ex[inclusion_label == "Y", inclusion_label := "Beta-lactam antibiotic"]
+
 # factor age groups
 all_data_ex[, AGE_BAND := factor(AGE_BAND, levels = c("0-1", "2-5", 
                                                        "6-10", "11-15", "16-20", "21-25", 
@@ -21,22 +28,6 @@ all_data_ex[, AGE_BAND := factor(AGE_BAND, levels = c("0-1", "2-5",
                                                        "46-50", "51-55",  "56-60", "61-65", 
                                                        "66-70", "71-75", "76-80",  "81-85" ,
                                                        "86+") )]
-
-
-### INterlude, see which antibiotics driving post-covid bump
-
-interlude <- all_data_ex[beta_lactam == "Y" & AGE_BAND == "0-1"]
-# sum over gender
-interlude_s <- interlude[, sum(ITEMS), by = c("date_time2","drug_name")]
-#divide by average
-interlude_s[, av_drug := mean(V1), by = c("drug_name")]
-interlude_s[, relative := V1/av_drug]
-
-ggplot(interlude_s[date_time2>as.Date("2020-01-01")], aes( x = date_time2, y = relative, colour = drug_name)) + 
-  geom_line() + theme_bw() + 
-  labs(x = "Date (cut off to start at 2020)", y = "Relative #prescriptions cf average over time period", 
-       title = "Which drugs responsible for uptick in 2023? Showing age 0-1 only")
-
 
 
 # Combine the number of ITEMS across drug type (e.g. beta lactam or not) - don't need to change population 
@@ -57,15 +48,17 @@ ggplot(combined_subgroup, aes(x = date_time2, y = per_100k, colour = AGE_BAND)) 
   scale_colour_manual(values = cc)
 
 
-### Now want to compare against MRSA. 
+####### Now want to compare against MRSA. #####
 
 staph <- fread("data/staph_aur_bacteraemia.csv")
+#convert to year
 staph[,fyear_start :=as.numeric(substr(FINANCIAL_YEAR, start = 1, stop = 4)) ]
 #remove older data
 staph <- staph[fyear_start>2014]
+# foramt ages
 staph[, AGE_BAND := factor(AGE_BAND,
                            levels = c("<1","1-14","15-44", "45-64" ,"65-74", "75-84", "85+" ))]
-#temp use cases rather than rate as better comparison
+#initially use cases rather than rate to compare
 staph_temp <- staph[, c("Species", "fyear_start", "AGE_BAND", "CASES_MEN", "CASES_WOMEN")]
 staph_temp_m <- melt(staph_temp, id.vars = c("Species", "fyear_start", "AGE_BAND"))
 ggplot(staph_temp_m, aes(x = fyear_start, y =value, colour = AGE_BAND)) + 
@@ -73,7 +66,7 @@ ggplot(staph_temp_m, aes(x = fyear_start, y =value, colour = AGE_BAND)) +
   facet_wrap(variable~Species, scales = "free") + 
   theme_bw() + 
   labs(x = "financial year start", y = "number of bacteraemia")
-
+# hard to compare
 
 # convert prescriptions data to the same-ish age groups as the resistance data
 all_data_ex[AGE_BAND == "0-1", AGE_BAND_COMBO := "0-1" ]
@@ -141,39 +134,11 @@ all_data_ex[date_time2 > as.Date("2022-04-05") &
                         date_time2 <= as.Date("2023-04-05"), fyear_start := 2022]
 
 
-# # Sum items across age group and year
-# prescrips_annual <- all_data_ex[,  sum(ITEMS), by = c("fyear_start", "GENDER", "AGE_BAND_COMBO", "inclusion_label")]
-# prescrips_annual <- prescrips_annual[!is.na(fyear_start)]
-# prescrips_annual[pop_sizes_COMBO, on=c(AGE_BAND_COMBO="AGE_BAND_COMBO", fyear_start= "YEAR", GENDER = "GENDER"), population := i.V1]
-# 
-# prescrips_annual[, rate_per_100k := (V1/population)*100000]
-# # label prescription rate
-# prescrips_annual[,type := "prescription_rate"]
-# 
-# # # reformat resistance data
-# staph_temp <- melt.data.table(staph_temp, id.vars = c("Species", "fyear_start", "AGE_BAND"))
-# colnames(staph_temp)[which(colnames(staph_temp)=="AGE_BAND")] <- "AGE_BAND_COMBO"
-# staph_temp[Species == "MRSA", inclusion_label := "Beta-lactam antibiotic"]
-# staph_temp[Species == "MSSA", inclusion_label := "Not beta-lactam antibiotic"]
-# staph_temp[, date_time := paste0(fyear_start+1,"-04-05") ]
-# staph_temp[, date_time2 := as.Date(date_time, try.format = "%z-%m-%d") ]
-# staph_temp[, type := "BSI"]
-# staph_temp[variable == "CASES_MEN", GENDER := "Male"]
-# staph_temp[variable == "CASES_WOMEN", GENDER := "Female"]
-# 
+#### Compare against proportion resistant ####
 
-### Want to compare against proportion resistant
-
-staph <- fread("data/staph_aur_bacteraemia.csv")
-staph[,fyear_start :=as.numeric(substr(FINANCIAL_YEAR, start = 1, stop = 4)) ]
-#remove older data
-staph <- staph[fyear_start>2014]
-staph[, AGE_BAND := factor(AGE_BAND,
-                           levels = c("<1","1-14","15-44", "45-64" ,"65-74", "75-84", "85+" ))]
-staph_temp <- staph[, c("Species", "fyear_start", "AGE_BAND", "CASES_MEN", "CASES_WOMEN")]
 # reformat gender
 staph_temp_m <- melt.data.table(staph_temp, id.vars = c("Species", "fyear_start", "AGE_BAND"))
-# cast to seperate columns for MRSA and MSSA
+# cast to separate columns for MRSA and MSSA
 staph_temp_c <- dcast.data.table(staph_temp_m,  AGE_BAND + variable +fyear_start~ Species, value.var = "value")
 
 # calculate proportion
@@ -194,7 +159,9 @@ staph_temp_c[GENDER == "CASES_WOMEN", GENDER := "Female"]
 
 # Calculate prescriptions by finanical year and the nrew age groups
 prescrips_annual <- all_data_ex[,  sum(ITEMS), by = c("fyear_start", "GENDER", "AGE_BAND_COMBO", "inclusion_label")]
+# remove any without finanical yaer
 prescrips_annual <- prescrips_annual[!is.na(fyear_start)]
+# match population sizes acrpss
 prescrips_annual[pop_sizes_COMBO, on=c(AGE_BAND_COMBO="AGE_BAND_COMBO", fyear_start= "YEAR", GENDER = "GENDER"), population := i.V1]
 # rate
 prescrips_annual[, rate_per_100k := (V1/population)*100000]
@@ -202,11 +169,13 @@ prescrips_annual[, rate_per_100k := (V1/population)*100000]
 prescrips_annual[,type := "prescription_rate"]
 # only wanted beta-lactams
 prescrips_annual <- prescrips_annual[inclusion_label== "Beta-lactam antibiotic"]
+# remove unneeded column
 prescrips_annual[, inclusion_label := NULL]
 # relabel as needed 
 colnames(prescrips_annual)[which(colnames(prescrips_annual)=="rate_per_100k")] <- "value"
 prescrips_annual[, c("population", "V1") := NULL]
 
+#create column for matching age bands in plot
 staph_temp_c[,matched_age := AGE_BAND_COMBO]
 prescrips_annual[AGE_BAND_COMBO == "0-1",matched_age := "<1"]
 prescrips_annual[AGE_BAND_COMBO == "2-15",matched_age := "1-14"]
@@ -216,24 +185,30 @@ prescrips_annual[AGE_BAND_COMBO == "66-70",matched_age := "65-74"]
 prescrips_annual[AGE_BAND_COMBO == "76-80",matched_age := "75-84"]
 prescrips_annual[AGE_BAND_COMBO == "86+",matched_age := "85+"]
 
+#combine into one data frame
 all_together <- rbind(staph_temp_c, prescrips_annual)
 
+# nice labels
 all_together[type == "prescription_rate", nice_labels := "Prescription rate"]
 all_together[type == "prop_resistant", nice_labels := "Proportion resistant"]
 all_together[type == "prop_resistant", upper_lim := 0.15]
 all_together[type == "prescription_rate", upper_lim := 80000]
 
+#covid rectangle geom_rect object
+rectangle_object <- unique(all_together[, c("nice_labels", "type","AGE_BAND_COMBO", "upper_lim", "matched_age")])
+rectangle_object[,fyear_start := 2019]
+rectangle_object[,value := 0]
 
 MRSA_PRESCRIPS <- ggplot(all_together, aes(x = fyear_start, y = value, colour = GENDER, linetype = type)) + 
   geom_blank(aes(ymin =0 , ymax = upper_lim) ) +
+  geom_rect(data = rectangle_object, xmin = 2019, xmax = 2022, ymin = -0.7, aes( ymax = upper_lim), 
+            alpha = 0.4,fill = "grey", colour =NA, inherit.aes = F) +
   facet_wrap(nice_labels~AGE_BAND_COMBO, scales = "free_y", nrow = 2) + 
   geom_line() + geom_point(size = 0.4) + theme_bw() + 
-  annotate("rect", xmin = 2019.5, xmax = 2022, ymin = -0.7, ymax = 1.8,
-           alpha = 0.4,fill = "grey") +
   scale_linetype_manual(values = c(1,2)) + 
   
   labs(x = "Date", y = "Proportion MRSI (over MRSA and MSSA), Annual beta-lactam prescription rate",
-       title = "C: BSI resistance vs prescriptions", colour = "Age Band", linetype = "Sex") 
+       title = "C: BSI resistance vs prescriptions", colour = "Sex", linetype = "Type") 
 
 MRSA_PRESCRIPS
 

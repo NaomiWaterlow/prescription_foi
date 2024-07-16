@@ -1,20 +1,23 @@
 
-####### NOTE!!!! THERE IS SOMETHING WRONG WITH POPULATIOUN DENOMINATORS IN THIS SCRIPT
+############ Respiratory Tract Infections Analysis ############################################################
+####### July 2024 #####################################################################
+####### Authors: Naomi Waterlow & Gwen Knight #########################################
+#######################################################################################
 
-
-
-
-# does flu vaccine effect prescriptions for RTIs?
-
+# Read in data
 all_data_ex <- fread("data/all_data_organised.csv")
 drugs_lookup <- fread("data/drugs_lookup.csv")
 pop_sizes_all <- fread("data/pop_sizes.csv")
+#Match drug name
 all_data_ex[drugs_lookup, on="BNF_CHEMICAL_SUBSTANCE_CODE", drug_name := CHEMICAL_SUBSTANCE_BNF_DESCR]
+# default don't include as RTI
+drugs_lookup[, RTI := "N"]
+# label as RTI if Penicillin or ceph/b-lactam categories
+drugs_lookup[Drug_type %in% c("Penicillins", "Cephalosporins and other beta-lactams"), RTI := "Y"]
+# transfer labels over to prescription data
 all_data_ex[drugs_lookup, on="BNF_CHEMICAL_SUBSTANCE_CODE", RTI := RTI]
 # remove amoxicillin
 all_data_ex[drug_name == "Amoxicillin", RTI := "N"]
-all_data_ex <- all_data_ex[!is.na(AGE_BAND)]
-
 
 # sum across genders as not interested. 
 data_for_RTI<- all_data_ex[, sum(ITEMS),
@@ -39,7 +42,7 @@ data_for_RTI[AGE_BAND %in% c("66-70", "71-75", "76-80",  "81-85" ,
 # combine across new age bands and drugs. 
 temp <- data_for_RTI[, sum(V1), by = c("date_time2", "AGE_BAND_NEW", "RTI")]
 
-# here combining age bands but not drugs for population sizes
+# Calculating population sizes to match
 pop_sizes_nogender <- pop_sizes_all[, sum(value), by = c("AGE_BAND", "YEAR")]
 pop_sizes_nogender <- pop_sizes_nogender[!is.na(AGE_BAND)]
 pop_sizes_nogender[, AGE_BAND_NEW := "15-50"]
@@ -52,15 +55,17 @@ pop_sizes_nogender[AGE_BAND == "56-60" , AGE_BAND_NEW := "50-65"]
 pop_sizes_nogender[AGE_BAND == "61-65" , AGE_BAND_NEW := "50-65"]
 pop_sizes_nogender[AGE_BAND %in% c("66-70", "71-75", "76-80",  "81-85" ,
                              "86-90", "91-95","96-100","101-105", "105+"), AGE_BAND_NEW := "65+"]
-
 pop_sizes_nogender <- pop_sizes_nogender[, sum(V1), by = c("AGE_BAND_NEW", "YEAR")]
+# change to date
 temp[, YEAR := year(date_time2)]
+# add population sizes
 temp[pop_sizes_nogender, on = c("YEAR", "AGE_BAND_NEW"), population := i.V1]
+# check format
 temp[,AGE_BAND_NEW := factor(AGE_BAND_NEW, levels = c("0-1"  , "2-5"  , "6-10",  "11-15", "15-50", "50-65" ,"65+"  ))]
-
+# calculate prescriptions per 100k population
 temp[, prescriptions_p_100k := (V1/population)*100000]
 
-
+# plot
 ggplot(temp, aes(x = date_time2, y = prescriptions_p_100k, colour = AGE_BAND_NEW)) + 
   geom_line() + theme_bw() + 
   labs(x = "Date", y = "Prescription rate of RTI antibiotics", 
@@ -84,7 +89,6 @@ geom_vline(xintercept = as.Date("2021-10-01"), linetype = "dashed") +
 # normalise compared to 15-50 age group at each time step
 temp2 <- temp[AGE_BAND_NEW=="15-50"]
 temp[temp2, on = c("date_time2"), mid_age := i.prescriptions_p_100k]
-
 temp[, normalised_rate := prescriptions_p_100k/mid_age]
 
 FLU_VACC <- ggplot(temp, aes(x = date_time2, y = normalised_rate, colour = AGE_BAND_NEW)) + 
@@ -114,7 +118,7 @@ FLU_VACC <- ggplot(temp, aes(x = date_time2, y = normalised_rate, colour = AGE_B
 temp[date_time2 >= as.Date(paste0(year(date_time2), "-10-01")) & 
        date_time2 < as.Date(paste0(year(date_time2)+1, "-04-01")) , flu_year := year(date_time2)]
 
-# drop anything wiht na (off season) or 2023 (as dont have full season)
+# drop anything with NA (off season) or 2023 (as dont have full season)
 temp <- temp[!is.na(flu_year) & flu_year != 2023,]
 
 # sum across flu year
@@ -128,6 +132,7 @@ flu_total[is.na(prev_year_value), prev_year_value := V1]
 # proportion change
 flu_total[,prop_change := (V1/prev_year_value)-1]
 
+#create plot across all timespan
 FLU_CHANGE <- ggplot(flu_total, aes(x = flu_year, y = prop_change, colour = AGE_BAND_NEW)) +
   annotate("rect", xmin = 2019.5, xmax = 2022, ymin = -0.7, ymax = 1.8,
            alpha = 0.4,fill = "grey") +
@@ -151,6 +156,7 @@ FLU_CHANGE <- ggplot(flu_total, aes(x = flu_year, y = prop_change, colour = AGE_
   lims(y = c(-0.7,1.8)) + 
   geom_hline(yintercept = 0)
 
+#create plot without covid years
 FLU_CHANGE <- ggplot(flu_total[flu_year < 2020, ], aes(x = flu_year, y = prop_change, colour = AGE_BAND_NEW)) +
   # annotate("rect", xmin = 2019.5, xmax = 2019.8, ymin = -0.7, ymax = 1.8,
   #          alpha = 0.4,fill = "grey") +

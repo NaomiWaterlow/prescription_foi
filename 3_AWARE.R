@@ -1,7 +1,9 @@
-# label by AWARE classification
-library(data.table)
-library(ggplot2)
-library(gridExtra)
+############ AWaRe Analysis ############################################################
+####### July 2024 #####################################################################
+####### Authors: Naomi Waterlow & Gwen Knight #########################################
+#######################################################################################
+
+# load data and lookup file
 all_data_ex <- fread("data/all_data_organised.csv")
 aware_lookup <- fread("data/AWARE_Classification.csv")
 
@@ -11,6 +13,7 @@ all_data_ex[aware_lookup, on = c("drug_name"), aware_class := i.Category]
 # which ones don't match names? 
 missing <- unique(all_data_ex[is.na(aware_class)]$drug_name)
 
+######## manually update the ones that don't match #####
 temp <- aware_lookup$drug_name[grepl("Benzylpenicillin", aware_lookup$drug_name, fixed = TRUE)]
 all_data_ex[drug_name == "Benzylpenicillin sodium (Penicillin G)", aware_class := aware_lookup[drug_name == temp, "Category"]]
 
@@ -176,23 +179,25 @@ missing <- unique(all_data_ex[is.na(aware_class)]$drug_name)
 # Clofazimine
 
 
-#### ADD the manual ones
+#### Aware analysis ####
 
-# combine into aware categories
+# remove the few that don't have an aware category
 all_data_ex_aware <- all_data_ex[!is.na(aware_class)]
+# sum across drugs
 all_data_ex_aware <- dcast.data.table(all_data_ex_aware,GENDER + YEAR + MONTH +
                            AGE_BAND + aware_class ~. , value.var = "ITEMS",
                          fun.aggregate = sum)
 
-
+# rename column
 colnames(all_data_ex_aware)[which(colnames(all_data_ex_aware) == ".")] <- "ITEMS"
 
 
 # average across months
 all_data_ex_aware[, av_across_months := mean(ITEMS),by = c( "GENDER", "AGE_BAND", "aware_class", 'YEAR')]
+# remove the replicates (i.e. across months)
 all_data_ex_aware_av <- unique(all_data_ex_aware[,c( "ITEMS", "MONTH") := NULL])
 
-
+# check formats
 all_data_ex_aware_av$aware_class <- factor(all_data_ex_aware_av$aware_class, 
                                              levels = c("Access", "Watch", "Reserve"))
 all_data_ex_aware_av[, AGE_BAND := factor(AGE_BAND, levels = c("0-1", "2-5", 
@@ -201,7 +206,7 @@ all_data_ex_aware_av[, AGE_BAND := factor(AGE_BAND, levels = c("0-1", "2-5",
                                                                          "46-50", "51-55",  "56-60", "61-65", 
                                                                          "66-70", "71-75", "76-80",  "81-85" ,
                                                                          "86+") )]
-
+#plot aware classifcations
 ggplot(all_data_ex_aware_av, aes(x = AGE_BAND, y = av_across_months,
                                  colour = YEAR, 
                                  group = YEAR)) + 
@@ -211,13 +216,14 @@ ggplot(all_data_ex_aware_av, aes(x = AGE_BAND, y = av_across_months,
   labs(y = "average number of prescriptions (across ICBs and months in 2023) per 1000 population",
        title = "AWARE CLASSIFICATION")
 
-
+# sum av prescriptions across Aware class
 tot_prescrips <- all_data_ex_aware_av[, sum(av_across_months), by = c("GENDER", "AGE_BAND", "YEAR")]
-
+# add totals
 all_data_ex_aware_av[tot_prescrips, on=c("GENDER", "AGE_BAND", "YEAR"), total_rate := i.V1]
+# calculate percent
 all_data_ex_aware_av[, perc_each_class := (av_across_months/total_rate)*100]
 
-
+# create plot
 AWARE1 <- ggplot(all_data_ex_aware_av, aes(x = AGE_BAND, y = perc_each_class,
                                  colour = YEAR, group = YEAR)) + 
   geom_line(stat = "identity") + 
@@ -235,7 +241,7 @@ AWARE1 <- ggplot(all_data_ex_aware_av, aes(x = AGE_BAND, y = perc_each_class,
 
 # which are the drugs that cause the big uptick in young men in watch? 
 drug_specific <- all_data_ex[!is.na(aware_class),sum(ITEMS), by = c("YEAR", "GENDER", "AGE_BAND", "drug_name", "aware_class")]
-
+# check format
 drug_specific[, AGE_BAND := factor(AGE_BAND, levels = c("0-1", "2-5", 
                                                                "6-10", "11-15", "16-20", "21-25", 
                                                                "26-30", "31-35", "36-40", "41-45", 
@@ -245,7 +251,7 @@ drug_specific[, AGE_BAND := factor(AGE_BAND, levels = c("0-1", "2-5",
 drug_specific$aware_class <- factor(drug_specific$aware_class, 
                                            levels = c("Access", "Watch", "Reserve"))
 
-
+#create plot
 AWARE2 <- ggplot(drug_specific[YEAR == 2023 ], aes(x = AGE_BAND, y = V1, group = drug_name)) + 
   facet_grid(aware_class~GENDER, scale = "free_y") + 
   geom_line() + 
@@ -259,10 +265,10 @@ AWARE2 <- ggplot(drug_specific[YEAR == 2023 ], aes(x = AGE_BAND, y = V1, group =
   geom_vline(xintercept = "11-15", linetype = "dotted")+ 
   geom_vline(xintercept = "16-20", linetype = "dotted")
 
-
+# create fig 3
 FIG3 <- grid.arrange(AWARE1, AWARE2, ncol=2)
 
-
+# save
 ggsave(paste0("plots/Fig3.pdf"), plot = FIG3, 
        width = 20, height = 10)
 # calculate the total % in aware across alla ge groups and sex

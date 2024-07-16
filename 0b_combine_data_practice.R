@@ -1,7 +1,8 @@
-library(data.table)
-## practice level - combine and reformat data
-# Note, this takes ages. Very big dataset.
-#####
+############ COMBINE GP ############################################################
+####### July 2024 #####################################################################
+####### Authors: Naomi Waterlow & Gwen Knight #########################################
+#######################################################################################
+
 
 # Find all the names of the files
 practice_files <- list.files("data/Practice_Data/")
@@ -22,11 +23,11 @@ all_practice_data[, "MONTH" := as.numeric(substr(YEAR_MONTH, 5, 6)),]
 
 # convert to numeric -> the "*"s get converted to NAs
 all_practice_data[, UNIQUE_PATIENT_COUNT := as.numeric(UNIQUE_PATIENT_COUNT)]
-# Change stars to -1 so can be used in numeric
+# Change stars to 1 so can be used in numeric
 all_practice_data[is.na(UNIQUE_PATIENT_COUNT), UNIQUE_PATIENT_COUNT := 1]
 # convert to numeric -> the "*"s get converted to NAs
 all_practice_data[, ITEMS := as.numeric(ITEMS)]
-# Change stars to -1 so can be used in numeric
+# Change stars to 1 so can be used in numeric
 all_practice_data[is.na(ITEMS), ITEMS := 1]
 
 

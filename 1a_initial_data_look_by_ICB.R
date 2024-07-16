@@ -1,11 +1,9 @@
-# Look at data
-
-library(ggplot2)
-library(data.table)
+############ ICB data exploration ################################################
+####### July 2024 #####################################################################
+####### Authors: Naomi Waterlow & Gwen Knight #########################################
+#######################################################################################
 
 ###### initial look at the specific drugs #####
-
-## NOTE: this is in progress - and the denominator for the percentage does not include suubgroups who have no prescriptions
 
 
 #create lookup
@@ -46,17 +44,5 @@ for(i in drugs_lookup$BNF_CHEMICAL_SUBSTANCE_CODE){
   
 }
 
-
-
-
-# ### Check if 0s in patients are randomly distributed. 
-# # tbd interpret outcomes
-# testing_missingness <- copy(all_ICB_data)
-# testing_missingness[UNIQUE_PATIENT_COUNT == 0, missing_indicator := 1 ]
-# testing_missingness[UNIQUE_PATIENT_COUNT != 0, missing_indicator := 0 ]
-# testing_missingness[, c("ITEMS", "UNIQUE_PATIENT_COUNT") := NULL]
-# sub_sample <- sample(1:nrow(testing_missingness), 1000000)
-# testing_missingness_sample <- testing_missingness[sub_sample,]
-# model <- glm(missing_indicator ~.,family=binomial(link='logit'),data=testing_missingness_sample)
 
 

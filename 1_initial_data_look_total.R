@@ -3,13 +3,6 @@
 ####### Authors: Naomi Waterlow & Gwen Knight #########################################
 #######################################################################################
 
-### Libraries
-library(stringr)
-library(data.table)
-library(ggplot2)
-library(gridExtra)
-library(ggpubr)
-
 
 ### Data 
 # create lookup

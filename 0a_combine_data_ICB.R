@@ -1,8 +1,8 @@
-library(data.table)
 
-## ICB level - combine and reformat data
-# Note, this takes ages. Very big dataset.
-#####
+############ COMBINE ICB ############################################################
+####### July 2024 #####################################################################
+####### Authors: Naomi Waterlow & Gwen Knight #########################################
+#######################################################################################
 
 # Find all the names of the files
 ICB_files <- list.files("data/ICB_Data/")
@@ -23,11 +23,11 @@ all_ICB_data[, "MONTH" := as.numeric(substr(YEAR_MONTH, 5, 6)),]
 
 # convert to numeric -> the "*"s get converted to NAs
 all_ICB_data[, UNIQUE_PATIENT_COUNT := as.numeric(UNIQUE_PATIENT_COUNT)]
-# Change stars to -1 so can be used in numeric
+# Change stars to 1 so can be used in numeric
 all_ICB_data[is.na(UNIQUE_PATIENT_COUNT), UNIQUE_PATIENT_COUNT := 1]
 # convert to numeric -> the "*"s get converted to NAs
 all_ICB_data[, ITEMS := as.numeric(ITEMS)]
-# Change stars to -1 so can be used in numeric
+# Change stars to 1 so can be used in numeric
 all_ICB_data[is.na(ITEMS), ITEMS := 1]
 
 
