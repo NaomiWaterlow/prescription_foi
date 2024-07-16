@@ -4,6 +4,7 @@
 .Ruserdata
 
 *.xlsx
+*.csv
 Practice_Data/
 ICB_Data/
 

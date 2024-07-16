@@ -8,6 +8,16 @@ The subnational data can be accessed from https://opendata.nhsbsa.net/dataset/fo
 
 ## Code 
 - initial_data_look_total.R. This script loads the data that is not split by geography, calculates the population sizes and makes time series plots of each drug. Also generates Figure 1. This script must be run before the other scripts will work, as it generates the initial cleaned data. 
+=======
+
+All code can be run from 0_master_script.R, and this contains all the instructions on how to run it.
+
+
+
+##### Below information is old and can probably be removed.
+
+- 0_initial_data_look_total.R. This script loads the data that is not split by geography, calculates the population sizes and makes plots of each drug. Also generates Figure 1. This script must be run before the other scripts will work, as it generates the initial cleaned data. 
+
 
 - RTI.R This script compares the respiratory antibiotics to the data of flu vaccinations, option at the top to Exclude Amoxicillin or not. 
 
@@ -15,10 +25,7 @@ The subnational data can be accessed from https://opendata.nhsbsa.net/dataset/fo
 
 - AWARE.R This assigns the aware classifications to the drugs and creates Figure 3. 
 
-
-
-The following scripts use the geographically split data (and is less up to date): 
-
+The following scripts use the geographically split data: 
 
 - combine_data_ICB.R. This reads in all the ICB data files and combines them. Splits date into month and year and converts age to a factor. for the columns UNIQUE_PATIENT_COUNT & ITEMS, the * (used for hidden values between 1 and 4) is converted to 1. This will be changed later.
 
