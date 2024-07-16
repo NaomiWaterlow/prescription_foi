@@ -41,7 +41,7 @@ fwrite(data_2023, file = paste0("data/",sensitivity_choice,"/starpu_overall_",se
 STAR_PU_NEW <- dcast.data.table(data_2023, AGE_BAND ~ GENDER, value.var = "star_pu")
 
 # check age band is factor with levls in correct order
-STAR_PU_NEW[, AGE_BAND := factor(AGE_BAND, levels = c("0-1", "2-5", 
+data_2023[, AGE_BAND := factor(AGE_BAND, levels = c("0-1", "2-5", 
                                                    "6-10", "11-15", "16-20", "21-25", 
                                                    "26-30", "31-35", "36-40", "41-45", 
                                                    "46-50", "51-55",  "56-60", "61-65", 
