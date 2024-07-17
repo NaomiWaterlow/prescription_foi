@@ -12,12 +12,12 @@ library(scales)
 library(gridExtra)
 library(ggpubr)
 
-#check we have appropiate folders for storing
-dir.create(file.path("plots/"))
-dir.create(file.path("data/"))
+#check we have appropriate folders for storing
+if(!file.exists("plots")){dir.create(file.path("plots/"))}
+if(!file.exists("data")){dir.create(file.path("data/"))}
 
 
-# choose which version to run for sensitvity of *s
+# choose which version to run for sensitivity of *s
 # Options are: 
 # "default_1" - stars set to 1
 # "sens_4" - stars set to 4
@@ -26,8 +26,8 @@ dir.create(file.path("data/"))
 sensitivity_choice <- "default_1"
 # if you want to create a new sensitivity analysis, it needs to be altered in scripts 0a, 0b and 1.
 
-dir.create(file.path(paste0("plots/", sensitivity_choice)))
-dir.create(file.path(paste0("data/", sensitivity_choice)))
+if(!file.exists(paste0("plots/", sensitivity_choice))){dir.create(file.path(paste0("plots/", sensitivity_choice)))}
+if(!file.exists(paste0("data/", sensitivity_choice))){dir.create(file.path(paste0("data/", sensitivity_choice)))}
 
 #### DO THE FIRST TIME ONLY, takes a while ######
 
