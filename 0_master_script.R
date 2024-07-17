@@ -11,10 +11,12 @@ library(ggplot2)
 library(scales)
 library(gridExtra)
 library(ggpubr)
+library(tidyverse)
 
 #check we have appropriate folders for storing
 if(!file.exists("plots")){dir.create(file.path("plots/"))}
 if(!file.exists("data")){dir.create(file.path("data/"))}
+if(!file.exists("tables")){dir.create(file.path("tables/"))}
 
 
 # choose which version to run for sensitivity of *s
