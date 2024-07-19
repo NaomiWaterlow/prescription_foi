@@ -231,6 +231,29 @@ for(i in unique(all_data_ex$BNF_CHEMICAL_SUBSTANCE_CODE)){
 
 ############ Need to normalise prescriptions by the number of people in age group ########################
 
+# check for seasonalisty
+seasonality_check <- all_data_ex[date_time2<"2020-04-01",]
+seasonality_check <- seasonality_check[, sum(ITEMS), by = c("drug_name", "MONTH")]
+# calculate average drugs given
+seasonality_check[, average_annual := mean(V1), by = c("drug_name")]
+# calcultae difference in percent by month
+seasonality_check[, percent_dif := ((V1/average_annual)*100) -100]
+sc<- seasonality_check[abs(percent_dif) >20]
+count_seasonal <- 0
+for(drug in unique(sc$drug_name)){
+  
+  if(length(sc[drug_name == drug,]$MONTH) >= 2){
+    count_seasonal <- count_seasonal+1
+    print(paste0(drug, " is seasonal"))
+  }
+
+}
+
+# percentage of drugs that are seasonal
+count_seasonal
+count_seasonal/length(unique(seasonality_check$drug_name)) *100
+
+
 ###### Load in the population sizes
 ## Up to 2021
 pop_sizes_to_23 <- fread("data/myebtablesenglandwales20112023.csv", header = T)
