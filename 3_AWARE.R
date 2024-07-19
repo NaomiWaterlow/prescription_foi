@@ -5,6 +5,9 @@
 
 # load data and lookup file
 all_data_ex <- fread(paste0("data/",sensitivity_choice,"/all_data_organised_",sensitivity_choice,".csv"))
+ICB_data <- fread(paste0("data/",sensitivity_choice,"/all_ICB_data_",sensitivity_choice,".csv"))
+
+
 aware_lookup <- fread("data/AWARE_Classification.csv")
 
 # when name matches add the aware calssification
@@ -277,3 +280,98 @@ ggsave(paste0("plots/",sensitivity_choice,"/Fig3_",sensitivity_choice,".pdf"), p
 overall_aware <- drug_specific[YEAR == 2023, sum(V1), by = c("aware_class")]
 overall_aware[, total := sum(overall_aware$V1)]
 overall_aware[, proportion := V1/total]
+
+###### Aware by ICB #####
+
+# match over the drug names and classes
+ICB_data[unique(all_data_ex[,c("BNF_CHEMICAL_SUBSTANCE_CODE", "drug_name", "aware_class")]),
+         on = c("BNF_CHEMICAL_SUBSTANCE_CODE"), aware_class := i.aware_class]
+
+# remove the few that don't have an aware category
+# and only look at 2023 and remove unknowns and wales
+ICB_data_ex_aware <- ICB_data[!is.na(aware_class) & YEAR == 2023 & GENDER %in% c("Male", "Female") &
+                                 AGE_BAND != "Unknown" & ICB_CODE != "Q99"]
+
+# need to format to same age groups
+ICB_data_ex_aware[AGE_BAND == "86-90", AGE_BAND := "86+" ]
+ICB_data_ex_aware[AGE_BAND == "91-95", AGE_BAND := "86+" ]
+ICB_data_ex_aware[AGE_BAND == "96-100", AGE_BAND := "86+" ]
+ICB_data_ex_aware[AGE_BAND == "101-105", AGE_BAND := "86+" ]
+ICB_data_ex_aware[AGE_BAND == "105+", AGE_BAND := "86+" ]
+# sum across drugs and age band
+ICB_data_ex_aware <- dcast.data.table(ICB_data_ex_aware,GENDER + YEAR + MONTH +
+                                        AGE_BAND + aware_class + ICB_CODE ~. , value.var = "ITEMS",
+                                      fun.aggregate = sum)
+
+# rename column
+colnames(ICB_data_ex_aware)[which(colnames(ICB_data_ex_aware) == ".")] <- "ITEMS"
+
+
+# average across months
+ICB_data_ex_aware[, av_across_months := mean(ITEMS),by = c( "GENDER", "AGE_BAND", "aware_class", "ICB_CODE")]
+# remove the replicates (i.e. across months)
+ICB_data_ex_aware_av <- unique(ICB_data_ex_aware[,c( "ITEMS", "MONTH") := NULL])
+
+
+
+
+
+# check formats
+ICB_data_ex_aware_av$aware_class <- factor(ICB_data_ex_aware_av$aware_class, 
+                                           levels = c("Access", "Watch", "Reserve"))
+ICB_data_ex_aware_av[, AGE_BAND := factor(AGE_BAND, levels = c("0-1", "2-5", 
+                                                               "6-10", "11-15", "16-20", "21-25", 
+                                                               "26-30", "31-35", "36-40", "41-45", 
+                                                               "46-50", "51-55",  "56-60", "61-65", 
+                                                               "66-70", "71-75", "76-80",  "81-85" ,
+                                                               "86+") )]
+#plot aware classifcations
+ggplot(ICB_data_ex_aware_av, aes(x = AGE_BAND, y = av_across_months,
+                                 colour = ICB_CODE, 
+                                 group = ICB_CODE)) + 
+  geom_line() + 
+  facet_grid(GENDER~aware_class) + 
+  theme_bw() + 
+  labs(y = "average number of prescriptions (across ICBs and months in 2023) per 1000 population",
+       title = "AWARE CLASSIFICATION")
+
+
+# sum av prescriptions across Aware class
+tot_prescrips_ICBS <- ICB_data_ex_aware_av[, sum(av_across_months), by = c("GENDER", "AGE_BAND", "YEAR" , "ICB_CODE")]
+# add totals
+ICB_data_ex_aware_av[tot_prescrips_ICBS, on=c("GENDER", "AGE_BAND", "YEAR", "ICB_CODE"), total_rate := i.V1]
+# calculate percent
+ICB_data_ex_aware_av[, perc_each_class := (av_across_months/total_rate)*100]
+
+# create plot
+AWARE_ICB <- ggplot(ICB_data_ex_aware_av, aes(x = AGE_BAND, y = perc_each_class,
+                                            group = ICB_CODE)) + 
+  geom_line(alpha = 0.5) + 
+  facet_grid(aware_class~GENDER, scales = "free_y") + 
+  theme_bw() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
+  labs(y = "Percent of total prescriptions by age group in each category",
+       title = "AWaRe Classifications by ICB", x = "Age band") + 
+  geom_hline(data =all_data_ex_aware_av[aware_class=="Access"], aes(yintercept = 60), 
+             linetype = "dashed") + 
+  geom_hline(data =all_data_ex_aware_av[aware_class=="Access"], aes(yintercept = 80), 
+             linetype = "dashed") + 
+  geom_vline(xintercept = "11-15", linetype = "dotted")+ 
+  geom_vline(xintercept = "16-20", linetype = "dotted") 
+AWARE_ICB
+
+# select max and min in each age group and work out difference
+max_ICBs <- ICB_data_ex_aware_av[,max(perc_each_class), by = c("AGE_BAND", "GENDER", "aware_class")]
+colnames(max_ICBs)[which(colnames(max_ICBs) == "V1")] <- "max"
+max_ICBs$min <- ICB_data_ex_aware_av[,min(perc_each_class), by = c("AGE_BAND", "GENDER", "aware_class")]$V1
+max_ICBs[, difference := max-min]
+
+# just look at access
+max_ICBs <-max_ICBs [aware_class == "Access"]
+# maximum and minimum difference
+max_ICBs[which.min(max_ICBs$difference)]
+max_ICBs[which.max(max_ICBs$difference)]
+
+ggsave(paste0("plots/",sensitivity_choice,"/aware_icb_",sensitivity_choice,".pdf"), plot = AWARE_ICB, 
+       width = 20, height = 10)
+
