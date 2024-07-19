@@ -141,7 +141,8 @@ STAR_PU_APPLIED <- ggplot(ICB_items_drugs[ICB_CODE != "QXU" & ICB_CODE !="QJM" &
   geom_point(data = ICB_items_drugs[ICB_CODE == "QUY"], aes(x = short_title, y = log(normalised_rating)), colour = "#D81B60", size =3) + 
   geom_point(data = ICB_items_drugs[ICB_CODE == "QJM"], aes(x = short_title, y = log(normalised_rating)), colour = "#1E88E5", size =3) + 
   geom_point(data = ICB_items_drugs[ICB_CODE == "QOP"], aes(x = short_title, y = log(normalised_rating)), colour = "#FFC107", size =3) + 
-  labs(x = "Drug Family", y = "Normalised prescriptions per UCM population (log-scale)", colour = "ICB Code")+ 
+  labs(x = "Drug Family", y = "Normalised prescriptions per UCM population (log-scale)",
+       colour = "ICB Code")+ 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   theme(axis.text.x = element_blank())
 
@@ -201,12 +202,22 @@ starpu_rankings[change > 0, change_label := "Increased"]
 starpu_rankings[change < 0, change_label := "Decreased"]
 
 
-STARPU_RANKINGS <- ggplot(starpu_rankings, aes(x = short_title, y = ICB_CODE, fill = change)) + 
+starpu_rankings[ranking <= 10, rank_group := 1]
+starpu_rankings[ranking > 10 & ranking <=20, rank_group := 2]
+starpu_rankings[ranking > 20 & ranking <=30, rank_group := 3]
+starpu_rankings[ranking > 30  ,rank_group := 4]
+
+starpu_rankings$rank_group <- factor(starpu_rankings$rank_group, 
+                                        levels = c(1,2,3,4))
+
+
+STARPU_RANKINGS <- ggplot(starpu_rankings, aes(x = short_title, y = ICB_CODE, fill = rank_group)) + 
                             geom_tile() + 
   theme_bw() +
-  scale_fill_gradientn(colours = c("#24693D", "#F4F8FB", "#2A5783"), limits = c(-42,42)) + 
-  labs(x = "Updated Comparison Metric group", y = "ICB Code", fill = "Change in rank", 
+ # scale_fill_gradientn(colours = c("#24693D", "#F4F8FB", "#2A5783"), limits = c(-42,42)) + 
+  labs(x = "Updated Comparison Metric group", y = "ICB Code", fill = "Rank group", 
          title = "C: Ranking of UCMs") + 
+  scale_fill_brewer(palette = "Purples") +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 
 STARPU_RANKINGS_SUP <- ggplot(starpu_rankings, aes(x = short_title, y = ICB_CODE, fill = change)) + 
@@ -217,13 +228,15 @@ STARPU_RANKINGS_SUP <- ggplot(starpu_rankings, aes(x = short_title, y = ICB_CODE
        title = "Ranking of UCMs")+ 
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 
+ggsave(paste0("plots/",sensitivity_choice,"/Starpu_supplement_",sensitivity_choice,".pdf"), 
+       plot = STARPU_RANKINGS_SUP, 
+       width = 20, height = 10)
 
 
 
-
-# combine all to Figure 2
+ß# combine all to Figure 2
 FIG2 <- grid.arrange(NEW_STARPU + theme(legend.position = "None"),
-                     STAR_PU_APPLIED + labs(title = "C: Comparison of overall vs family specific UCMs"),
+                     STAR_PU_APPLIED + labs(title = "D: Comparison of overall vs family specific UCMs"),
                      OLD_STARPU + theme(legend.position = "None"),
                      LEG,
                      STARPU_RANKINGS,
