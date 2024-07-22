@@ -25,7 +25,7 @@ if(!file.exists("tables")){dir.create(file.path("tables/"))}
 # "sens_4" - stars set to 4
 # "m4_f1" - if male, stars set to 4, if female stars set to 1. Unknowns/Indeterminate set to 0
 # "20_cutoff" - if  20 or under, stars set to 4, if over 20 stars set to 1. Unknowns set to 0
-sensitivity_choice <- "default_1"
+sensitivity_choice <- "20_cutoff"
 # if you want to create a new sensitivity analysis, it needs to be altered in scripts 0a, 0b and 1.
 
 if(!file.exists(paste0("plots/", sensitivity_choice))){dir.create(file.path(paste0("plots/", sensitivity_choice)))}

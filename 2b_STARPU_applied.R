@@ -234,7 +234,7 @@ ggsave(paste0("plots/",sensitivity_choice,"/Starpu_supplement_",sensitivity_choi
 
 
 
-ß# combine all to Figure 2
+# combine all to Figure 2
 FIG2 <- grid.arrange(NEW_STARPU + theme(legend.position = "None"),
                      STAR_PU_APPLIED + labs(title = "D: Comparison of overall vs family specific UCMs"),
                      OLD_STARPU + theme(legend.position = "None"),

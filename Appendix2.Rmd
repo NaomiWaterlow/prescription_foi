@@ -1,0 +1,352 @@
+---
+title: "Appendix 2"
+author: "Naomi Waterlow,Gwen Knight"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+\maxdeadcycles=200
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Paper: Prescriptions of antibiotics in England
+
+## Antibiotic specific results
+
+This Appendix contains figures looking at each antibiotic by age band, sex and time. 
+
+
+```{r load, include = F} 
+all_drugs <- readRDS("drugs_included.RDS")
+```
+
+
+```{r all_drugs[1], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[1], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[1], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+
+```{r all_drugs[2], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[2], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[2], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[3], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[3], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[3], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[4], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[4], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[4], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[5], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[5], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[5], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[6], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[6], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[6], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[7], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[7], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[7], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[8], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[8], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[8], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[9], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[9], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[9], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[10], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[10], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[10], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[11], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[11], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[11], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[12], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[12], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[12], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[13], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[13], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[13], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[14], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[14], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[14], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[15], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[15], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[15], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[16], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[16], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[16], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[17], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[17], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[17], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[18], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[18], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[18], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[19], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[19], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[19], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[20], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[20], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[20], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[21], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[21], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[21], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[22], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[22], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[22], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[23], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[23], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[23], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[24], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[24], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[24], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[25], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[25], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[25], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[26], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[26], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[26], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[27], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[27], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[27], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[28], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[28], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[28], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[29], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[29], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[29], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[30], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[30], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[30], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[31], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[31], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[31], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[32], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[32], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[32], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[33], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[33], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[33], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[34], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[34], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[34], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[35], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[35], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[35], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[36], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[36], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[36], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[37], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[37], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[37], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[38], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[38], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[38], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[39], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[39], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[39], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[40], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[40], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[40], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[41], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[41], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[41], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[42], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[42], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[42], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+
+```{r all_drugs[43], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[43], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[43], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+
+```{r all_drugs[44], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[44], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[44], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+
+```{r all_drugs[45], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[45], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[45], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+
+```{r all_drugs[46], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[46], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[46], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+
+```{r all_drugs[47], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[47], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[47], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+
+```{r all_drugs[48], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[48], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[48], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+
+```{r all_drugs[49], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[49], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[49], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+\clearpage
+
+```{r all_drugs[50], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[50], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[50], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+
+```{r all_drugs[51], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[51], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[51], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+
+```{r all_drugs[52], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[52], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[52], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+
+```{r all_drugs[53], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[53], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[53], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+
+```{r all_drugs[54], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[54], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[54], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+
+```{r all_drugs[55], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[55], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[55], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+
+```{r all_drugs[56], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[56], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[56], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+
+```{r all_drugs[57], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[57], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[57], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+
+```{r all_drugs[58], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[58], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[58], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+
+```{r all_drugs[59], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[59], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[59], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+
+```{r all_drugs[60], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[60], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[60], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+
+```{r all_drugs[61], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[61], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[61], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+
+```{r all_drugs[62], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[62], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[62], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+
+```{r all_drugs[63], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[63], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[63], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+
+```{r all_drugs[64], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[64], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[64], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+
+```{r all_drugs[65], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[65], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[65], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+
+```{r all_drugs[66], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[66], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[66], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+
+```{r all_drugs[67], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[67], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[67], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+
+```{r all_drugs[68], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[68], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[68], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+
+```{r all_drugs[69], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[69], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[69], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+
+```{r all_drugs[70], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[70], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[70], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+
+```{r all_drugs[71], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[71], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[71], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+
+```{r all_drugs[72], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[72], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[72], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+
+```{r all_drugs[73], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[73], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[73], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+
+```{r all_drugs[74], echo=FALSE, fig.cap = paste("Prescription rate per 100’000 population for ", all_drugs[74], ". Colours indicate age groups, facets indicate sex. Grey shading indicates years of Covid-19 interventions"), out.width="100%"}
+knitr::include_graphics(path =paste0("plots/default_1/per_pop/",stringr::str_replace_all(all_drugs[74], "[^[:alnum:]]", "_"),"_overview_default_1.pdf"))
+```
+

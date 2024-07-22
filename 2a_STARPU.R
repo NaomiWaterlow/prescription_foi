@@ -133,14 +133,37 @@ for(i in all_drugs){
   
   # create plot
   PLOT_TEMP <- ggplot(temp2, aes( x = GENDER, y = AGE_BAND, fill = star_pu)) + 
-    geom_tile() + geom_text(aes(label = round(star_pu,2)), colour = "white") + 
+    geom_tile() + geom_text(aes(label = round(star_pu,2)), colour = "grey14") + 
     theme_bw() + 
-    labs(y = "Age Band", x = "Gender", fill = "STAR PU 2023", title = paste0(i, ": total prescriptions", sum(temp$V1)))+ 
+    labs(y = "Age Band", x = "Gender", fill = "STAR PU 2023", title = paste0(i, ": total prescriptions ", sum(temp$V1)))+ 
     scale_y_discrete(drop = F) + 
-    scale_x_discrete(drop = F) 
+    scale_x_discrete(drop = F) + 
+    scale_fill_gradient2(low = "#24693D", mid = "#F4F8FB",high = "#2A5783" , midpoint = 1) 
   # save plot
   ggsave(filename = paste0("plots/",sensitivity_choice,"/starpu/",str_replace_all(i, "[^[:alnum:]]", " "),
                 "_new_starpu_",sensitivity_choice,".pdf"), plot = PLOT_TEMP, 
          width = 20, height = 10) 
+  
+  assign(paste0("PLOT_",i), PLOT_TEMP)
 }
-            
+
+PLOT1 <- grid.arrange(PLOT_Aminoglycosides,`PLOT_Antileprotic drugs`, `PLOT_Antituberculosis drugs`, 
+             `PLOT_Cephalosporins and other beta-lactams`)
+
+ggsave(filename = paste0("plots/",sensitivity_choice,"/starpu/",
+                         "UCM_family_1",sensitivity_choice,".pdf"), plot = PLOT1, 
+       width = 20, height = 10)   
+
+PLOT2 <- grid.arrange(`PLOT_Clindamycin and lincomycin`, PLOT_Macrolides, `PLOT_Metronidazole, tinidazole and ornidazole`, PLOT_Penicillins)
+
+ggsave(filename = paste0("plots/",sensitivity_choice,"/starpu/",
+                         "UCM_family_2",sensitivity_choice,".pdf"), plot = PLOT2, 
+       width = 20, height = 10)   
+
+PLOT3 <- grid.arrange(PLOT_Quinolones, `PLOT_Some other antibacterials`, 
+                      `PLOT_Sulfonamides and trimethoprim`, PLOT_Tetracyclines, 
+                      `PLOT_Urinary-tract infections`)
+
+ggsave(filename = paste0("plots/",sensitivity_choice,"/starpu/",
+                         "UCM_family_3",sensitivity_choice,".pdf"), plot = PLOT3, 
+       width = 20, height = 10)   

@@ -89,6 +89,8 @@ if(sensitivity_choice == "default_1"){
 #### Save re-formatted data
 fwrite(all_data, paste0("data/",sensitivity_choice,"/all_data_",sensitivity_choice,".csv"))
 
+
+
 # drop all the ones that have less than an average of 10 prescriptions per year (i.e. < 90 prescriptions in total)
 temp <- all_data[, sum(ITEMS), by = "drug_name"]
 to_remove_low <- (temp[which(temp$V1 < 90)]$drug_name) # Removes 22 drugs
@@ -209,7 +211,7 @@ for(i in unique(all_data_ex$BNF_CHEMICAL_SUBSTANCE_CODE)){
          colour = "Year") + facet_grid(.~MONTH) + theme_bw() + 
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
   
-  ggsave(paste0("plots/", sensitivity_choice, "/seasonality/",str_replace_all(target_name, "[^[:alnum:]]", " "),
+  ggsave(paste0("plots/", sensitivity_choice, "/seasonality/",str_replace_all(target_name, "[^[:alnum:]]", "_"),
                 "_seasonality_",sensitivity_choice,".pdf"), plot = TEMP, 
          width = 20, height = 10)
   
@@ -332,6 +334,10 @@ all_data_ex <- all_data_ex[, sum(ITEMS),
                            by = c("BNF_CHEMICAL_SUBSTANCE_CODE", "AGE_BAND","GENDER" ,"YEAR", "MONTH", "drug_name")]
 colnames(all_data_ex)[which(colnames(all_data_ex) == "V1")] <- "ITEMS"
 
+# also do this across all drugs
+data_overall <- all_data_ex[,sum(ITEMS), by = c("AGE_BAND","GENDER" ,"YEAR", "MONTH" )]
+colnames(data_overall)[which(colnames(data_overall) == "V1")] <- "ITEMS"
+
 # Melt population data to merge with prescription data 
 pop_sizes_all <- melt.data.table(pop_sizes_to_23, id.vars = c("GENDER", "AGE_BAND"))
 pop_sizes_all[variable == "pop_2015_c", YEAR := 2015]
@@ -346,18 +352,19 @@ pop_sizes_all[variable == "pop_2023_c", YEAR := 2023]
 
 # Merge population and prescription data 
 all_data_ex[pop_sizes_all, on = c("AGE_BAND", "GENDER", "YEAR"), population := i.value]
-
+data_overall[pop_sizes_all, on = c("AGE_BAND", "GENDER", "YEAR"), population := i.value]
 ## Checks on population 
 # all_data_ex %>% filter(YEAR == 2023, MONTH == 1, drug_name == "Nitrofurantoin") %>%#, #AGE_BAND %in% c("0-1","2-5")) %>%
 #   summarise(sum(population)) ## 58 million
 
 # Calculate the per 100,000 population prescription rate 
 all_data_ex[, per_100k := (ITEMS/ population)*100000]
-
+data_overall[, per_100k := (ITEMS/ population)*100000]
 # Add in a date_time standardised column 
 all_data_ex[MONTH <10, date_time := paste0(YEAR, "-0",MONTH,"-01")] # add a zero to convert single month value to 2digits
 all_data_ex[MONTH >= 10, date_time := paste0(YEAR, "-",MONTH,"-01")]
 all_data_ex[, date_time2 := as.Date(date_time, try.format = "%z-%m-%d")] # in standard date time format
+data_overall[all_data_ex, on = c("YEAR", "MONTH"), date_time2 := date_time2]
 
 ########### Save organised and reformatted prescription data and population data
 fwrite(all_data_ex, paste0("data/",sensitivity_choice,"/all_data_organised_",sensitivity_choice,".csv"))
@@ -404,12 +411,36 @@ for(i in drugs_lookup$BNF_CHEMICAL_SUBSTANCE_CODE){
     
     print(target_name)
     
-    ggsave(paste0("plots/",sensitivity_choice,"/per_pop/",str_replace_all(target_name, "[^[:alnum:]]", " "),
-                  "_overview_",sensitivity_choice,".pdf"), plot = PLOT_TEMP, 
+
+    
+    ggsave(paste0("plots/",sensitivity_choice,"/per_pop/",str_replace_all(target_name, "[^[:alnum:]]", "_"),
+                  "_overview_",sensitivity_choice,".pdf"), plot = PLOT_TEMP+ theme(title = element_text(size =25), 
+                                                                                   axis.title = element_text(size =20), 
+                                                                                   axis.text = element_text(size =20), 
+                                                                                   legend.text = element_text(size =20), 
+                                                                                   legend.title = element_text(size =20)), 
            width = 20, height = 10)
     
   }
 }
+
+#generate overall drugs plot
+PLOT_OVERALL <-  ggplot(data_overall,aes(x= date_time2, y = per_100k, colour = AGE_BAND, group = AGE_BAND) ) +
+  annotate("rect", xmin = as.Date("2020-03-01"), xmax = as.Date("2022-07-01"), ymin = 0, ymax = max(data_overall$per_100k),
+         alpha = 0.4,fill = "grey") +
+  geom_point( size =0.3) +
+  geom_line()+
+  labs(title = "All prescriptions") + facet_grid(GENDER~.) + 
+  theme_bw() + 
+  labs(x = "Month", y = "Prescriptions per 100k population", colour = "Age band") + 
+  guides(color = guide_legend(override.aes = list(size=2))) +
+  scale_color_manual(values = cc)
+
+
+ggsave(paste0("plots/",sensitivity_choice,"/per_pop/all_perscriptions_",sensitivity_choice,".pdf"),
+       plot = PLOT_OVERALL, 
+       width = 20, height = 10)
+
 
 ###### Heat map of male vs female rates
 # Exclude those with small numbers to guarantee sufficient prescriptions
@@ -435,7 +466,7 @@ relative_weightings$drug_name <- factor(relative_weightings$drug_name)
 ## Add in short titles for figure formatting 
 relative_weightings[drug_type == "Penicillins", short_title :=  "Penicillins"]
 relative_weightings[drug_type == "Macrolides", short_title :=  "Macrolides"]
-relative_weightings[drug_type == "Cephalosportins and other beta-lactams", short_title :=  "Ceph's"]
+relative_weightings[drug_type == "Cephalosporins and other beta-lactams", short_title :=  "Ceph's"]
 relative_weightings[drug_type == "Quinolones", short_title :=  "Quinolones"]
 relative_weightings[drug_type == "Clindamycin and lincomycin", short_title :=  "C&L"]
 relative_weightings[drug_type == "Sulfonamides and trimethoprim", short_title :=  "S&T"]
@@ -468,6 +499,21 @@ FIG1 <- grid.arrange(CLARITH_PLOT + theme(legend.position = "NONE"), OF_PLOT+ th
                                                                                                                                                            c(2,2,2,2,2, 3, 4,4,4,4,4,4,4))
 )
 
+quantify_gender <- relative_weightings[YEAR == target_year]
+quantify_gender[relative_gender < 0, female_higher := 0]
+quantify_gender[relative_gender > 0, female_higher := 1]
+quantify_gender2 <- quantify_gender[, sum(female_higher), by = "drug_name"]
+quantify_gender2$total <-  quantify_gender[, .N, by = "drug_name"]$N
+quantify_gender2[V1/total > 0.5, threshold_0.5 := T]
+quantify_gender2[V1/total > 0.75, threshold_0.75 := T]
+quantify_gender2[V1/total > 0.9, threshold_0.9 := T]
+
+# X% of drugs have over 50% of age groups that prescribe more to female than male
+sum(quantify_gender2$threshold_0.5, na.rm = T)/nrow(quantify_gender2)
+# X% of drugs have over 75% of age groups that prescribe more to female than male
+sum(quantify_gender2$threshold_0.75, na.rm = T)/nrow(quantify_gender2)
+# X% of drugs have over 90% of age groups that prescribe more to female than male
+sum(quantify_gender2$threshold_0.9, na.rm = T)/nrow(quantify_gender2)
 
 ##### Save Figure 1
 ggsave(paste0("plots/",sensitivity_choice,"/Fig1_",sensitivity_choice,".pdf"), plot = FIG1, 
