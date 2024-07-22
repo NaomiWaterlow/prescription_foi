@@ -1,5 +1,5 @@
 # ICB populations 2023 formatting 
-# CURRENTLY MISSING WALES!!
+# Does not include Wales
 
 # read in the population data
 pop_dat <- fread("data/ICB_populations.csv")

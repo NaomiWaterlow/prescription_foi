@@ -89,6 +89,8 @@ if(sensitivity_choice == "default_1"){
 #### Save re-formatted data
 fwrite(all_data, paste0("data/",sensitivity_choice,"/all_data_",sensitivity_choice,".csv"))
 
+
+
 # drop all the ones that have less than an average of 10 prescriptions per year (i.e. < 90 prescriptions in total)
 temp <- all_data[, sum(ITEMS), by = "drug_name"]
 to_remove_low <- (temp[which(temp$V1 < 90)]$drug_name) # Removes 22 drugs
@@ -209,7 +211,7 @@ for(i in unique(all_data_ex$BNF_CHEMICAL_SUBSTANCE_CODE)){
          colour = "Year") + facet_grid(.~MONTH) + theme_bw() + 
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
   
-  ggsave(paste0("plots/", sensitivity_choice, "/seasonality/",str_replace_all(target_name, "[^[:alnum:]]", " "),
+  ggsave(paste0("plots/", sensitivity_choice, "/seasonality/",str_replace_all(target_name, "[^[:alnum:]]", "_"),
                 "_seasonality_",sensitivity_choice,".pdf"), plot = TEMP, 
          width = 20, height = 10)
   
@@ -231,70 +233,92 @@ for(i in unique(all_data_ex$BNF_CHEMICAL_SUBSTANCE_CODE)){
 
 ############ Need to normalise prescriptions by the number of people in age group ########################
 
+# check for seasonalisty
+seasonality_check <- all_data_ex[date_time2<"2020-04-01",]
+seasonality_check <- seasonality_check[, sum(ITEMS), by = c("drug_name", "MONTH")]
+# calculate average drugs given
+seasonality_check[, average_annual := mean(V1), by = c("drug_name")]
+# calcultae difference in percent by month
+seasonality_check[, percent_dif := ((V1/average_annual)*100) -100]
+sc<- seasonality_check[abs(percent_dif) >20]
+count_seasonal <- 0
+for(drug in unique(sc$drug_name)){
+  
+  if(length(sc[drug_name == drug,]$MONTH) >= 2){
+    count_seasonal <- count_seasonal+1
+    print(paste0(drug, " is seasonal"))
+  }
+
+}
+
+# percentage of drugs that are seasonal
+count_seasonal
+count_seasonal/length(unique(seasonality_check$drug_name)) *100
+
+
 ###### Load in the population sizes
 ## Up to 2021
-pop_sizes_to_21 <- fread("data/MYEB2_detailed_components_of_change_series_EW_(2020_geog20).csv")
-pop_sizes_to_21 <- pop_sizes_to_21[, c("laname20", "age", "sex", "population_2015", "population_2016", 
-                                       "population_2017", "population_2018", "population_2019", "population_2020")]
+pop_sizes_to_23 <- fread("data/myebtablesenglandwales20112023.csv", header = T)
+pop_sizes_to_23 <- pop_sizes_to_23[, c("laname23","country", "age", "sex", "population_2015", "population_2016", 
+                                       "population_2017", "population_2018", "population_2019", "population_2020", 
+                                       "population_2021", "population_2022", "population_2023")]
+# Only keep England
+pop_sizes_to_23 <- pop_sizes_to_23[country == "E",]
 
-pop_sizes_to_21[,pop_2015 :=  sum(population_2015), by = c("age", "sex")]
-pop_sizes_to_21[,pop_2016 :=  sum(population_2016), by = c("age", "sex")]
-pop_sizes_to_21[,pop_2017 :=  sum(population_2017), by = c("age", "sex")]
-pop_sizes_to_21[,pop_2018 :=  sum(population_2018), by = c("age", "sex")]
-pop_sizes_to_21[,pop_2019 :=  sum(population_2019), by = c("age", "sex")]
-pop_sizes_to_21[,pop_2020 :=  sum(population_2020), by = c("age", "sex")]
-pop_sizes_to_21[,c("laname20","population_2015", "population_2016", 
-                   "population_2017", "population_2018", "population_2019", "population_2020") := NULL ]
-pop_sizes_to_21 <- unique(pop_sizes_to_21)
+pop_sizes_to_23[,pop_2015 :=  sum(population_2015), by = c("age", "sex")]
+pop_sizes_to_23[,pop_2016 :=  sum(population_2016), by = c("age", "sex")]
+pop_sizes_to_23[,pop_2017 :=  sum(population_2017), by = c("age", "sex")]
+pop_sizes_to_23[,pop_2018 :=  sum(population_2018), by = c("age", "sex")]
+pop_sizes_to_23[,pop_2019 :=  sum(population_2019), by = c("age", "sex")]
+pop_sizes_to_23[,pop_2020 :=  sum(population_2020), by = c("age", "sex")]
+pop_sizes_to_23[,pop_2021 :=  sum(population_2021), by = c("age", "sex")]
+pop_sizes_to_23[,pop_2022 :=  sum(population_2022), by = c("age", "sex")]
+pop_sizes_to_23[,pop_2023 :=  sum(population_2023), by = c("age", "sex")]
+pop_sizes_to_23[,c("laname23","population_2015", "population_2016", 
+                   "population_2017", "population_2018", "population_2019", "population_2020", 
+                   "population_2021", "population_2022", "population_2023") := NULL ]
+pop_sizes_to_23 <- unique(pop_sizes_to_23)
 
 # convert sex to match variable in national prescription data 
-pop_sizes_to_21[sex == 1, sex2 := "M"] 
-pop_sizes_to_21[sex == 2, sex2 := "F"]
-pop_sizes_to_21[, sex := sex2]
-pop_sizes_to_21[, sex2 := NULL]
-
-## For 2021 and 2022
-pop_sizes_to_23 <- fread("data/pop_21_22.csv", header = T)
-pop_sizes_to_21[pop_sizes_to_23, on = c("age", "sex"), pop_2021 := i.2021]
-pop_sizes_to_21[pop_sizes_to_23, on = c("age", "sex"), pop_2022 := i.2022]
-# for now assume 2023 is the same as 2022, as the data is not yet published
-pop_sizes_to_21[pop_sizes_to_23, on = c("age", "sex"), pop_2023 := i.2022]
+pop_sizes_to_23[sex == "M", GENDER := "Male"] 
+pop_sizes_to_23[sex == "F", GENDER := "Female"] 
+pop_sizes_to_23[, sex := NULL]
 
 ## Group ages into age groups to match prescription data
-pop_sizes_to_21[age %in% c(0,1), AGE_BAND := "0-1"] 
-pop_sizes_to_21[age >= 2 & age <=5, AGE_BAND := "2-5"] 
-pop_sizes_to_21[age >= 6 & age <=10, AGE_BAND := "6-10"] 
-pop_sizes_to_21[age >= 11 & age <=15, AGE_BAND := "11-15"] 
-pop_sizes_to_21[age >= 16 & age <=20, AGE_BAND := "16-20"] 
-pop_sizes_to_21[age >= 21 & age <=25, AGE_BAND := "21-25"] 
-pop_sizes_to_21[age >= 26 & age <=30, AGE_BAND := "26-30"] 
-pop_sizes_to_21[age >= 31 & age <=35, AGE_BAND := "31-35"] 
-pop_sizes_to_21[age >= 36 & age <=40, AGE_BAND := "36-40"] 
-pop_sizes_to_21[age >= 41 & age <=45, AGE_BAND := "41-45"] 
-pop_sizes_to_21[age >= 46 & age <=50, AGE_BAND := "46-50"] 
-pop_sizes_to_21[age >= 51 & age <=55, AGE_BAND := "51-55"] 
-pop_sizes_to_21[age >= 56 & age <=60, AGE_BAND := "56-60"] 
-pop_sizes_to_21[age >= 61 & age <=65, AGE_BAND := "61-65"] 
-pop_sizes_to_21[age >= 66 & age <=70, AGE_BAND := "66-70"] 
-pop_sizes_to_21[age >= 71 & age <=75, AGE_BAND := "71-75"] 
-pop_sizes_to_21[age >= 76 & age <=80, AGE_BAND := "76-80"] 
-pop_sizes_to_21[age >= 81 & age <=85, AGE_BAND := "81-85"] 
-pop_sizes_to_21[age >= 86 , AGE_BAND := "86+"] 
+pop_sizes_to_23[age %in% c(0,1), AGE_BAND := "0-1"] 
+pop_sizes_to_23[age >= 2 & age <=5, AGE_BAND := "2-5"] 
+pop_sizes_to_23[age >= 6 & age <=10, AGE_BAND := "6-10"] 
+pop_sizes_to_23[age >= 11 & age <=15, AGE_BAND := "11-15"] 
+pop_sizes_to_23[age >= 16 & age <=20, AGE_BAND := "16-20"] 
+pop_sizes_to_23[age >= 21 & age <=25, AGE_BAND := "21-25"] 
+pop_sizes_to_23[age >= 26 & age <=30, AGE_BAND := "26-30"] 
+pop_sizes_to_23[age >= 31 & age <=35, AGE_BAND := "31-35"] 
+pop_sizes_to_23[age >= 36 & age <=40, AGE_BAND := "36-40"] 
+pop_sizes_to_23[age >= 41 & age <=45, AGE_BAND := "41-45"] 
+pop_sizes_to_23[age >= 46 & age <=50, AGE_BAND := "46-50"] 
+pop_sizes_to_23[age >= 51 & age <=55, AGE_BAND := "51-55"] 
+pop_sizes_to_23[age >= 56 & age <=60, AGE_BAND := "56-60"] 
+pop_sizes_to_23[age >= 61 & age <=65, AGE_BAND := "61-65"] 
+pop_sizes_to_23[age >= 66 & age <=70, AGE_BAND := "66-70"] 
+pop_sizes_to_23[age >= 71 & age <=75, AGE_BAND := "71-75"] 
+pop_sizes_to_23[age >= 76 & age <=80, AGE_BAND := "76-80"] 
+pop_sizes_to_23[age >= 81 & age <=85, AGE_BAND := "81-85"] 
+pop_sizes_to_23[age >= 86 , AGE_BAND := "86+"] 
 
 # Sum up population in each age band by sex 
-pop_sizes_to_21[,pop_2015_c :=  sum(pop_2015), by = c("AGE_BAND", "sex")]
-pop_sizes_to_21[,pop_2016_c :=  sum(pop_2016), by = c("AGE_BAND", "sex")]
-pop_sizes_to_21[,pop_2017_c :=  sum(pop_2017), by = c("AGE_BAND", "sex")]
-pop_sizes_to_21[,pop_2018_c :=  sum(pop_2018), by = c("AGE_BAND", "sex")]
-pop_sizes_to_21[,pop_2019_c :=  sum(pop_2019), by = c("AGE_BAND", "sex")]
-pop_sizes_to_21[,pop_2020_c :=  sum(pop_2020), by = c("AGE_BAND", "sex")]
-pop_sizes_to_21[,pop_2021_c :=  sum(pop_2021), by = c("AGE_BAND", "sex")]
-pop_sizes_to_21[,pop_2022_c :=  sum(pop_2022), by = c("AGE_BAND", "sex")]
-pop_sizes_to_21[,pop_2023_c :=  sum(pop_2023), by = c("AGE_BAND", "sex")]
-pop_sizes_to_21[,c("age","pop_2015", "pop_2016", 
+pop_sizes_to_23[,pop_2015_c :=  sum(pop_2015), by = c("AGE_BAND", "GENDER")]
+pop_sizes_to_23[,pop_2016_c :=  sum(pop_2016), by = c("AGE_BAND", "GENDER")]
+pop_sizes_to_23[,pop_2017_c :=  sum(pop_2017), by = c("AGE_BAND", "GENDER")]
+pop_sizes_to_23[,pop_2018_c :=  sum(pop_2018), by = c("AGE_BAND", "GENDER")]
+pop_sizes_to_23[,pop_2019_c :=  sum(pop_2019), by = c("AGE_BAND", "GENDER")]
+pop_sizes_to_23[,pop_2020_c :=  sum(pop_2020), by = c("AGE_BAND", "GENDER")]
+pop_sizes_to_23[,pop_2021_c :=  sum(pop_2021), by = c("AGE_BAND", "GENDER")]
+pop_sizes_to_23[,pop_2022_c :=  sum(pop_2022), by = c("AGE_BAND", "GENDER")]
+pop_sizes_to_23[,pop_2023_c :=  sum(pop_2023), by = c("AGE_BAND", "GENDER")]
+pop_sizes_to_23[,c("age","pop_2015", "pop_2016", 
                    "pop_2017", "pop_2018", "pop_2019", "pop_2020", "pop_2021", 
-                   "pop_2022", "pop_2023") := NULL ]
-pop_sizes_to_21 <- unique(pop_sizes_to_21)
+                   "pop_2022", "pop_2023", "country") := NULL ]
+pop_sizes_to_23 <- unique(pop_sizes_to_23)
 
 
 # need to format the prescription data into the population based age-bands
@@ -310,8 +334,12 @@ all_data_ex <- all_data_ex[, sum(ITEMS),
                            by = c("BNF_CHEMICAL_SUBSTANCE_CODE", "AGE_BAND","GENDER" ,"YEAR", "MONTH", "drug_name")]
 colnames(all_data_ex)[which(colnames(all_data_ex) == "V1")] <- "ITEMS"
 
+# also do this across all drugs
+data_overall <- all_data_ex[,sum(ITEMS), by = c("AGE_BAND","GENDER" ,"YEAR", "MONTH" )]
+colnames(data_overall)[which(colnames(data_overall) == "V1")] <- "ITEMS"
+
 # Melt population data to merge with prescription data 
-pop_sizes_all <- melt.data.table(pop_sizes_to_21, id.vars = c("sex", "AGE_BAND"))
+pop_sizes_all <- melt.data.table(pop_sizes_to_23, id.vars = c("GENDER", "AGE_BAND"))
 pop_sizes_all[variable == "pop_2015_c", YEAR := 2015]
 pop_sizes_all[variable == "pop_2016_c", YEAR := 2016]
 pop_sizes_all[variable == "pop_2017_c", YEAR := 2017]
@@ -321,22 +349,22 @@ pop_sizes_all[variable == "pop_2020_c", YEAR := 2020]
 pop_sizes_all[variable == "pop_2021_c", YEAR := 2021]
 pop_sizes_all[variable == "pop_2022_c", YEAR := 2022]
 pop_sizes_all[variable == "pop_2023_c", YEAR := 2023]
-pop_sizes_all[sex == "M", GENDER := "Male"]
-pop_sizes_all[sex == "F", GENDER := "Female"]
+
 # Merge population and prescription data 
 all_data_ex[pop_sizes_all, on = c("AGE_BAND", "GENDER", "YEAR"), population := i.value]
-
+data_overall[pop_sizes_all, on = c("AGE_BAND", "GENDER", "YEAR"), population := i.value]
 ## Checks on population 
 # all_data_ex %>% filter(YEAR == 2023, MONTH == 1, drug_name == "Nitrofurantoin") %>%#, #AGE_BAND %in% c("0-1","2-5")) %>%
-#   summarise(sum(population)) ## 60 million 
+#   summarise(sum(population)) ## 58 million
 
 # Calculate the per 100,000 population prescription rate 
 all_data_ex[, per_100k := (ITEMS/ population)*100000]
-
+data_overall[, per_100k := (ITEMS/ population)*100000]
 # Add in a date_time standardised column 
 all_data_ex[MONTH <10, date_time := paste0(YEAR, "-0",MONTH,"-01")] # add a zero to convert single month value to 2digits
 all_data_ex[MONTH >= 10, date_time := paste0(YEAR, "-",MONTH,"-01")]
 all_data_ex[, date_time2 := as.Date(date_time, try.format = "%z-%m-%d")] # in standard date time format
+data_overall[all_data_ex, on = c("YEAR", "MONTH"), date_time2 := date_time2]
 
 ########### Save organised and reformatted prescription data and population data
 fwrite(all_data_ex, paste0("data/",sensitivity_choice,"/all_data_organised_",sensitivity_choice,".csv"))
@@ -383,12 +411,36 @@ for(i in drugs_lookup$BNF_CHEMICAL_SUBSTANCE_CODE){
     
     print(target_name)
     
-    ggsave(paste0("plots/",sensitivity_choice,"/per_pop/",str_replace_all(target_name, "[^[:alnum:]]", " "),
-                  "_overview_",sensitivity_choice,".pdf"), plot = PLOT_TEMP, 
+
+    
+    ggsave(paste0("plots/",sensitivity_choice,"/per_pop/",str_replace_all(target_name, "[^[:alnum:]]", "_"),
+                  "_overview_",sensitivity_choice,".pdf"), plot = PLOT_TEMP+ theme(title = element_text(size =25), 
+                                                                                   axis.title = element_text(size =20), 
+                                                                                   axis.text = element_text(size =20), 
+                                                                                   legend.text = element_text(size =20), 
+                                                                                   legend.title = element_text(size =20)), 
            width = 20, height = 10)
     
   }
 }
+
+#generate overall drugs plot
+PLOT_OVERALL <-  ggplot(data_overall,aes(x= date_time2, y = per_100k, colour = AGE_BAND, group = AGE_BAND) ) +
+  annotate("rect", xmin = as.Date("2020-03-01"), xmax = as.Date("2022-07-01"), ymin = 0, ymax = max(data_overall$per_100k),
+         alpha = 0.4,fill = "grey") +
+  geom_point( size =0.3) +
+  geom_line()+
+  labs(title = "All prescriptions") + facet_grid(GENDER~.) + 
+  theme_bw() + 
+  labs(x = "Month", y = "Prescriptions per 100k population", colour = "Age band") + 
+  guides(color = guide_legend(override.aes = list(size=2))) +
+  scale_color_manual(values = cc)
+
+
+ggsave(paste0("plots/",sensitivity_choice,"/per_pop/all_perscriptions_",sensitivity_choice,".pdf"),
+       plot = PLOT_OVERALL, 
+       width = 20, height = 10)
+
 
 ###### Heat map of male vs female rates
 # Exclude those with small numbers to guarantee sufficient prescriptions
@@ -414,7 +466,7 @@ relative_weightings$drug_name <- factor(relative_weightings$drug_name)
 ## Add in short titles for figure formatting 
 relative_weightings[drug_type == "Penicillins", short_title :=  "Penicillins"]
 relative_weightings[drug_type == "Macrolides", short_title :=  "Macrolides"]
-relative_weightings[drug_type == "Cephalosportins and other beta-lactams", short_title :=  "Ceph's"]
+relative_weightings[drug_type == "Cephalosporins and other beta-lactams", short_title :=  "Ceph's"]
 relative_weightings[drug_type == "Quinolones", short_title :=  "Quinolones"]
 relative_weightings[drug_type == "Clindamycin and lincomycin", short_title :=  "C&L"]
 relative_weightings[drug_type == "Sulfonamides and trimethoprim", short_title :=  "S&T"]
@@ -435,7 +487,7 @@ RELATIVE_GENDER <- ggplot(relative_weightings[YEAR == target_year], aes(x = AGE_
   scale_fill_gradient2(low = "#24693D", mid = "#F4F8FB",high = "#2A5783" ) + 
   facet_grid(short_title~., scales = "free_y", space = "free") + 
   labs(x = "Age Band", y= "Antibiotic", fill = "relative rate (log)", 
-       title = paste0("C: Relative prescription rate by sex (",target_year,")")) + 
+       title = paste0("C: Relative prescription rate by sex (annual prescriptions for ",target_year,")")) + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 RELATIVE_GENDER
 ggsave(paste0("plots/",sensitivity_choice,"/per_pop/relative_gender_",target_year,".pdf"), 
@@ -447,6 +499,21 @@ FIG1 <- grid.arrange(CLARITH_PLOT + theme(legend.position = "NONE"), OF_PLOT+ th
                                                                                                                                                            c(2,2,2,2,2, 3, 4,4,4,4,4,4,4))
 )
 
+quantify_gender <- relative_weightings[YEAR == target_year]
+quantify_gender[relative_gender < 0, female_higher := 0]
+quantify_gender[relative_gender > 0, female_higher := 1]
+quantify_gender2 <- quantify_gender[, sum(female_higher), by = "drug_name"]
+quantify_gender2$total <-  quantify_gender[, .N, by = "drug_name"]$N
+quantify_gender2[V1/total > 0.5, threshold_0.5 := T]
+quantify_gender2[V1/total > 0.75, threshold_0.75 := T]
+quantify_gender2[V1/total > 0.9, threshold_0.9 := T]
+
+# X% of drugs have over 50% of age groups that prescribe more to female than male
+sum(quantify_gender2$threshold_0.5, na.rm = T)/nrow(quantify_gender2)
+# X% of drugs have over 75% of age groups that prescribe more to female than male
+sum(quantify_gender2$threshold_0.75, na.rm = T)/nrow(quantify_gender2)
+# X% of drugs have over 90% of age groups that prescribe more to female than male
+sum(quantify_gender2$threshold_0.9, na.rm = T)/nrow(quantify_gender2)
 
 ##### Save Figure 1
 ggsave(paste0("plots/",sensitivity_choice,"/Fig1_",sensitivity_choice,".pdf"), plot = FIG1, 

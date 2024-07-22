@@ -1,97 +1,97 @@
-﻿BNF_CHEMICAL_SUBSTANCE_CODE,CHEMICAL_SUBSTANCE_BNF_DESCR,DRUG_FAMILY,Drug_type
-0501011J0,Benzylpenicillin sodium (Penicillin G),Penicillins (excluding β-lactamase inhibitors),Penicillins
-0501011P0,Phenoxymethylpenicillin (Penicillin V),Penicillins (excluding β-lactamase inhibitors),Penicillins
-0501012G0,Flucloxacillin sodium,Penicillins (excluding β-lactamase inhibitors),Penicillins
-0501012H0,Flucloxacillin magnesium,Penicillins (excluding β-lactamase inhibitors),Penicillins
-0501012U0,Temocillin sodium,Penicillins (excluding β-lactamase inhibitors),Penicillins
-0501013B0,Amoxicillin,Penicillins (excluding β-lactamase inhibitors),Penicillins
-0501013C0,Amoxicillin sodium,Penicillins (excluding β-lactamase inhibitors),Penicillins
-0501013E0,Ampicillin,Penicillins (excluding β-lactamase inhibitors),Penicillins
-0501013K0,Co-amoxiclav (Amoxicillin/clavulanic acid),Penicillins (excluding β-lactamase inhibitors),Penicillins
-0501013L0,Co-fluampicil(Flucloxacillin/ampicillin),Penicillins (excluding β-lactamase inhibitors),Penicillins
-0501014N0,Ticarcillin with clavulanic acid,Penicillins (excluding β-lactamase inhibitors),Penicillins
-0501014S0,Piperacillin sodium/tazobactam sodium,Penicillins (excluding β-lactamase inhibitors),Penicillins
-0501015P0,Pivmecillinam hydrochloride,Penicillins (excluding β-lactamase inhibitors),Penicillins
-0501021A0,Cefaclor,First and second-generation cephalosporins,Cephalosporins and other beta-lactams
-0501021B0,Cefadroxil,First and second-generation cephalosporins,Cephalosporins and other beta-lactams
-0501021C0,Cefixime,"Third, fourth and fifth-generation cephalosporins",Cephalosporins and other beta-lactams
-0501021D0,Cefotaxime sodium,"Third, fourth and fifth-generation cephalosporins",Cephalosporins and other beta-lactams
-0501021E0,Cefoxitin sodium,First and second-generation cephalosporins,Cephalosporins and other beta-lactams
-0501021F0,Cefpodoxime,"Third, fourth and fifth-generation cephalosporins",Cephalosporins and other beta-lactams
-0501021G0,Ceftriaxone sodium,"Third, fourth and fifth-generation cephalosporins",Cephalosporins and other beta-lactams
-0501021H0,Ceftazidime pentahydrate,"Third, fourth and fifth-generation cephalosporins",Cephalosporins and other beta-lactams
-0501021J0,Cefuroxime sodium,First and second-generation cephalosporins,Cephalosporins and other beta-lactams
-0501021K0,Cefuroxime axetil,First and second-generation cephalosporins,Cephalosporins and other beta-lactams
-0501021L0,Cefalexin,First and second-generation cephalosporins,Cephalosporins and other beta-lactams
-0501021M0,Cefradine,First and second-generation cephalosporins,Cephalosporins and other beta-lactams
-0501022A0,Meropenem,Carbapenems,Cephalosporins and other beta-lactams
-0501022B0,Ertapenem sodium,Carbapenems,Cephalosporins and other beta-lactams
-0501022D0,Imipenem with cilastatin,Carbapenems,Cephalosporins and other beta-lactams
-0501023A0,Aztreonam,Other antibacterials,Cephalosporins and other beta-lactams
-0501030F0,Demeclocycline hydrochloride,Tetracyclines,Tetracyclines
-0501030I0,Doxycycline hyclate,Tetracyclines,Tetracyclines
-0501030L0,Lymecycline,Tetracyclines,Tetracyclines
-0501030P0,Minocycline hydrochloride,Tetracyclines,Tetracyclines
-0501030T0,Oxytetracycline,Tetracyclines,Tetracyclines
-0501030V0,Tetracycline,Tetracyclines,Tetracyclines
-0501030X0,Tetracycline combined preparations,Tetracyclines,Tetracyclines
-0501030Y0,Tigecycline,Tetracyclines,Tetracyclines
-0501030Z0,Doxycycline monohydrate,Tetracyclines,Tetracyclines
-0501040C0,Amikacin,Aminoglycosides,Aminoglycosides
-0501040H0,Gentamicin sulfate,Aminoglycosides,Aminoglycosides
-0501040N0,Neomycin sulfate,Aminoglycosides,Aminoglycosides
-0501040U0,Tobramycin,Aminoglycosides,Aminoglycosides
-0501050A0,Azithromycin,"Macrolides, lincosamides and streptogramins",Macrolides
-0501050B0,Clarithromycin,"Macrolides, lincosamides and streptogramins",Macrolides
-0501050C0,Erythromycin,"Macrolides, lincosamides and streptogramins",Macrolides
-0501050H0,Erythromycin ethylsuccinate,"Macrolides, lincosamides and streptogramins",Macrolides
-0501050K0,Erythromycin lactobionate,"Macrolides, lincosamides and streptogramins",Macrolides
-0501050N0,Erythromycin stearate,"Macrolides, lincosamides and streptogramins",Macrolides
-0501060D0,Clindamycin hydrochloride,"Macrolides, lincosamides and streptogramins",Clindamycin and lincomycin
-0501060E0,Clindamycin phosphate,"Macrolides, lincosamides and streptogramins",Clindamycin and lincomycin
-0501070AA,Taurolidine,Other antibacterials,Some other antibacterials
-0501070AB,Nitazoxanide,Other antibacterials,Some other antibacterials
-0501070AC,Fidaxomicin,"Macrolides, lincosamides and streptogramins",Some other antibacterials
-0501070AD,Tedizolid,Other antibacterials,Some other antibacterials
-0501070AE,Fosfomycin trometamol,Other antibacterials,Some other antibacterials
-0501070F0,Chloramphenicol,Other antibacterials,Some other antibacterials
-0501070H0,Colistin sulfate,Other antibacterials,Some other antibacterials
-0501070I0,Colistimethate sodium,Other antibacterials,Some other antibacterials
-0501070M0,Fusidic acid,Other antibacterials,Some other antibacterials
-0501070N0,Sodium fusidate,Other antibacterials,Some other antibacterials
-0501070T0,Teicoplanin,Other antibacterials,Some other antibacterials
-0501070U0,Vancomycin hydrochloride,Other antibacterials,Some other antibacterials
-0501070W0,Linezolid,Other antibacterials,Some other antibacterials
-0501070X0,Rifaximin,Other antibacterials,Some other antibacterials
-0501070Y0,Daptomycin,Other antibacterials,Some other antibacterials
-0501070Z0,Pristinamycin,Other antibacterials,Some other antibacterials
-0501080D0,Co-trimoxazole(Trimethoprim/sulfamethoxazole),Sulfonamides and trimethoprim,Sulfonamides and trimethoprim
-0501080J0,Sulfadiazine,Sulfonamides and trimethoprim,Sulfonamides and trimethoprim
-0501080T0,Sulfamethoxypyridazine,Sulfonamides and trimethoprim,Sulfonamides and trimethoprim
-0501080V0,Sulfapyridine,Sulfonamides and trimethoprim,Sulfonamides and trimethoprim
-0501080W0,Trimethoprim,Sulfonamides and trimethoprim,Sulfonamides and trimethoprim
-0501090A0,Aminosalicylic acid,Other antibacterials,Antituberculosis drugs
-0501090C0,Capreomycin,Aminoglycosides,Antituberculosis drugs
-0501090E0,Cycloserine,Other antibacterials,Antituberculosis drugs
-0501090H0,Ethambutol hydrochloride,Other antibacterials,Antituberculosis drugs
-0501090K0,Isoniazid,Other antibacterials,Antituberculosis drugs
-0501090N0,Pyrazinamide,Other antibacterials,Antituberculosis drugs
-0501090Q0,Rifabutin,Other antibacterials,Antituberculosis drugs
-0501090R0,Rifampicin,Other antibacterials,Antituberculosis drugs
-0501090S0,Rifampicin combined preparations,Other antibacterials,Antituberculosis drugs
-0501090U0,Streptomycin,Aminoglycosides,Antituberculosis drugs
-0501090V0,Bedaquiline,Other antibacterials,Antituberculosis drugs
-0501100C0,Clofazimine,Other antibacterials,Antileprotic drugs
-0501100H0,Dapsone,Sulfonamides and trimethoprim,Antileprotic drugs
-0501100J0,Thalidomide (Antileprotic),Other antibacterials,Antileprotic drugs
-0501110C0,Metronidazole,Oral Metronidazole (P01AB01),"Metronidazole, tinidazole and ornidazole"
-0501110G0,Tinidazole,Other antibacterials,"Metronidazole, tinidazole and ornidazole"
-0501120L0,Ciprofloxacin,Quinolones,Quinolones
-0501120N0,Nalidixic acid,Quinolones,Quinolones
-0501120P0,Ofloxacin,Quinolones,Quinolones
-0501120Q0,Norfloxacin,Quinolones,Quinolones
-0501120X0,Levofloxacin,Quinolones,Quinolones
-0501120Y0,Moxifloxacin,Quinolones,Quinolones
-0501130H0,Methenamine hippurate,Other antibacterials,Urinary-tract infections
-0501130R0,Nitrofurantoin,Other antibacterials,Urinary-tract infections
-0501130S0,Fosfomycin calcium,Other antibacterials,Urinary-tract infections
+﻿BNF_CHEMICAL_SUBSTANCE_CODE,CHEMICAL_SUBSTANCE_BNF_DESCR,Drug_type
+0501011J0,Benzylpenicillin sodium (Penicillin G),Penicillins
+0501011P0,Phenoxymethylpenicillin (Penicillin V),Penicillins
+0501012G0,Flucloxacillin sodium,Penicillins
+0501012H0,Flucloxacillin magnesium,Penicillins
+0501012U0,Temocillin sodium,Penicillins
+0501013B0,Amoxicillin,Penicillins
+0501013C0,Amoxicillin sodium,Penicillins
+0501013E0,Ampicillin,Penicillins
+0501013K0,Co-amoxiclav (Amoxicillin/clavulanic acid),Penicillins
+0501013L0,Co-fluampicil(Flucloxacillin/ampicillin),Penicillins
+0501014N0,Ticarcillin with clavulanic acid,Penicillins
+0501014S0,Piperacillin sodium/tazobactam sodium,Penicillins
+0501015P0,Pivmecillinam hydrochloride,Penicillins
+0501021A0,Cefaclor,Cephalosporins and other beta-lactams
+0501021B0,Cefadroxil,Cephalosporins and other beta-lactams
+0501021C0,Cefixime,Cephalosporins and other beta-lactams
+0501021D0,Cefotaxime sodium,Cephalosporins and other beta-lactams
+0501021E0,Cefoxitin sodium,Cephalosporins and other beta-lactams
+0501021F0,Cefpodoxime,Cephalosporins and other beta-lactams
+0501021G0,Ceftriaxone sodium,Cephalosporins and other beta-lactams
+0501021H0,Ceftazidime pentahydrate,Cephalosporins and other beta-lactams
+0501021J0,Cefuroxime sodium,Cephalosporins and other beta-lactams
+0501021K0,Cefuroxime axetil,Cephalosporins and other beta-lactams
+0501021L0,Cefalexin,Cephalosporins and other beta-lactams
+0501021M0,Cefradine,Cephalosporins and other beta-lactams
+0501022A0,Meropenem,Cephalosporins and other beta-lactams
+0501022B0,Ertapenem sodium,Cephalosporins and other beta-lactams
+0501022D0,Imipenem with cilastatin,Cephalosporins and other beta-lactams
+0501023A0,Aztreonam,Cephalosporins and other beta-lactams
+0501030F0,Demeclocycline hydrochloride,Tetracyclines
+0501030I0,Doxycycline hyclate,Tetracyclines
+0501030L0,Lymecycline,Tetracyclines
+0501030P0,Minocycline hydrochloride,Tetracyclines
+0501030T0,Oxytetracycline,Tetracyclines
+0501030V0,Tetracycline,Tetracyclines
+0501030X0,Tetracycline combined preparations,Tetracyclines
+0501030Y0,Tigecycline,Tetracyclines
+0501030Z0,Doxycycline monohydrate,Tetracyclines
+0501040C0,Amikacin,Aminoglycosides
+0501040H0,Gentamicin sulfate,Aminoglycosides
+0501040N0,Neomycin sulfate,Aminoglycosides
+0501040U0,Tobramycin,Aminoglycosides
+0501050A0,Azithromycin,Macrolides
+0501050B0,Clarithromycin,Macrolides
+0501050C0,Erythromycin,Macrolides
+0501050H0,Erythromycin ethylsuccinate,Macrolides
+0501050K0,Erythromycin lactobionate,Macrolides
+0501050N0,Erythromycin stearate,Macrolides
+0501060D0,Clindamycin hydrochloride,Clindamycin and lincomycin
+0501060E0,Clindamycin phosphate,Clindamycin and lincomycin
+0501070AA,Taurolidine,Some other antibacterials
+0501070AB,Nitazoxanide,Some other antibacterials
+0501070AC,Fidaxomicin,Some other antibacterials
+0501070AD,Tedizolid,Some other antibacterials
+0501070AE,Fosfomycin trometamol,Some other antibacterials
+0501070F0,Chloramphenicol,Some other antibacterials
+0501070H0,Colistin sulfate,Some other antibacterials
+0501070I0,Colistimethate sodium,Some other antibacterials
+0501070M0,Fusidic acid,Some other antibacterials
+0501070N0,Sodium fusidate,Some other antibacterials
+0501070T0,Teicoplanin,Some other antibacterials
+0501070U0,Vancomycin hydrochloride,Some other antibacterials
+0501070W0,Linezolid,Some other antibacterials
+0501070X0,Rifaximin,Some other antibacterials
+0501070Y0,Daptomycin,Some other antibacterials
+0501070Z0,Pristinamycin,Some other antibacterials
+0501080D0,Co-trimoxazole(Trimethoprim/sulfamethoxazole),Sulfonamides and trimethoprim
+0501080J0,Sulfadiazine,Sulfonamides and trimethoprim
+0501080T0,Sulfamethoxypyridazine,Sulfonamides and trimethoprim
+0501080V0,Sulfapyridine,Sulfonamides and trimethoprim
+0501080W0,Trimethoprim,Sulfonamides and trimethoprim
+0501090A0,Aminosalicylic acid,Antituberculosis drugs
+0501090C0,Capreomycin,Antituberculosis drugs
+0501090E0,Cycloserine,Antituberculosis drugs
+0501090H0,Ethambutol hydrochloride,Antituberculosis drugs
+0501090K0,Isoniazid,Antituberculosis drugs
+0501090N0,Pyrazinamide,Antituberculosis drugs
+0501090Q0,Rifabutin,Antituberculosis drugs
+0501090R0,Rifampicin,Antituberculosis drugs
+0501090S0,Rifampicin combined preparations,Antituberculosis drugs
+0501090U0,Streptomycin,Antituberculosis drugs
+0501090V0,Bedaquiline,Antituberculosis drugs
+0501100C0,Clofazimine,Antileprotic drugs
+0501100H0,Dapsone,Antileprotic drugs
+0501100J0,Thalidomide (Antileprotic),Antileprotic drugs
+0501110C0,Metronidazole,"Metronidazole, tinidazole and ornidazole"
+0501110G0,Tinidazole,"Metronidazole, tinidazole and ornidazole"
+0501120L0,Ciprofloxacin,Quinolones
+0501120N0,Nalidixic acid,Quinolones
+0501120P0,Ofloxacin,Quinolones
+0501120Q0,Norfloxacin,Quinolones
+0501120X0,Levofloxacin,Quinolones
+0501120Y0,Moxifloxacin,Quinolones
+0501130H0,Methenamine hippurate,Urinary-tract infections
+0501130R0,Nitrofurantoin,Urinary-tract infections
+0501130S0,Fosfomycin calcium,Urinary-tract infections

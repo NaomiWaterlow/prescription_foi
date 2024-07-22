@@ -9,7 +9,10 @@ starpu_overall <- fread(file = paste0("data/",sensitivity_choice,"/starpu_overal
 
 # load the cleaned ICB data
 ICB_data <- fread(paste0("data/",sensitivity_choice,"/all_ICB_data_",sensitivity_choice,".csv"))
+# 2023 obnly
 ICB_data_2023 <- ICB_data[YEAR == 2023]
+#remove wales as not in the combined data set
+ICB_data_2023 <- ICB_data_2023[ICB_CODE != "Q99"]
 drugs_lookup <- fread("data/drugs_lookup.csv")
 # load in the ICB population data
 ICB_pops <- fread("data/ICB_Data/ICB_2023_pops.csv")
@@ -134,21 +137,113 @@ STAR_PU_APPLIED <- ggplot(ICB_items_drugs[ICB_CODE != "QXU" & ICB_CODE !="QJM" &
   geom_hline(yintercept = log(ICB_items_overall[ICB_CODE == "QJM",normalised_rating]),colour = "#1E88E5" ,alpha = 1, size = 1) +
   geom_hline(yintercept = log(ICB_items_overall[ICB_CODE == "QOP",normalised_rating]),colour = "#FFC107" ,alpha = 1, size = 1) +
     geom_jitter(width = 0.2, colour = "grey20") + theme_bw() +
-  facet_wrap(.~new_label, scales = "free",ncol = 5, labeller = label_wrap_gen(width=20)) + 
+  facet_wrap(.~new_label, scales = "free",nrow=2, labeller = label_wrap_gen(width=20)) + 
   geom_point(data = ICB_items_drugs[ICB_CODE == "QUY"], aes(x = short_title, y = log(normalised_rating)), colour = "#D81B60", size =3) + 
   geom_point(data = ICB_items_drugs[ICB_CODE == "QJM"], aes(x = short_title, y = log(normalised_rating)), colour = "#1E88E5", size =3) + 
   geom_point(data = ICB_items_drugs[ICB_CODE == "QOP"], aes(x = short_title, y = log(normalised_rating)), colour = "#FFC107", size =3) + 
-  labs(x = "Drug Family", y = "Normalised prescriptions per UCM population (log-scale)", colour = "ICB Code")+ 
+  labs(x = "Drug Family", y = "Normalised prescriptions per UCM population (log-scale)",
+       colour = "ICB Code")+ 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   theme(axis.text.x = element_blank())
 
+
+
+
+ggplot(ICB_items_overall, aes(x = ICB_CODE, y = rating)) + 
+  geom_point() + theme_bw() + 
+  labs(y = "ITEMS per STAR-PU")
+
+
+# work out rank changes
+
+ICB_items_overall[, ranking := rank(rating)]
+ICB_items_drugs[,ranking := rank(rating), by = "drug_type"]
+
+# create matching columsn so can include in same plot
+
+ICB_items_overall_match <- data.frame(
+  ICB_CODE = ICB_items_overall[,"ICB_CODE"], 
+  drug_type = "Overall", 
+  rating = ICB_items_overall[,"rating"], 
+  short_title = "Overall", 
+  ranking = ICB_items_overall[,"ranking"]
+)
+
+starpu_rankings <- rbind(ICB_items_drugs[,c("ICB_CODE", "drug_type",
+                                            "rating", "short_title", 
+                                            "ranking")],
+                         ICB_items_overall_match)
+
+# make OVERALL first factor
+starpu_rankings$short_title <- factor(starpu_rankings$short_title,
+                                      levels = c("Overall","Penicillins",
+                                                 "Ceph's",
+                                                 "Tetracyclines" ,
+                                                 "Aminoglycosides",
+                                                 "Macrolides",
+                                                 "C&L",
+                                                 "Other",
+                                                 "S&T",
+                                                 "TB", 
+                                                 "Lep", 
+                                                 "MTO",
+                                                 "Quinolones",
+                                                 "UTIs" ))
+# order factor by overall ranking
+temp <- starpu_rankings[drug_type == "Overall",]
+levels_to_use <- temp[order(ranking)]$ICB_CODE
+starpu_rankings$ICB_CODE <- factor(starpu_rankings$ICB_CODE, levels = rev(levels_to_use))
+
+#want to label whether it's up or down for colouring
+starpu_rankings[ICB_items_overall_match, on = "ICB_CODE", overal_ranking := i.ranking]
+starpu_rankings[, change := overal_ranking - ranking]
+starpu_rankings[change == 0, change_label := "No change"]
+starpu_rankings[change > 0, change_label := "Increased"]
+starpu_rankings[change < 0, change_label := "Decreased"]
+
+
+starpu_rankings[ranking <= 10, rank_group := 1]
+starpu_rankings[ranking > 10 & ranking <=20, rank_group := 2]
+starpu_rankings[ranking > 20 & ranking <=30, rank_group := 3]
+starpu_rankings[ranking > 30  ,rank_group := 4]
+
+starpu_rankings$rank_group <- factor(starpu_rankings$rank_group, 
+                                        levels = c(1,2,3,4))
+
+
+STARPU_RANKINGS <- ggplot(starpu_rankings, aes(x = short_title, y = ICB_CODE, fill = rank_group)) + 
+                            geom_tile() + 
+  theme_bw() +
+ # scale_fill_gradientn(colours = c("#24693D", "#F4F8FB", "#2A5783"), limits = c(-42,42)) + 
+  labs(x = "Updated Comparison Metric group", y = "ICB Code", fill = "Rank group", 
+         title = "C: Ranking of UCMs") + 
+  scale_fill_brewer(palette = "Purples") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+
+STARPU_RANKINGS_SUP <- ggplot(starpu_rankings, aes(x = short_title, y = ICB_CODE, fill = change)) + 
+  geom_tile() + geom_text(aes(label = ranking)) + 
+  theme_bw() +
+  scale_fill_gradientn(colours = c("#24693D", "#F4F8FB", "#2A5783"), limits = c(-42,42)) + 
+  labs(x = "Updated Comparison Metric group", y = "ICB Code", fill = "Change in rank", 
+       title = "Ranking of UCMs")+ 
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+
+ggsave(paste0("plots/",sensitivity_choice,"/Starpu_supplement_",sensitivity_choice,".pdf"), 
+       plot = STARPU_RANKINGS_SUP, 
+       width = 20, height = 10)
+
+
+
 # combine all to Figure 2
 FIG2 <- grid.arrange(NEW_STARPU + theme(legend.position = "None"),
-                     STAR_PU_APPLIED + labs(title = "C: Comparison of overall vs family specific UCMs"),
+                     STAR_PU_APPLIED + labs(title = "D: Comparison of overall vs family specific UCMs"),
                      OLD_STARPU + theme(legend.position = "None"),
                      LEG,
-                     layout_matrix = rbind(c(3,3,1,1,4,2,2,2,2,2),
-                                           c(3,3,1,1,4,2,2,2,2,2)))
+                     STARPU_RANKINGS,
+                     layout_matrix = rbind(c(3,3,1,1,4,5,5,5,5,5),
+                                           c(3,3,1,1,4,5,5,5,5,5),
+                                           c(2,2,2,2,2,2,2,2,2,2),
+                                           c(2,2,2,2,2,2,2,2,2,2)))
 #save
 ggsave(paste0("plots/",sensitivity_choice,"/Fig2_",sensitivity_choice,".pdf"), plot = FIG2, 
        width = 20, height = 10)
@@ -161,9 +256,4 @@ ggsave(paste0("plots/",sensitivity_choice,"/Fig2_",sensitivity_choice,".pdf"), p
 
 # From https://assets.publishing.service.gov.uk/media/65cf498ee1bdec001132225c/ESPAUR-report-2022-to-2023.pdf
 
-
-
-ggplot(ICB_items_overall, aes(x = ICB_CODE, y = rating)) + 
-  geom_point() + theme_bw() + 
-  labs(y = "ITEMS per STAR-PU")
 
