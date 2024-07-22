@@ -471,7 +471,8 @@ paste0(round(mean(per_persond$per_person),2), "(",
 
 
 # In women 
-inwomend <- all_data_ex %>% group_by(GENDER, YEAR) %>% summarise(total_items = sum(ITEMS)) %>%
+inwomend <- all_data_ex %>% group_by(GENDER, YEAR) %>% 
+  summarise(total_items = sum(ITEMS)) %>%
   pivot_wider(names_from = GENDER, values_from = total_items) %>%
   mutate(perc_f = 100*Female / (Male + Female))
 
