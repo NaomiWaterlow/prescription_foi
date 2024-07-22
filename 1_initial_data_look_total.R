@@ -650,9 +650,13 @@ colnames(table1) <- c("Antibiotic", "Total prescriptions", "Mean annual prescrip
 
 write.csv(table1, paste0("tables/",sensitivity_choice,"_table1.csv"))
 
+## Proportion in top 20 
+100 * sum(table1_unformatted[1:20,"total_prescriptions"]) / sum(table1_unformatted[,"total_prescriptions"]) # = 98%
+
 ### common month
 table(table1[1:20,"Month"])
 table(table1[1:20,"% to females"])
 length(which(table1_unformatted[1:20,"2023"] - table1_unformatted[1:20,"2016"]<0))
+
           
       
