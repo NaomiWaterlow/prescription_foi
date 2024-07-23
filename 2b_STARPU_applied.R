@@ -130,17 +130,17 @@ ICB_items_drugs[, drug_total := sum(ITEMS), by ="drug_type"]
 ICB_items_drugs[, new_label := paste0(drug_type, " (n=", format(drug_total, big.mark=",", scientific=F, trim = T), ")")]
 
 #create plot
-STAR_PU_APPLIED <- ggplot(ICB_items_drugs[ICB_CODE != "QXU" & ICB_CODE !="QJM" & ICB_CODE != "QOP"], aes(x = short_title, y = log(normalised_rating))) + 
+STAR_PU_APPLIED <- ggplot(ICB_items_drugs[ICB_CODE != "QWO" & ICB_CODE !="QJM" & ICB_CODE != "QRL"], aes(x = short_title, y = log(normalised_rating))) + 
   geom_blank(aes(y = 0, ymin =-abs(normalised_rating)*0.5 , ymax = abs(normalised_rating)*0.5) ) +
   geom_hline(yintercept = log(ICB_items_overall$normalised_rating), alpha = 0.2) +
-  geom_hline(yintercept = log(ICB_items_overall[ICB_CODE == "QXU",normalised_rating]),colour = "#D81B60" ,alpha = 1, size = 1) +
+  geom_hline(yintercept = log(ICB_items_overall[ICB_CODE == "QRL",normalised_rating]),colour = "#D81B60" ,alpha = 1, size = 1) +
   geom_hline(yintercept = log(ICB_items_overall[ICB_CODE == "QJM",normalised_rating]),colour = "#1E88E5" ,alpha = 1, size = 1) +
-  geom_hline(yintercept = log(ICB_items_overall[ICB_CODE == "QOP",normalised_rating]),colour = "#FFC107" ,alpha = 1, size = 1) +
+  geom_hline(yintercept = log(ICB_items_overall[ICB_CODE == "QWO",normalised_rating]),colour = "#FFC107" ,alpha = 1, size = 1) +
     geom_jitter(width = 0.2, colour = "grey20") + theme_bw() +
   facet_wrap(.~new_label, scales = "free",nrow=2, labeller = label_wrap_gen(width=20)) + 
-  geom_point(data = ICB_items_drugs[ICB_CODE == "QUY"], aes(x = short_title, y = log(normalised_rating)), colour = "#D81B60", size =3) + 
+  geom_point(data = ICB_items_drugs[ICB_CODE == "QRL"], aes(x = short_title, y = log(normalised_rating)), colour = "#D81B60", size =3) + 
   geom_point(data = ICB_items_drugs[ICB_CODE == "QJM"], aes(x = short_title, y = log(normalised_rating)), colour = "#1E88E5", size =3) + 
-  geom_point(data = ICB_items_drugs[ICB_CODE == "QOP"], aes(x = short_title, y = log(normalised_rating)), colour = "#FFC107", size =3) + 
+  geom_point(data = ICB_items_drugs[ICB_CODE == "QWO"], aes(x = short_title, y = log(normalised_rating)), colour = "#FFC107", size =3) + 
   labs(x = "Drug Family", y = "Normalised prescriptions per UCM population (log-scale)",
        colour = "ICB Code")+ 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
@@ -218,7 +218,11 @@ STARPU_RANKINGS <- ggplot(starpu_rankings, aes(x = short_title, y = ICB_CODE, fi
   labs(x = "Updated Comparison Metric group", y = "ICB Code", fill = "Rank group", 
          title = "C: Ranking of UCMs") + 
   scale_fill_brewer(palette = "Purples") +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))+ 
+  geom_rect(ymin =0.5, ymax= 1.5, xmin = -Inf, xmax = Inf, colour = "#1E88E5", fill = NA)+ #
+  geom_rect(ymin =36.5, ymax= 37.5, xmin = -Inf, xmax = Inf, colour = "#D81B60", fill = NA)+ #QRL
+  geom_rect(ymin =4.5, ymax= 5.5, xmin = -Inf, xmax = Inf, colour = "#FFC107", fill = NA) #QWO
+  
 
 STARPU_RANKINGS_SUP <- ggplot(starpu_rankings, aes(x = short_title, y = ICB_CODE, fill = change)) + 
   geom_tile() + geom_text(aes(label = ranking)) + 
@@ -226,7 +230,7 @@ STARPU_RANKINGS_SUP <- ggplot(starpu_rankings, aes(x = short_title, y = ICB_CODE
   scale_fill_gradientn(colours = c("#24693D", "#F4F8FB", "#2A5783"), limits = c(-42,42)) + 
   labs(x = "Updated Comparison Metric group", y = "ICB Code", fill = "Change in rank", 
        title = "Ranking of UCMs")+ 
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) 
 
 ggsave(paste0("plots/",sensitivity_choice,"/Starpu_supplement_",sensitivity_choice,".pdf"), 
        plot = STARPU_RANKINGS_SUP, 
@@ -241,6 +245,7 @@ FIG2 <- grid.arrange(NEW_STARPU + theme(legend.position = "None"),
                      LEG,
                      STARPU_RANKINGS,
                      layout_matrix = rbind(c(3,3,1,1,4,5,5,5,5,5),
+                                           c(3,3,1,1,4,5,5,5,5,5),
                                            c(3,3,1,1,4,5,5,5,5,5),
                                            c(2,2,2,2,2,2,2,2,2,2),
                                            c(2,2,2,2,2,2,2,2,2,2)))

@@ -200,7 +200,9 @@ rectangle_object <- unique(all_together[, c("nice_labels", "type","AGE_BAND_COMB
 rectangle_object[,fyear_start := 2019]
 rectangle_object[,value := 0]
 
-MRSA_PRESCRIPS <- ggplot(all_together, aes(x = fyear_start, y = value, colour = GENDER, linetype = type)) + 
+all_together
+
+MRSA_PRESCRIPS <- ggplot(all_together, aes(x = fyear_start, y = value, colour = GENDER, linetype = nice_labels)) + 
   geom_blank(aes(ymin =0 , ymax = upper_lim) ) +
   geom_rect(data = rectangle_object, xmin = 2019, xmax = 2022, ymin = -0.7, aes( ymax = upper_lim), 
             alpha = 0.4,fill = "grey", colour =NA, inherit.aes = F) +

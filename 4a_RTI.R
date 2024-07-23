@@ -109,7 +109,7 @@ FLU_VACC <- ggplot(temp, aes(x = date_time2, y = normalised_rate, colour = AGE_B
   geom_vline(xintercept = as.Date("2019-10-01"), linetype = "dashed") + 
   annotate("text", x = as.Date("2019-10-01")+30, y = 3.5, label = "Ages 10-11", angle = 90)+
   geom_vline(xintercept = as.Date("2020-10-01")) + 
-  annotate("text", x = as.Date("2020-10-01")+30, y = 3.5, label = "Ages 11-12 & 50-65", angle = 90)+
+  annotate("text", x = as.Date("2020-10-01")+30, y = 3.4, label = "Ages 11-12 & 50-65", angle = 90)+
   geom_vline(xintercept = as.Date("2021-10-01"), linetype = "dashed") + 
   annotate("text", x = as.Date("2021-10-01")+30, y = 3.5, label = "Ages 12-16", angle = 90)  + 
   lims(y = c(0,4))
@@ -150,7 +150,7 @@ FLU_CHANGE <- ggplot(flu_total, aes(x = flu_year, y = prop_change, colour = AGE_
   geom_vline(xintercept = 2019-0.4, linetype = "dashed") + 
   annotate("text", x = 2019-0.3, y = 1.5, label = "Ages 10-11", angle = 90)+
   geom_vline(xintercept = 2020-0.4) + 
-  annotate("text", x = 2020-0.3, y = 1.5, label = "Ages 11-12 & 50-65", angle = 90)+
+  annotate("text", x = 2020-0.3, y = 1.4, label = "Ages 11-12 & 50-65", angle = 90)+
   geom_vline(xintercept = 2021-0.4,linetype = "dashed") + 
   annotate("text", x = 2021-0.3, y = 1.5, label = "Ages 12-16", angle = 90) + 
   lims(y = c(-0.7,1.8)) + 
@@ -162,8 +162,8 @@ FLU_CHANGE <- ggplot(flu_total[flu_year < 2020, ], aes(x = flu_year, y = prop_ch
   #          alpha = 0.4,fill = "grey") +
   geom_line() + theme_bw() + 
   geom_point() + 
-  labs(x = "Flu season", y = "Change in number of prescirptions from previous year", 
-       title = "B: RTI antibiotics (flu season), excluding Amoxicillin", 
+  labs(x = "Influenza season", y = "Change in number of prescirptions from previous influenza season", 
+       title = "B: Relative RTI antibiotics (flu season), excluding Amoxicillin", 
        colour = "Age band") +
   geom_vline(xintercept = 2016-0.4, linetype = "dashed") + 
   annotate("text", x = 2016-0.3, y = 0.2, label = "Ages 7-8", angle = 90)+
@@ -177,7 +177,7 @@ FLU_CHANGE <- ggplot(flu_total[flu_year < 2020, ], aes(x = flu_year, y = prop_ch
   # annotate("text", x = 2020-0.3, y = 1.5, label = "Ages 11-12 & 50-65", angle = 90)+
   # geom_vline(xintercept = 2021-0.4,linetype = "dashed") + 
   # annotate("text", x = 2021-0.3, y = 1.5, label = "Ages 12-16", angle = 90) + 
-  lims(y = c(-0.3,0.3)) + 
+  lims(y = c(-0.2,0.25)) + 
   geom_hline(yintercept = 0)
 
 

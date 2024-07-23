@@ -659,4 +659,11 @@ table(table1[1:20,"% to females"])
 length(which(table1_unformatted[1:20,"2023"] - table1_unformatted[1:20,"2016"]<0))
 
           
-      
+# calculate what percentage of all prescriptions are in the top 20 
+sum(table1_unformatted[1:20,"total_prescriptions" ])/sum(table1_unformatted$total_prescriptions)
+
+#check how many had fewer in 2023 compared to 2016
+temp_table <- data.table(table1_unformatted)
+temp_table[,prop_change := `2023`/`2019`]
+# what percentage had at least 10% lower
+sum(temp_table[prop_change<0.9, lower_10 := 1]$lower_10, na.rm = T)/nrow(temp_table)
