@@ -520,11 +520,27 @@ ggsave(paste0("plots/",sensitivity_choice,"/Fig1_",sensitivity_choice,".pdf"), p
        width = 20, height = 10)
 
 ################## Table 1 #########################
-all_data_ex <- fread(paste0("data/",sensitivity_choice,"/all_data_organised_",sensitivity_choice,".csv"))
+all_data_ex_o <- fread(paste0("data/",sensitivity_choice,"/all_data_organised_",sensitivity_choice,".csv"))
+
+##### Total antibiotics over time
+total_time <- all_data_ex_o %>% group_by(date_time, GENDER) %>%
+  summarise(total = sum(ITEMS))
+
+ggplot(total_time, aes(x=date_time, y= total)) + 
+  geom_line(aes(col = GENDER)) + 
+  annotate("rect", xmin = as.Date("2020-03-01"), xmax = as.Date("2022-07-01"), ymin = 0, ymax = max(total_time$total),
+           alpha = 0.4,fill = "grey") + 
+  scale_y_continuous("Total number of antibiotics prescribed") + 
+  scale_x_date("Time") + 
+  scale_color_discrete("Sex")
+
+
+# Filter so only full years in the data 
+all_data_ex <- all_data_ex_o %>% filter(YEAR >= 2016)
 
 # Summary values for results section 
 # Total 
-format(all_data_ex %>% summarise(sum(ITEMS)), big.mark = ",")
+format(all_data_ex_o %>% summarise(sum(ITEMS)), big.mark = ",")
 # Per person 
 total_pops = all_data_ex %>% group_by(YEAR) %>% filter(MONTH == 12, drug_name == "Nitrofurantoin") %>% 
   summarise(totalp = sum(population))
