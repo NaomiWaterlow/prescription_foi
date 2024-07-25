@@ -210,7 +210,7 @@ MRSA_PRESCRIPS <- ggplot(all_together, aes(x = fyear_start, y = value, colour = 
   geom_line() + geom_point(size = 0.4) + theme_bw() + 
   scale_linetype_manual(values = c(1,2)) + 
   
-  labs(x = "Date", y = "Proportion MRSI (over MRSA and MSSA), Annual beta-lactam prescription rate",
+  labs(x = "Date", y = "Proportion MRSA, Annual beta-lactam prescription rate",
        title = "C: BSI resistance vs prescriptions", colour = "Sex", linetype = "Type") 
 
 MRSA_PRESCRIPS

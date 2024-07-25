@@ -25,9 +25,9 @@ all_data[, "YEAR" := as.numeric(substr(YEAR_MONTH, 1, 4)),]
 all_data[, "MONTH" := as.numeric(substr(YEAR_MONTH, 5, 6)),]
 
 # convert to numeric -> the "*"s get converted to NAs
-all_data[, UNIQUE_PATIENT_COUNT := as.numeric(UNIQUE_PATIENT_COUNT)]
+suppressWarnings( all_data[, UNIQUE_PATIENT_COUNT := as.numeric(UNIQUE_PATIENT_COUNT)])
 # convert to numeric -> the "*"s get converted to NAs
-all_data[, ITEMS := as.numeric(ITEMS)]
+suppressWarnings( all_data[, ITEMS := as.numeric(ITEMS)])
 
 if(sensitivity_choice == "default_1"){
   
