@@ -4,7 +4,7 @@
 ## Date: July 2024
 
 ## Data
-The subnational data can be accessed from https://opendata.nhsbsa.net/dataset/foi-01671 along with the reference data tables. The national data can be accessed from a subsequent FOI request here: https://opendata.nhsbsa.net/dataset/foi-01975. All datasets (csv files) need to be put in subfolders of data to run the above code. (data, data > ICB_Data and data > Practice_Data).
+The subnational data can be accessed from https://opendata.nhsbsa.net/dataset/foi-01671 along with the reference data tables. The national data can be accessed from a subsequent FOI request here: https://opendata.nhsbsa.net/dataset/foi-01975. Copyright NHSBA, open government lisence (https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/). All datasets (csv files) need to be put in subfolders of data to run the above code. (data, data > ICB_Data and data > Practice_Data).
 
 ## Code 
 - initial_data_look_total.R. This script loads the data that is not split by geography, calculates the population sizes and makes time series plots of each drug. Also generates Figure 1. This script must be run before the other scripts will work, as it generates the initial cleaned data. 
