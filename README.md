@@ -1,4 +1,7 @@
-##### Code for working on UK antibiotic prescirption data - in progress. ########## 
+##### Code for working on UK antibiotic prescirption data ########## 
+
+## Published manuscript
+Waterlow NR, Ashfield T, Knight GM. Observational study of antibiotic prescribing patterns by age and sex in primary care in England: why we need to take this variation into account to evaluate antibiotic stewardship and predict AMR variation. JAC Antimicrob Resist. 2025 Feb 7;7(1):dlae210. doi: 10.1093/jacamr/dlae210. PMID: 39927312; PMCID: PMC11803082.
 
 ## Authors: Naomi Waterlow & Gwen Knight
 ## Date: July 2024
@@ -13,8 +16,7 @@ The subnational data can be accessed from https://opendata.nhsbsa.net/dataset/fo
 All code can be run from 0_master_script.R, and this contains all the instructions on how to run it.
 
 
-
-##### Below information is old and can probably be removed.
+##### Old information - extra analyses not in the paper
 
 - 0_initial_data_look_total.R. This script loads the data that is not split by geography, calculates the population sizes and makes plots of each drug. Also generates Figure 1. This script must be run before the other scripts will work, as it generates the initial cleaned data. 
 
