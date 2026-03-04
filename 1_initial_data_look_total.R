@@ -248,7 +248,7 @@ for(drug in unique(sc$drug_name)){
     count_seasonal <- count_seasonal+1
     print(paste0(drug, " is seasonal"))
   }
-
+  
 }
 
 # percentage of drugs that are seasonal
@@ -411,7 +411,7 @@ for(i in drugs_lookup$BNF_CHEMICAL_SUBSTANCE_CODE){
     
     print(target_name)
     
-
+    
     
     ggsave(paste0("plots/",sensitivity_choice,"/per_pop/",str_replace_all(target_name, "[^[:alnum:]]", "_"),
                   "_overview_",sensitivity_choice,".pdf"), plot = PLOT_TEMP+ theme(title = element_text(size =25), 
@@ -427,7 +427,7 @@ for(i in drugs_lookup$BNF_CHEMICAL_SUBSTANCE_CODE){
 #generate overall drugs plot
 PLOT_OVERALL <-  ggplot(data_overall,aes(x= date_time2, y = per_100k, colour = AGE_BAND, group = AGE_BAND) ) +
   annotate("rect", xmin = as.Date("2020-03-01"), xmax = as.Date("2022-07-01"), ymin = 0, ymax = max(data_overall$per_100k),
-         alpha = 0.4,fill = "grey") +
+           alpha = 0.4,fill = "grey") +
   geom_point( size =0.3) +
   geom_line()+
   labs(title = "All prescriptions") + facet_grid(GENDER~.) + 
@@ -451,6 +451,8 @@ drugs_to_exclude <- drugs_lookup[total_prescriptions<100000,]$CHEMICAL_SUBSTANCE
 # average per year
 all_data_ex[drugs_lookup, on=c(drug_name = "CHEMICAL_SUBSTANCE_BNF_DESCR"), drug_type := i.Drug_type]
 all_data_annual <- all_data_ex[!(drug_name %in% drugs_to_exclude), mean(per_100k), by = c("drug_name", "GENDER", "AGE_BAND", "YEAR", "drug_type")]
+write_csv(all_data_annual,"data/all_data_annual.csv")
+
 
 # Just use data from latest year
 target_year <- 2023
@@ -674,7 +676,7 @@ table(table1[1:20,"Month"])
 table(table1[1:20,"% to females"])
 length(which(table1_unformatted[1:20,"2023"] - table1_unformatted[1:20,"2016"]<0))
 
-          
+
 # calculate what percentage of all prescriptions are in the top 20 
 sum(table1_unformatted[1:20,"total_prescriptions" ])/sum(table1_unformatted$total_prescriptions)
 
